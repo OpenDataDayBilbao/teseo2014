@@ -1,0 +1,33 @@
+
+.soften {
+    height: 5px;
+    margin-bottom: 0.5em;
+    background-image: -webkit-linear-gradient(left, transparent, rgba(0, 0, 0, .2), transparent);
+    background-image: -moz-linear-gradient(left, transparent, rgba(0, 0, 0, .2), transparent);
+    background-image: -ms-linear-gradient(left, transparent, rgba(0, 0, 0, .2), transparent);
+    background-image: -o-linear-gradient(left, transparent, rgba(0, 0, 0, .2), transparent);
+    border: 0;
+    width: 100%;
+}
+
+.tooltip {
+    padding: 0.5em 3em;
+}
+
+.tooltip > h3 {
+    font-size: 2em;
+    text-align: center;
+    margin-bottom: 0.25em;
+}
+
+.tooltip > p {
+    font-size: 1.5em;
+}
+
+.fa-female {
+    color: #ffa3b1;
+}
+
+.fa-male {
+    color: #4d6df3;
+}
