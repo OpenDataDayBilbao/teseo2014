@@ -295,47 +295,46 @@ def create_gender_per_area_evolution():
     
 if __name__=='__main__':
     pp = pprint.PrettyPrinter(indent=4)    
-#    
-#    #create the thesis panel social network
-#    #G = build_panel_relations()
-#    #filter_panel_relations(G)
-#    #print 'Writing file'
-#    #nx.write_gexf(G, './processed_data/panel_relations_filtered.gexf')
-#
-#    #Create the temporal evolution of the universities
-#    print 'Temporal evolution of the universities'
-#    unis = create_university_temporal_evolution_by_year()
-#    pp.pprint(unis)
-#    json.dump(unis, open('./processed_data/universities_temporal.json', 'w'), indent = 4)
-# 
-#    #Create the temporal evolution of the geoprahpical regions
-#    print 'Temporal evolution of the geoprahpical regions'
-#    regions = create_region_temporal_evolution_by_year()
-#    pp.pprint(regions)
-#    json.dump(regions, open('./processed_data/regions_temporal.json', 'w'), indent = 4)
-#    
-#    #Create the temporal evolution of the knowledge areas
-#    print 'Temporal evolution of the knowledge areas'
-#    areas = create_area_temporal_evolution_by_year()
-#    pp.pprint(areas)
-#    json.dump(areas, open('./processed_data/areas_temporal.json', 'w'), indent = 4)
-#    
-#    #Create the temporal evolution of the author genders
-#    print 'Temporal evolution of the author genders'
-#    genders_total = create_gender_temporal_evolution_by_year()
-#    pp.pprint(genders_total)
-#    json.dump(genders_total, open('./processed_data/genders_total.json', 'w'), indent = 4)
-#    
-#    #Create the temporal evolution of gender percentage
-#    print 'Temporal evolution of gender percentage'
-#    genders_percentage = create_gender_percentaje_evolution(genders_total)
-#    pp.pprint(genders_percentage)
-#    json.dump(genders_percentage, open('./processed_data/genders_percentage.json', 'w'), indent = 4)
-#    
+    
+    #create the thesis panel social network
+    #G = build_panel_relations()
+    #filter_panel_relations(G)
+    #print 'Writing file'
+    #nx.write_gexf(G, './processed_data/panel_relations_filtered.gexf')
+
+    #Create the temporal evolution of the universities
+    print 'Temporal evolution of the universities'
+    unis = create_university_temporal_evolution_by_year()
+    pp.pprint(unis)
+    json.dump(unis, open('./processed_data/universities_temporal.json', 'w'), indent = 4)
+ 
+    #Create the temporal evolution of the geoprahpical regions
+    print 'Temporal evolution of the geoprahpical regions'
+    regions = create_region_temporal_evolution_by_year()
+    pp.pprint(regions)
+    json.dump(regions, open('./processed_data/regions_temporal.json', 'w'), indent = 4)
+    
+    #Create the temporal evolution of the knowledge areas
+    print 'Temporal evolution of the knowledge areas'
+    areas = create_area_temporal_evolution_by_year()
+    pp.pprint(areas)
+    json.dump(areas, open('./processed_data/areas_temporal.json', 'w'), indent = 4)
+    
+    #Create the temporal evolution of the author genders
+    print 'Temporal evolution of the author genders'
+    genders_total = create_gender_temporal_evolution_by_year()
+    pp.pprint(genders_total)
+    json.dump(genders_total, open('./processed_data/genders_total.json', 'w'), indent = 4)
+    
+    #Create the temporal evolution of gender percentage
+    print 'Temporal evolution of gender percentage'
+    genders_percentage = create_gender_percentaje_evolution(genders_total)
+    pp.pprint(genders_percentage)
+    json.dump(genders_percentage, open('./processed_data/genders_percentage.json', 'w'), indent = 4)
+    
     #create the temporal evolution of gender per area
     print 'Temporal evolution of gender percentage'
     genders_area_total = create_gender_per_area_evolution()
     pp.pprint(genders_area_total)
     json.dump(genders_area_total, open('./processed_data/genders_area_total.json', 'w'), indent = 4)
     
-
