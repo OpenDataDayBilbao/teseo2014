@@ -82,6 +82,37 @@ def build_panel_relations():
     
     return G
     
+def build_area_relations():   
+    cnx = mysql.connector.connect(**config)
+    cursor = cnx.cursor()
+    G = nx.Graph()
+    for cont, thesis in enumerate(thesis_ids):
+        if cont%500 == 0:
+            print 'creating network: ' + str(float(cont)/len(thesis_ids) * 100)
+        
+        query = 'SELECT descriptor.text FROM descriptor, association_thesis_description WHERE association_thesis_description.descriptor_id = descriptor.id AND association_thesis_description.thesis_id =' + str(thesis)
+        cursor.execute(query)
+        descriptors = []
+        for descriptor in cursor:
+            descriptors.append(descriptor[0])
+            
+        for i, descriptor in enumerate(descriptors):
+            source = descriptor
+            for j in range(i+1, len(descriptors)):
+                target = descriptors[j]
+                if G.has_edge(source, target):
+                    G.edge[source][target]['weight'] += 1
+                else:
+                    G.add_edge(source, target, weight = 1)
+
+    cursor.close()
+    print 'Graph created'
+    print '-Nodes:',len(G.nodes())
+    print '-Edges:',len(G.edges())
+    
+    return G
+    
+    
 #the graph is too big. Nodes with not enough degree are deleted
 #If a node has a degree of 4 or less it only has been in the panel of 1 viva
 def filter_panel_relations(G, MIN_DEGREE = 5):   
@@ -301,6 +332,11 @@ if __name__=='__main__':
     #filter_panel_relations(G)
     #print 'Writing file'
     #nx.write_gexf(G, './processed_data/panel_relations_filtered.gexf')
+    
+    #create the social network for the thematic areas
+    G = build_area_relations()
+    print 'Writing file'
+    nx.write_gexf(G, './processed_data/area_relations.gexf')
 
     #Create the temporal evolution of the universities
     print 'Temporal evolution of the universities'
@@ -333,7 +369,7 @@ if __name__=='__main__':
     json.dump(genders_percentage, open('./processed_data/genders_percentage.json', 'w'), indent = 4)
     
     #create the temporal evolution of gender per area
-    print 'Temporal evolution of gender percentage'
+    print 'Temporal evolution of gender percentage per area'
     genders_area_total = create_gender_per_area_evolution()
     pp.pprint(genders_area_total)
     json.dump(genders_area_total, open('./processed_data/genders_area_total.json', 'w'), indent = 4)
