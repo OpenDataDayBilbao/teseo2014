@@ -10,17 +10,17 @@
     width: 100%;
 }
 
-.tooltip {
+.tooltip-div {
     padding: 0.5em 3em;
 }
 
-.tooltip > h3 {
+.tooltip-div > h3 {
     font-size: 2em;
     text-align: center;
     margin-bottom: 0.25em;
 }
 
-.tooltip > p {
+.tooltip-div > p {
     font-size: 1.5em;
 }
 
@@ -30,4 +30,51 @@
 
 .fa-male {
     color: #4d6df3;
+}
+
+.page-header {
+    background: url(../img/teseo.jpg) no-repeat center center fixed;
+    padding: 1.5em 5em;
+}
+
+blockquote {
+    border-left: 5px solid #777;
+}
+
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    /* Margin bottom by footer height */
+    margin-bottom: 60px;
+    background-color: transparent;
+}
+
+#footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    /* Set the fixed height of the footer here */
+    height: 60px;
+    background-color: #ccc;
+}
+
+
+/* Custom page CSS
+-------------------------------------------------- */
+/* Not required for template or sticky footer method. */
+
+.container {
+    width: auto;
+    max-width: 1200px;
+    padding: 0 15px;
+}
+
+.container .text-muted {
+    margin: 20px 0;
 }
