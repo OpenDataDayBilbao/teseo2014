@@ -179,6 +179,11 @@ def load_descriptor_codes():
     with open( "./cache/descriptor_codes.p", "rb" ) as infile:
         result = pickle.load(infile)
     return result
+    
+def load_codes_descriptor():
+    with open( "./cache/descriptor_codes.p", "rb" ) as infile:
+        result = pickle.load(infile)
+    return result
             
     
 
@@ -198,6 +203,8 @@ descriptors = load_descriptors()
 name_genders = load_genders()
 
 descriptor_codes = load_descriptor_codes()
+
+codes_descriptor = load_codes_descriptor()
 
 university_locations = {
     u'SANTIAGO DE COMPOSTELA':u'Galicia',
@@ -362,8 +369,9 @@ university_ids = {
 
 #this should be done the first time running this scripts    
 if __name__=='__main__':
-    print check_similar_names()
-    print 'done'
+    import pprint
+    pp = pprint.PrettyPrinter(indent=4) 
+    pp.pprint(descriptor_codes)
     
 
 

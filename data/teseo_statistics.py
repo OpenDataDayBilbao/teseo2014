@@ -6,7 +6,7 @@ Created on Tue Feb 18 11:20:55 2014
 """
 
 import mysql.connector
-from cache import university_locations, university_ids, thesis_ids, descriptors, name_genders, descriptor_codes
+from cache import university_locations, university_ids, thesis_ids, descriptors, name_genders, descriptor_codes, codes_descriptor
 import networkx as nx
 import sys
 import pprint
@@ -62,7 +62,7 @@ def build_panel_relations():
     for cont, thesis in enumerate(thesis_ids):
         if cont%500 == 0:
             print 'creating network: ' + str(float(cont)/len(thesis_ids) * 100)
-        query = 'SELECT person_id FROM panel_member WHERE thesis_id =' + str(thesis)
+        query = 'SELECT person.name FROM panel_member, person WHERE panel_member.person_id = person.id AND panel_member.thesis_id =' + str(thesis)
         cursor.execute(query)
         panel = []
         for person in cursor:
@@ -220,6 +220,54 @@ def create_area_temporal_evolution_by_year():
     cursor.close()
     return results
     
+#only uses first level area codes ##0000
+#def create_meta_area_temporal_evolution_by_year():
+#    cnx = mysql.connector.connect(**config)
+#    cnx2 = mysql.connector.connect(**config)
+#    cursor = cnx.cursor()
+#    query = 'SELECT id, defense_date from thesis'
+#    cursor.execute(query)
+#    results = {}
+#    for i, thesis in enumerate(cursor):         
+#        try:
+#            thesis_id = thesis[0]
+#            year = thesis[1].year
+#            print 'Processing', thesis_id, ', year', year
+#            
+#            #get descriptors   
+#            cursor_desc = cnx2.cursor()
+#            query_desc = 'SELECT descriptor_id FROM association_thesis_description WHERE thesis_id=' + str(thesis_id)      
+#            cursor_desc.execute(query_desc)
+#            
+#            used_descriptors = set()
+#            for desc in cursor_desc:
+#                descriptor_text = descriptors[descriptor_id]
+#                descriptor_code = descriptor_codes[descriptor_text]
+#                first_level_code = descriptor_code[0:2] + '0000'
+#                first_level_descriptor = codes_descriptor[first_level_code]
+#                used_descriptors.add(first_level_descriptor)          
+#            cursor_desc.close()
+#            
+#            
+#            if year in results.keys():
+#                descs = results[year]
+#                for d in used_descriptors:
+#                    if d in descs.keys():
+#                        descs[d] += 1
+#                    else:
+#                        descs[d] = 1            
+#            else:
+#                descs = {}
+#                for d in used_descriptors:
+#                    descs[d] = 1                
+#                results[year] = descs
+#        except AttributeError:
+#            print 'The thesis has no year in the database'
+#        except mysql.connector.errors.InternalError as ie:
+#            print 'Mysql error', ie.msg
+#    cursor.close()
+#    return results
+    
 def create_gender_temporal_evolution_by_year():
     cnx = mysql.connector.connect(**config)
     cursor = cnx.cursor()
@@ -328,49 +376,49 @@ if __name__=='__main__':
     pp = pprint.PrettyPrinter(indent=4)    
     
     #create the thesis panel social network
-    #G = build_panel_relations()
-    #filter_panel_relations(G)
-    #print 'Writing file'
-    #nx.write_gexf(G, './processed_data/panel_relations_filtered.gexf')
+    G = build_panel_relations()
+    filter_panel_relations(G)
+    print 'Writing file'
+    nx.write_gexf(G, './processed_data/panel_relations_filtered.gexf')
     
     #create the social network for the thematic areas
-    G = build_area_relations()
-    print 'Writing file'
-    nx.write_gexf(G, './processed_data/area_relations.gexf')
-
-    #Create the temporal evolution of the universities
-    print 'Temporal evolution of the universities'
-    unis = create_university_temporal_evolution_by_year()
-    pp.pprint(unis)
-    json.dump(unis, open('./processed_data/universities_temporal.json', 'w'), indent = 4)
- 
-    #Create the temporal evolution of the geoprahpical regions
-    print 'Temporal evolution of the geoprahpical regions'
-    regions = create_region_temporal_evolution_by_year()
-    pp.pprint(regions)
-    json.dump(regions, open('./processed_data/regions_temporal.json', 'w'), indent = 4)
-    
-    #Create the temporal evolution of the knowledge areas
-    print 'Temporal evolution of the knowledge areas'
-    areas = create_area_temporal_evolution_by_year()
-    pp.pprint(areas)
-    json.dump(areas, open('./processed_data/areas_temporal.json', 'w'), indent = 4)
-    
-    #Create the temporal evolution of the author genders
-    print 'Temporal evolution of the author genders'
-    genders_total = create_gender_temporal_evolution_by_year()
-    pp.pprint(genders_total)
-    json.dump(genders_total, open('./processed_data/genders_total.json', 'w'), indent = 4)
-    
-    #Create the temporal evolution of gender percentage
-    print 'Temporal evolution of gender percentage'
-    genders_percentage = create_gender_percentaje_evolution(genders_total)
-    pp.pprint(genders_percentage)
-    json.dump(genders_percentage, open('./processed_data/genders_percentage.json', 'w'), indent = 4)
-    
-    #create the temporal evolution of gender per area
-    print 'Temporal evolution of gender percentage per area'
-    genders_area_total = create_gender_per_area_evolution()
-    pp.pprint(genders_area_total)
-    json.dump(genders_area_total, open('./processed_data/genders_area_total.json', 'w'), indent = 4)
+#    G = build_area_relations()
+#    print 'Writing file'
+#    nx.write_gexf(G, './processed_data/area_relations.gexf')
+#
+#    #Create the temporal evolution of the universities
+#    print 'Temporal evolution of the universities'
+#    unis = create_university_temporal_evolution_by_year()
+#    pp.pprint(unis)
+#    json.dump(unis, open('./processed_data/universities_temporal.json', 'w'), indent = 4)
+# 
+#    #Create the temporal evolution of the geoprahpical regions
+#    print 'Temporal evolution of the geoprahpical regions'
+#    regions = create_region_temporal_evolution_by_year()
+#    pp.pprint(regions)
+#    json.dump(regions, open('./processed_data/regions_temporal.json', 'w'), indent = 4)
+#    
+#    #Create the temporal evolution of the knowledge areas
+#    print 'Temporal evolution of the knowledge areas'
+#    areas = create_area_temporal_evolution_by_year()
+#    pp.pprint(areas)
+#    json.dump(areas, open('./processed_data/areas_temporal.json', 'w'), indent = 4)
+#    
+#    #Create the temporal evolution of the author genders
+#    print 'Temporal evolution of the author genders'
+#    genders_total = create_gender_temporal_evolution_by_year()
+#    pp.pprint(genders_total)
+#    json.dump(genders_total, open('./processed_data/genders_total.json', 'w'), indent = 4)
+#    
+#    #Create the temporal evolution of gender percentage
+#    print 'Temporal evolution of gender percentage'
+#    genders_percentage = create_gender_percentaje_evolution(genders_total)
+#    pp.pprint(genders_percentage)
+#    json.dump(genders_percentage, open('./processed_data/genders_percentage.json', 'w'), indent = 4)
+#    
+#    #create the temporal evolution of gender per area
+#    print 'Temporal evolution of gender percentage per area'
+#    genders_area_total = create_gender_per_area_evolution()
+#    pp.pprint(genders_area_total)
+#    json.dump(genders_area_total, open('./processed_data/genders_area_total.json', 'w'), indent = 4)
     
