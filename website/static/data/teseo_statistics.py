@@ -475,7 +475,7 @@ if __name__=='__main__':
 #    json.dump(primary_areas, open('./processed_data/first_level_areas_temporal.json', 'w'), indent = 4)
     
      #Create the temporal evolution of panel members' gender
-    print 'Temporal evolution of the knowledge areas'
+    print 'Temporal the panel members\' gender areas'
     panel_gender = create_gender_panel_evolution_by_year()
     pp.pprint(panel_gender)
     json.dump(panel_gender, open('./processed_data/gender_panel_temporal.json', 'w'), indent = 4)
