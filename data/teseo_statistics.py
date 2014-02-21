@@ -6,7 +6,7 @@ Created on Tue Feb 18 11:20:55 2014
 """
 
 import mysql.connector
-from cache import university_locations, university_ids, thesis_ids, descriptors, name_genders
+from cache import university_locations, university_ids, thesis_ids, descriptors, name_genders, descriptor_codes
 import networkx as nx
 import sys
 import pprint

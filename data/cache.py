@@ -175,7 +175,10 @@ def check_similar_names():
     return repeated
             
 
-
+def load_descriptor_codes():
+    with open( "./cache/descriptor_codes.p", "rb" ) as infile:
+        result = pickle.load(infile)
+    return result
             
     
 
@@ -193,6 +196,8 @@ thesis_ids = load_thesis_ids()
 descriptors = load_descriptors()
 
 name_genders = load_genders()
+
+descriptor_codes = load_descriptor_codes()
 
 university_locations = {
     u'SANTIAGO DE COMPOSTELA':u'Galicia',
