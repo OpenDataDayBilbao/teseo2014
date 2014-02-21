@@ -21,6 +21,11 @@ def gender():
     return render_template("male_female.html")
 
 
+@app.route('/genero_del_tribunal')
+def gender_in_panel():
+    return render_template("gender_in_panel.html")
+
+
 @app.route('/total')
 def total_theses_by_year():
     return render_template("total_theses_by_year.html")
@@ -89,6 +94,11 @@ def evolution_topic_list():
             topics.append(value)
 
     return render_template("evolution_topic_list.html", topics=topics)
+
+
+@app.route('/gender_by_topic/<min_year>/<max_year>')
+def gender_by_topic(min_year, max_year):
+    return render_template("gender_analysis_by_topics.html", min_year=min_year, max_year=max_year)
 
 
 if __name__ == '__main__':

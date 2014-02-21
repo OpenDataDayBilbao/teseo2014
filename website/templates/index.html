@@ -29,37 +29,49 @@
                         <ul class="nav nav-pills nav-stacked">
                             <li>
                                 <a href="{{ url_for('total_theses_by_year') }}">
-                                    <i class="fa fa-beer"></i>&emsp;Nº total de tesis
+                                    <i class="fa fa-book"></i>&emsp;Nº total de tesis
                                 </a>
                             </li>
 
                             <li>
                                 <a href="{{ url_for('gender') }}">
-                                    <i class="fa fa-bullhorn"></i>&emsp;Nº de tesis por género
+                                    <i class="fa fa-book"></i>&emsp;Nº de tesis por género
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="{{ url_for('gender_by_topic', min_year=2000, max_year=2013) }}">
+                                    <i class="fa fa-book"></i>&emsp;Nº de tesis por género y temática
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="{{ url_for('gender_in_panel') }}">
+                                    <i class="fa fa-book"></i>&emsp;Presencia de cada genero en el tribunal
                                 </a>
                             </li>
 
                             <li>
                                 <a href="{{ url_for('evolution_topic_list') }}">
-                                    <i class="fa fa-bullhorn"></i>&emsp;Lista de temáticas
+                                    <i class="fa fa-book"></i>&emsp;Lista de temáticas
                                 </a>
                             </li>
 
                             <li>
                                 <a href="{{ url_for('topics_by_five_years', min_year=2010, max_year=2013) }}">
-                                    <i class="fa fa-bullhorn"></i>&emsp;Temáticas por período (alto nivel)
+                                    <i class="fa fa-book"></i>&emsp;Temáticas por período (alto nivel)
                                 </a>
                             </li>
 
                             <li>
                                 <a href="{{ url_for('all_topics_by_five_years', min_year=2010, max_year=2013) }}">
-                                    <i class="fa fa-bullhorn"></i>&emsp;Temáticas por período (todas)
+                                    <i class="fa fa-book"></i>&emsp;Temáticas por período (todas)
                                 </a>
                             </li>
 
                             <li>
                                 <a href="{{ url_for('evolution_topic_comparison', topic_1='LOGICA', topic_2='DEMOGRAFIA') }}">
-                                    <i class="fa fa-bullhorn"></i>&emsp;Comparar temáticas
+                                    <i class="fa fa-book"></i>&emsp;Comparar temáticas
                                 </a>
                             </li>
                         </ul>

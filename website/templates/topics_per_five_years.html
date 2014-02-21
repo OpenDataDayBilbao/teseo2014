@@ -12,7 +12,7 @@
 
 {% block content %}
 
-    <h1>Tópicos: {{ min_year }} - {{ max_year }}</h1>
+    <h1>Temáticas: {{ min_year }} - {{ max_year }}</h1>
 
     <br>
 
@@ -27,9 +27,13 @@
     <script type="text/javascript" src="{{ url_for('static', filename='js/jqcloud-1.0.4.min.js') }}"></script>
 
     <script>
+        function replaceAll(text, search, newstring ){
+            return text.replace(new RegExp(search, 'g'), newstring);
+        }
+
         var word_array = [
             {% for key, value in tag_dict.items() %}
-                {text: "{{ key }}", weight: "{{ value }}"},
+                {text: "{{ key }}", weight: "{{ value }}", link: "{{ url_for('evolution_topic', topic=key) }}"},
             {% endfor %}
         ];
 
