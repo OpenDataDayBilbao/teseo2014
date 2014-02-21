@@ -371,6 +371,49 @@ def create_gender_per_area_evolution():
     cursor.close()
     return results
     
+def create_gender_panel_evolution_by_year():    
+    cnx = mysql.connector.connect(**config)
+    cnx2 = mysql.connector.connect(**config)
+    cursor = cnx.cursor()
+    query = 'SELECT thesis.id, thesis.defense_date from thesis'
+    cursor.execute(query)
+    results = {}
+    for i, thesis in enumerate(cursor):
+        print 'Gender panel', i
+        cursor_names = cnx2.cursor()        
+        query_names = 'SELECT person.first_name FROM panel_member, person WHERE person.id = panel_member.person_id AND panel_member.thesis_id=' + str(thesis[0])      
+        cursor_names.execute(query_names)
+        genders = {'male':0, 'female':0, 'None':0}
+        for name in cursor_names:
+            try:
+                gender = name_genders[name[0]]
+            except:
+                gender = 'None'
+            genders[gender] += 1
+        cursor_names.close()        
+        
+        
+        
+        
+        try:
+            year = thesis[1].year
+            if year in results.keys():
+                gender_cont = results[year]
+                for g in genders:
+                    if g in gender_cont.keys():
+                        gender_cont[g] += genders[g]
+                    else:
+                        gender_cont[g] = genders[g]
+            else:
+                results[year] = genders
+        except AttributeError:
+            print 'The thesis has no year in the database'        
+        
+    cursor.close()
+    
+    return results
+        
+    
     
             
     
@@ -426,7 +469,14 @@ if __name__=='__main__':
 #    json.dump(genders_area_total, open('./processed_data/genders_area_total.json', 'w'), indent = 4)
 #    
     #Create the temporal evolution of the primary knowledge areas
+#    print 'Temporal evolution of the knowledge areas'
+#    primary_areas = create_meta_area_temporal_evolution_by_year()
+#    pp.pprint(primary_areas)
+#    json.dump(primary_areas, open('./processed_data/first_level_areas_temporal.json', 'w'), indent = 4)
+    
+     #Create the temporal evolution of panel members' gender
     print 'Temporal evolution of the knowledge areas'
-    areas = create_meta_area_temporal_evolution_by_year()
-    pp.pprint(areas)
-    json.dump(areas, open('./processed_data/first_level_areas_temporal.json', 'w'), indent = 4)
+    panel_gender = create_gender_panel_evolution_by_year()
+    pp.pprint(panel_gender)
+    json.dump(panel_gender, open('./processed_data/gender_panel_temporal.json', 'w'), indent = 4)
+
