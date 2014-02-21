@@ -22,7 +22,8 @@
             var dataTable = new google.visualization.DataTable();
 
             dataTable.addColumn('string', 'Year');
-            dataTable.addColumn('number', 'Nº de tesis');
+            dataTable.addColumn('number', '{{ topic_1 }}');
+            dataTable.addColumn('number', '{{ topic_2 }}');
 
             var gender_json;
             $.getJSON("/static/data/processed_data/first_level_areas_temporal.json", function(json) {
@@ -31,13 +32,16 @@
                 for (var element in gender_json) {
                     console.log(gender_json);
 
-                    if('{{ topic }}' in gender_json[element]) {
-                        dataTable.addRow([String(element), gender_json[element]['{{topic}}']]);
-                    }
+                    var topic_1, topic_2;
+
+                    ('{{ topic_1 }}' in gender_json[element]) ? topic_1 = gender_json[element]['{{ topic_1 }}'] : topic_1 = 0;
+                    ('{{ topic_2 }}' in gender_json[element]) ? topic_2 = gender_json[element]['{{ topic_2 }}'] : topic_2 = 0;
+
+                    dataTable.addRow([String(element), topic_1, topic_2]);
                 }
 
                 var options = {
-                    title: 'Número total de tesis por año con temática {{ topic }}',
+                    title: 'Comparación del número total de tesis por año por temáticas',
                     width: 850,
                     height: 450,
                     hAxis: {
@@ -46,7 +50,7 @@
                     yAxis: {
                         title: 'Nº de tesis',
                     },
-                    colors: ['blue'],
+                    colors: ['blue', 'red'],
                     dataOpacity: 0.75,
                 };
 

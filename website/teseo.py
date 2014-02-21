@@ -75,6 +75,11 @@ def evolution_topic(topic):
     return render_template("evolution_topic.html", topic=topic)
 
 
+@app.route('/evolution_topic/<topic_1>/<topic_2>')
+def evolution_topic_comparison(topic_1, topic_2):
+    return render_template("evolution_topic_comparison.html", topic_1=topic_1, topic_2=topic_2)
+
+
 @app.route('/evolution_topic/')
 def evolution_topic_list():
     topics = []
