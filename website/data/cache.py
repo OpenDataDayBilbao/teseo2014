@@ -183,7 +183,14 @@ def load_descriptor_codes():
 def load_codes_descriptor():
     with open( "./cache/descriptor_codes.p", "rb" ) as infile:
         result = pickle.load(infile)
-    return result
+        
+    inverted_result = {}
+    for name in result:
+        code = result[name]
+        inverted_result[code] = name
+        
+    return inverted_result
+        
             
     
 
