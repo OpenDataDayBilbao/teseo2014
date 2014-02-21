@@ -19,29 +19,41 @@
         google.setOnLoadCallback(drawChart);
 
         function drawChart() {
-            var data = google.visualization.arrayToDataTable([
-                ['Year', 'Theses'],
-                ['2004', 1000],
-                ['2005', 150],
-            ]);
+            var dataTable = new google.visualization.DataTable();
 
-            var options = {
-                title: 'Número total de tesis por año',
-                width: 850,
-                height: 350,
-                hAxis: {
-                    title: 'Año',
-                },
-                yAxis: {
-                    title: 'Nº de tesis',
-                },
-                colors: ['blue'],
-                dataOpacity: 0.75,
-            };
+            dataTable.addColumn('string', 'Year');
+            dataTable.addColumn('number', 'Nº de tesis');
 
-            var chart = new google.visualization.ColumnChart(document.getElementById('chart'))
+            var gender_json;
+            $.getJSON("static/data/processed_data/genders_total.json", function(json) {
+                gender_json = json;
 
-            chart.draw(data, options);
+                for (var element in gender_json) {
+                    var number = gender_json[element];
+                    var total_per_year = number.None + number.male + number.female;
+
+                    if (! isNaN(total_per_year)) {
+                        console.log([String(element), total_per_year]);
+                        dataTable.addRow([String(element), total_per_year]);
+                    }
+                }
+
+                var options = {
+                    title: 'Número total de tesis por año',
+                    width: 850,
+                    height: 450,
+                    hAxis: {
+                        title: 'Año',
+                    },
+                    yAxis: {
+                        title: 'Nº de tesis',
+                    },
+                    colors: ['blue'],
+                    dataOpacity: 0.75,
+                };
+
+                var chart = new google.visualization.ColumnChart(document.getElementById('chart')).draw(dataTable, options);
+            });
         }
     </script>
 

@@ -21,7 +21,7 @@ def bu():
 
 @app.route('/total')
 def total_theses_by_year():
-    gender_json = $.getJSON("test.json");
+
     return render_template("total_theses_by_year.html")
 
 
