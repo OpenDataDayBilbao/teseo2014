@@ -38,6 +38,24 @@
                                     <i class="fa fa-bullhorn"></i>&emsp;Nº de tesis por género
                                 </a>
                             </li>
+
+                            <li>
+                                <a href="{{ url_for('evolution_topic_list') }}">
+                                    <i class="fa fa-bullhorn"></i>&emsp;Lista de temáticas
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="{{ url_for('topics_by_five_years', min_year=2010, max_year=2013) }}">
+                                    <i class="fa fa-bullhorn"></i>&emsp;Temáticas por período (alto nivel)
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="{{ url_for('all_topics_by_five_years', min_year=2010, max_year=2013) }}">
+                                    <i class="fa fa-bullhorn"></i>&emsp;Temáticas por período (todas)
+                                </a>
+                            </li>
                         </ul>
                     </div>
                 </aside>
