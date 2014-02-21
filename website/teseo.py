@@ -14,14 +14,13 @@ def index():
     return render_template("index.html")
 
 
-@app.route('/bu')
-def bu():
+@app.route('/genero')
+def gender():
     return render_template("male_female.html")
 
 
 @app.route('/total')
 def total_theses_by_year():
-
     return render_template("total_theses_by_year.html")
 
 
