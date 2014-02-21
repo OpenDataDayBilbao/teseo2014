@@ -1,0 +1,48 @@
+{% extends "index.html" %}
+
+
+
+{% block content %}
+
+        <div id="chart"></div>
+
+{% endblock %}
+
+
+
+{% block scripts %}
+
+    <script type="text/javascript" src="{{ url_for('static', filename='js/gcharts.js') }}"></script>
+
+    <script type="text/javascript">
+        google.load("visualization", "1", {packages:["corechart"]});
+        google.setOnLoadCallback(drawChart);
+
+        function drawChart() {
+            var data = google.visualization.arrayToDataTable([
+                ['Year', 'Theses'],
+                ['2004', 1000],
+                ['2005', 150],
+            ]);
+
+            var options = {
+                title: 'Número total de tesis por año',
+                width: 850,
+                height: 350,
+                hAxis: {
+                    title: 'Año',
+                },
+                yAxis: {
+                    title: 'Nº de tesis',
+                },
+                colors: ['blue'],
+                dataOpacity: 0.75,
+            };
+
+            var chart = new google.visualization.ColumnChart(document.getElementById('chart'))
+
+            chart.draw(data, options);
+        }
+    </script>
+
+{% endblock %}

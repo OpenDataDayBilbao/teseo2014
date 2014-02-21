@@ -19,5 +19,11 @@ def bu():
     return render_template("male_female.html")
 
 
+@app.route('/total')
+def total_theses_by_year():
+    gender_json = $.getJSON("test.json");
+    return render_template("total_theses_by_year.html")
+
+
 if __name__ == '__main__':
     app.run(debug=True)
