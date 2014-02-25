@@ -107,6 +107,10 @@ body {
   display: none;
 }
 
+.bar {
+    opacity: 0.75;
+}
+
 .d3-tip {
     line-height: 1;
     padding: 1.5em;

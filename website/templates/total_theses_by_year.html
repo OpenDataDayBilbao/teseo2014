@@ -6,7 +6,7 @@
 
         <div id="chart"></div>
 
-        <form class="form-horizontal" role="form">
+        <form class="form-inline" role="form">
             <div class="radio">
                 <label>
                     <input type="radio" name="optionsRadios" id="females" value="" checked>
@@ -26,6 +26,8 @@
                 </label>
             </div>
         </form>
+
+        <div id="svg"></div>
 
 {% endblock %}
 
@@ -56,17 +58,19 @@
     {% endraw %}
 
     <script>
-        var margin = {top: 40, right: 20, bottom: 30, left: 50},
+        var margin = {top: 40, right: 20, bottom: 30, left: 60},
             width = 1300 - margin.left - margin.right,
             height = 500 - margin.top - margin.bottom;
 
+        var format = d3.time.format("%y");
         var x = d3.scale.ordinal().rangeRoundBands([0, width], .1);
 
         var y = d3.scale.linear().range([height, 0]);
 
         var xAxis = d3.svg.axis()
             .scale(x)
-            .orient("bottom");
+            .orient("bottom")
+            .tickFormat(format);
 
         var yAxis = d3.svg.axis()
             .scale(y)
@@ -94,7 +98,7 @@
 
             }
 
-            x.domain(data.map(function(d) { return d.year; }));
+            x.domain(data.map(function(d) { return new Date(d.year, 01, 01); }));
             y.domain([0, d3.max(data, function(d) { return d.females + d.males + d.none; }) + 50]);
 
             svg.append("g")
@@ -114,7 +118,7 @@
 
             drawData("females");
 
-            $('.form-horizontal').change(function() {
+            $('.form-inline').change(function() {
                 if ($("#males").is(':checked')) {
                     drawData("males");
                 }
@@ -155,9 +159,7 @@
                             none: d.none,
                             total: d.females + d.males + d.none
                         }
-                        console.log(tooltip_data);
                         return template(tooltip_data);
-                        // return "<strong>" + variable + ":</strong> <span style='color:red'>" + 40*2 + "</span>";
                     });
 
                 svg.call(tip);
@@ -182,7 +184,7 @@
                     .enter().append("rect")
                         .attr("class", "bar")
                         .attr("style", "fill: " + color)
-                        .attr("x", function(d) { return x(d.year); })
+                        .attr("x", function(d) { return x(new Date(d.year, 01, 01)); })
                         .attr("width", x.rangeBand())
                         .attr("y", function(d) {
                             if (variable == "both")
