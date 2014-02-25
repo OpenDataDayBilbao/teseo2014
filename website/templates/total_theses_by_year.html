@@ -134,6 +134,7 @@
             var last_checked_total = false;
 
             $('.form-inline').change(function() {
+                svg.selectAll("line.horizontalGrid").data(yScale.ticks()).remove();
                 if ($("#males").is(':checked')) {
                     drawData("males");
                     last_checked_total = false;
@@ -194,7 +195,9 @@
                             "fill" : "none",
                             "shape-rendering" : "crispEdges",
                             "stroke" : "#ccc",
-                            "stroke-width" : "1px"
+                        })
+                        .attr("stroke-width", function(d, i) {
+                            return (i == 5) ? "3px" : "1px";
                         });
 
                 var b = svg.selectAll(".bar").data(data);
