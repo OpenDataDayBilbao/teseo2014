@@ -40,7 +40,7 @@
     <script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
 
     {% raw %}
-    <script id="tooltip-template" type="text/x-handlebars-template">
+    <script id="total-tooltip-template" type="text/x-handlebars-template">
         <h1>Año {{ year }}</h1>
 
         <p class="genders">
@@ -57,23 +57,39 @@
     </script>
     {% endraw %}
 
+    {% raw %}
+    <script id="percentage-tooltip-template" type="text/x-handlebars-template">
+        <h1>Año {{ year }}</h1>
+
+        <p class="genders">
+            &emsp;<i class="fa fa-female"></i>&emsp;{{ females }} %
+            <br>
+            &emsp;<i class="fa fa-male"></i>&emsp;{{ males }} %
+        </p>
+
+        <p>
+            {{ total }} tesis registradas
+        </p>
+    </script>
+    {% endraw %}
+
     <script>
         var margin = {top: 40, right: 20, bottom: 30, left: 60},
             width = 1300 - margin.left - margin.right,
             height = 500 - margin.top - margin.bottom;
 
-        var format = d3.time.format("%y");
-        var x = d3.scale.ordinal().rangeRoundBands([0, width], .1);
+        var year_format = d3.time.format("%y");
 
-        var y = d3.scale.linear().range([height, 0]);
+        var xScale = d3.scale.ordinal().rangeRoundBands([0, width], .1);
+        var yScale = d3.scale.linear().range([height, 0]);
 
         var xAxis = d3.svg.axis()
-            .scale(x)
+            .scale(xScale)
             .orient("bottom")
-            .tickFormat(format);
+            .tickFormat(year_format);
 
         var yAxis = d3.svg.axis()
-            .scale(y)
+            .scale(yScale)
             .orient("left");
 
         var svg = d3.select("body").append("svg")
@@ -98,8 +114,7 @@
 
             }
 
-            x.domain(data.map(function(d) { return new Date(d.year, 01, 01); }));
-            y.domain([0, d3.max(data, function(d) { return d.females + d.males + d.none; }) + 50]);
+            xScale.domain(data.map(function(d) { return new Date(d.year, 01, 01); }));
 
             svg.append("g")
                 .attr("class", "x axis")
@@ -107,50 +122,148 @@
                 .call(xAxis);
 
             svg.append("g")
-                .attr("class", "y axis")
+                .attr("class", "yaxis")
                 .call(yAxis)
                 .append("text")
                     .attr("transform", "rotate(-90)")
                     .attr("y", 6)
                     .attr("dy", ".71em")
+                    .attr("class", "yaxis-text")
                     .style("text-anchor", "end")
                     .text("Theses");
 
             drawData("females");
 
+            var last_checked_total = false;
+
             $('.form-inline').change(function() {
                 if ($("#males").is(':checked')) {
                     drawData("males");
+                    last_checked_total = false;
                 }
                 else if ($("#females").is(':checked')) {
                     drawData("females");
+                    last_checked_total = false;
                 }
                 else {
-                    drawData("both");
+                    drawTotal();
+                    last_checked_total = true;
                 }
             });
 
-            function drawData(variable) {
-                var color = null;
+            function drawTotal() {
 
-                if (variable == "females") {
-                    color = 'pink';
-                }
-                else if (variable == "males") {
-                    color = 'lightblue';
-                }
-                else {
-                    color = 'orange';
-                }
+                svg.selectAll('.bar').remove();
 
-                svg.selectAll(".bar")
-                    .remove();
+                yScale.domain([0, 100]);
+
+                $(".yaxis-text").text("% por género");
+
+                yAxis = d3.svg.axis()
+                    .scale(yScale)
+                    .orient("left");
+
+                d3.select(".yaxis")
+                    .transition().duration(1000).ease("sin-in-out")  // https://github.com/mbostock/d3/wiki/Transitions#wiki-d3_ease
+                    .call(yAxis);
 
                 var tip = d3.tip()
                     .attr('class', 'd3-tip')
                     .offset([-10, 0])
                     .html(function(d) {
-                        var template_source = $('#tooltip-template').html();
+                        var template_source = $('#percentage-tooltip-template').html();
+                        var template = Handlebars.compile(template_source);
+                        var total = d.females + d.males;
+                        var tooltip_data = {
+                            year: d.year,
+                            females: (d.females/total * 100).toFixed(2),
+                            males: (d.males/total * 100).toFixed(2),
+                            total: d.females + d.males + d.none
+                        }
+                        return template(tooltip_data);
+                    });
+
+                svg.call(tip);
+
+                svg.selectAll("line.horizontalGrid")
+                    .data(yScale.ticks(4))
+                    .enter().append("line")
+                        .attr({
+                            "class":"horizontalGrid",
+                            "x1" : margin.right,
+                            "x2" : width,
+                            "y1" : function(d){ return yScale(d);},
+                            "y2" : function(d){ return yScale(d);},
+                            "fill" : "none",
+                            "shape-rendering" : "crispEdges",
+                            "stroke" : "#ccc",
+                            "stroke-width" : "1px"
+                        });
+
+                var b = svg.selectAll(".bar").data(data);
+
+                b.enter().append('g')
+                    .attr('class', 'bar')
+                    .on('mouseover', tip.show)
+                    .on('mouseout', tip.hide);
+
+                b.append("rect")
+                    .attr("x", function(d) { return xScale(new Date(d.year, 01, 01)); })
+                    .attr("width", xScale.rangeBand())
+                    .attr("y", function(d) { return height; })
+                    .attr("height", function(d) { return 0; })
+                    .transition().duration(1000).ease("quad")
+                        .style("fill-opacity", 1)
+                        .style("fill", "#ffa3b1")
+                        .attr("y", function(d) { return yScale(d.females / (d.females + d.males) * 100); })
+                        .attr("height", function(d) { return height - yScale(d.females / (d.females + d.males) * 100); });
+
+                b.append("rect")
+                    .attr("x", function(d) { return xScale(new Date(d.year, 01, 01)); })
+                    .attr("width", xScale.rangeBand())
+                    .attr("y", function(d) { return height; })
+                    .attr("height", function(d) { return 0; })
+                    .transition().duration(1000).ease("quad")
+                        .style("fill-opacity", 1)
+                        .style("fill", "#4d6df3")
+                        .attr("y", function(d) { return 0; })
+                        .attr("height", function(d) { return height - yScale(d.males / (d.females + d.males) * 100); });
+            }
+
+            function drawData(variable) {
+
+                if (last_checked_total === true) {
+                    svg.selectAll('.bar').remove();
+                }
+
+                yScale.domain([0, d3.max(data, function(d) {
+                    var bigger = (d.females > d.males) ? d.females : d.males;
+                    bigger = Math.ceil(bigger / 500) * 500;
+                    return bigger;
+                })]);
+
+                $(".yaxis-text").text("% por género");
+
+                yAxis = d3.svg.axis()
+                    .scale(yScale)
+                    .orient("left");
+
+                d3.select(".yaxis")
+                    .transition().duration(1500).ease("sin-in-out")  // https://github.com/mbostock/d3/wiki/Transitions#wiki-d3_ease
+                    .call(yAxis);
+
+                var color = null;
+
+                if (variable == "females")
+                    color = '#ffa3b1';
+                else
+                    color = '#4d6df3';
+
+                var tip = d3.tip()
+                    .attr('class', 'd3-tip')
+                    .offset([-10, 0])
+                    .html(function(d) {
+                        var template_source = $('#total-tooltip-template').html();
                         var template = Handlebars.compile(template_source);
                         var tooltip_data = {
                             year: d.year,
@@ -165,41 +278,35 @@
                 svg.call(tip);
 
                 svg.selectAll("line.horizontalGrid")
-                    .data(y.ticks(4))
+                    .data(yScale.ticks(4))
                     .enter().append("line")
                         .attr({
                             "class":"horizontalGrid",
                             "x1" : margin.right,
                             "x2" : width,
-                            "y1" : function(d){ return y(d);},
-                            "y2" : function(d){ return y(d);},
+                            "y1" : function(d){ return yScale(d);},
+                            "y2" : function(d){ return yScale(d);},
                             "fill" : "none",
                             "shape-rendering" : "crispEdges",
                             "stroke" : "#ccc",
                             "stroke-width" : "1px"
                         });
 
-                svg.selectAll(".bar")
-                    .data(data)
-                    .enter().append("rect")
+                var b = svg.selectAll(".bar").data(data)
+
+                b.enter().append("rect")
                         .attr("class", "bar")
-                        .attr("style", "fill: " + color)
-                        .attr("x", function(d) { return x(new Date(d.year, 01, 01)); })
-                        .attr("width", x.rangeBand())
-                        .attr("y", function(d) {
-                            if (variable == "both")
-                                return y(d.females + d.males + d.none);
-                            else
-                                return y(d[String(variable)]);
-                        })
-                        .attr("height", function(d) {
-                            if (variable == "both")
-                                return height - y(d.females + d.males + d.none);
-                            else
-                                return height - y(d[String(variable)]);
-                        })
+                        .attr("x", function(d) { return xScale(new Date(d.year, 01, 01)); })
+                        .attr("width", xScale.rangeBand())
+                        .attr("y", function(d) { return height; })
+                        .attr("height", function(d) { return 0; })
                         .on('mouseover', tip.show)
-                        .on('mouseout', tip.hide);
+                        .on('mouseout', tip.hide)
+                b.transition().duration(1000).ease("quad")
+                        .style("fill-opacity", 1)
+                        .style("fill", color)
+                        .attr("y", function(d) { return yScale(d[String(variable)]); })
+                        .attr("height", function(d) { return height - yScale(d[String(variable)]); });
                 };
 
             // var sortTimeout = setTimeout(function() {
@@ -228,61 +335,7 @@
             //       .selectAll("g")
             //         .delay(delay);
             // }
-
-            // var showGenders = setTimeout(function() {
-            //     d3.select("#genders").property("checked", true).each(change2);
-            // }, 5000);
-
-            // function change2() {
-            //     clearTimeout(showGenders);
-
-            //     // Copy-on-write since tweens are evaluated after a delay.
-            //     // var x0 = x.domain(data.sort(this.checked
-            //     //     ? function(a, b) { return b.females - a.females; }
-            //     //     : function(a, b) { return d3.ascending(a.year, b.year); })
-            //     //     .map(function(d) { return d.year; }))
-            //     //     .copy();
-
-            //     // var transition = svg.transition().duration(750),
-            //     //     delay = function(d, i) { return i * 50; };
-
-            //     // transition.selectAll(".bar")
-            //     //     .delay(delay)
-            //     //     .attr("x", function(d) { return x0(d.year); });
-
-            //     // transition.select(".x.axis")
-            //     //     .call(xAxis)
-            //     //   .selectAll("g")
-            //     //     .delay(delay);
-
-            //     // svg.selectAll(".bar")
-            //     //     .data(data)
-            //     //     .enter().append("rect")
-            //     //         .attr("class", "bar")
-            //     //         .attr("x", function(d) { return x(d.year); })
-            //     //         .attr("width", x.rangeBand())
-            //     //         .attr("y", function(d) { return y(d.males); })
-            //     //         .attr("height", function(d) { return height - y(d.males); })
-            //     //         .on('mouseover', tip.show)
-            //     //         .on('mouseout', tip.hide);
-
-            //     // tip = d3.tip()
-            //     //     .attr('class', 'd3-tip')
-            //     //     .offset([-10, 0])
-            //     //     .html(function(d) {
-            //     //         return "<strong>Males:</strong> <span style='color:blue'>" + d.males + "</span>";
-            //     //     });
-
-            //     // svg.call(tip);
-            // }
         });
-
-
-
-        function type(d) {
-            d.females = +d.females;
-            return d;
-        }
 
 
 
