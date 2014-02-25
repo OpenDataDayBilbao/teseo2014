@@ -4,30 +4,28 @@
 
 {% block content %}
 
-        <div id="chart"></div>
+    <form class="form-inline" role="form">
+        <div class="radio">
+            <label>
+                <input type="radio" name="optionsRadios" id="females" value="" checked>
+                Mujeres
+            </label>
+        </div>
+        <div class="radio">
+            <label>
+                <input type="radio" name="optionsRadios" id="males" value="">
+                Hombres
+            </label>
+        </div>
+        <div class="radio">
+            <label>
+                <input type="radio" name="optionsRadios" id="both" value="">
+                Ambos
+            </label>
+        </div>
+    </form>
 
-        <form class="form-inline" role="form">
-            <div class="radio">
-                <label>
-                    <input type="radio" name="optionsRadios" id="females" value="" checked>
-                    Mujeres
-                </label>
-            </div>
-            <div class="radio">
-                <label>
-                    <input type="radio" name="optionsRadios" id="males" value="">
-                    Hombres
-                </label>
-            </div>
-            <div class="radio">
-                <label>
-                    <input type="radio" name="optionsRadios" id="both" value="">
-                    Ambos
-                </label>
-            </div>
-        </form>
-
-        <div id="svg"></div>
+    <div id="svg" class="centered"></div>
 
 {% endblock %}
 
@@ -36,8 +34,9 @@
 {% block scripts %}
 
     <script type="text/javascript" src="{{ url_for('static', filename='js/d3.min.js') }}"></script>
-    <script type="text/javascript" src="{{ url_for('static', filename='js/handlebars-v1.3.0.js') }}"></script>
     <script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
+
+    <script type="text/javascript" src="{{ url_for('static', filename='js/handlebars-v1.3.0.js') }}"></script>
 
     {% raw %}
     <script id="total-tooltip-template" type="text/x-handlebars-template">
@@ -74,8 +73,10 @@
     {% endraw %}
 
     <script>
-        var margin = {top: 40, right: 20, bottom: 30, left: 60},
-            width = 1300 - margin.left - margin.right,
+        var page_width = $(".container").width();
+
+        var margin = {top: 40, right: 20, bottom: 30, left: 50},
+            width = page_width - margin.left - margin.right,
             height = 500 - margin.top - margin.bottom;
 
         var year_format = d3.time.format("%y");
@@ -92,7 +93,7 @@
             .scale(yScale)
             .orient("left");
 
-        var svg = d3.select("body").append("svg")
+        var svg = d3.select("#svg").append("svg")
             .attr("width", width + margin.left + margin.right)
             .attr("height", height + margin.top + margin.bottom)
             .append("g")

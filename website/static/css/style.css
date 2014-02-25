@@ -75,19 +75,24 @@ body {
 
 .container {
     width: auto;
-    max-width: 1200px;
-    padding: 0 15px;
+    padding: 0 2.5em;
 }
 
 .container .text-muted {
     margin: 20px 0;
 }
 
+.centered {
+    text-align: center;
+}
 
+.form-inline {
+    float: right;
+}
 
-
-
-
+.form-inline > div {
+    margin: 0 1em;
+}
 
 
 
