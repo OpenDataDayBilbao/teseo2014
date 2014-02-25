@@ -1,4 +1,4 @@
-{% extends "index.html" %}
+{% extends "base.html" %}
 
 
 
@@ -6,11 +6,301 @@
 
         <div id="chart"></div>
 
+        <form class="form-horizontal" role="form">
+            <div class="radio">
+                <label>
+                    <input type="radio" name="optionsRadios" id="females" value="" checked>
+                    Mujeres
+                </label>
+            </div>
+            <div class="radio">
+                <label>
+                    <input type="radio" name="optionsRadios" id="males" value="">
+                    Hombres
+                </label>
+            </div>
+            <div class="radio">
+                <label>
+                    <input type="radio" name="optionsRadios" id="both" value="">
+                    Ambos
+                </label>
+            </div>
+        </form>
+
 {% endblock %}
 
 
 
 {% block scripts %}
+
+    <script type="text/javascript" src="{{ url_for('static', filename='js/d3.min.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/handlebars-v1.3.0.js') }}"></script>
+    <script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
+
+    {% raw %}
+    <script id="tooltip-template" type="text/x-handlebars-template">
+        <h1>Año {{ year }}</h1>
+
+        <p class="genders">
+            &emsp;<i class="fa fa-female"></i>&emsp;{{ females }}
+            <br>
+            &emsp;<i class="fa fa-male"></i>&emsp;{{ males }}
+            <br>
+            &emsp;<i class="fa fa-question"></i>&emsp;{{ none }}
+        </p>
+
+        <p>
+            <strong>Total:</strong>&emsp;{{ total }}
+        </p>
+    </script>
+    {% endraw %}
+
+    <script>
+        var margin = {top: 40, right: 20, bottom: 30, left: 50},
+            width = 1300 - margin.left - margin.right,
+            height = 500 - margin.top - margin.bottom;
+
+        var x = d3.scale.ordinal().rangeRoundBands([0, width], .1);
+
+        var y = d3.scale.linear().range([height, 0]);
+
+        var xAxis = d3.svg.axis()
+            .scale(x)
+            .orient("bottom");
+
+        var yAxis = d3.svg.axis()
+            .scale(y)
+            .orient("left");
+
+        var svg = d3.select("body").append("svg")
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", height + margin.top + margin.bottom)
+            .append("g")
+            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+        var data = [];
+        $.getJSON("{{ url_for('static', filename='data/processed_data/genders_total.json') }}", function(json) {
+            for (var element in json) {
+
+                if (element > 1976) {
+                    var data_obj = {
+                        "year": element,
+                        "none": json[element]["None"],
+                        "females": json[element]["female"],
+                        "males": json[element]["male"]
+                    };
+                    data.push(data_obj);
+                };
+
+            }
+
+            x.domain(data.map(function(d) { return d.year; }));
+            y.domain([0, d3.max(data, function(d) { return d.females + d.males + d.none; }) + 50]);
+
+            svg.append("g")
+                .attr("class", "x axis")
+                .attr("transform", "translate(0," + height + ")")
+                .call(xAxis);
+
+            svg.append("g")
+                .attr("class", "y axis")
+                .call(yAxis)
+                .append("text")
+                    .attr("transform", "rotate(-90)")
+                    .attr("y", 6)
+                    .attr("dy", ".71em")
+                    .style("text-anchor", "end")
+                    .text("Theses");
+
+            drawData("females");
+
+            $('.form-horizontal').change(function() {
+                if ($("#males").is(':checked')) {
+                    drawData("males");
+                }
+                else if ($("#females").is(':checked')) {
+                    drawData("females");
+                }
+                else {
+                    drawData("both");
+                }
+            });
+
+            function drawData(variable) {
+                var color = null;
+
+                if (variable == "females") {
+                    color = 'pink';
+                }
+                else if (variable == "males") {
+                    color = 'lightblue';
+                }
+                else {
+                    color = 'orange';
+                }
+
+                svg.selectAll(".bar")
+                    .remove();
+
+                var tip = d3.tip()
+                    .attr('class', 'd3-tip')
+                    .offset([-10, 0])
+                    .html(function(d) {
+                        var template_source = $('#tooltip-template').html();
+                        var template = Handlebars.compile(template_source);
+                        var tooltip_data = {
+                            year: d.year,
+                            females: d.females,
+                            males: d.males,
+                            none: d.none,
+                            total: d.females + d.males + d.none
+                        }
+                        console.log(tooltip_data);
+                        return template(tooltip_data);
+                        // return "<strong>" + variable + ":</strong> <span style='color:red'>" + 40*2 + "</span>";
+                    });
+
+                svg.call(tip);
+
+                svg.selectAll("line.horizontalGrid")
+                    .data(y.ticks(4))
+                    .enter().append("line")
+                        .attr({
+                            "class":"horizontalGrid",
+                            "x1" : margin.right,
+                            "x2" : width,
+                            "y1" : function(d){ return y(d);},
+                            "y2" : function(d){ return y(d);},
+                            "fill" : "none",
+                            "shape-rendering" : "crispEdges",
+                            "stroke" : "#ccc",
+                            "stroke-width" : "1px"
+                        });
+
+                svg.selectAll(".bar")
+                    .data(data)
+                    .enter().append("rect")
+                        .attr("class", "bar")
+                        .attr("style", "fill: " + color)
+                        .attr("x", function(d) { return x(d.year); })
+                        .attr("width", x.rangeBand())
+                        .attr("y", function(d) {
+                            if (variable == "both")
+                                return y(d.females + d.males + d.none);
+                            else
+                                return y(d[String(variable)]);
+                        })
+                        .attr("height", function(d) {
+                            if (variable == "both")
+                                return height - y(d.females + d.males + d.none);
+                            else
+                                return height - y(d[String(variable)]);
+                        })
+                        .on('mouseover', tip.show)
+                        .on('mouseout', tip.hide);
+                };
+
+            // var sortTimeout = setTimeout(function() {
+            //     d3.select("input").property("checked", true).each(change);
+            // }, 2000);
+
+            // function change() {
+            //     clearTimeout(sortTimeout);
+
+            //     // Copy-on-write since tweens are evaluated after a delay.
+            //     var x0 = x.domain(data.sort(this.checked
+            //         ? function(a, b) { return b.females - a.females; }
+            //         : function(a, b) { return d3.ascending(a.year, b.year); })
+            //         .map(function(d) { return d.year; }))
+            //         .copy();
+
+            //     var transition = svg.transition().duration(750),
+            //         delay = function(d, i) { return i * 50; };
+
+            //     transition.selectAll(".bar")
+            //         .delay(delay)
+            //         .attr("x", function(d) { return x0(d.year); });
+
+            //     transition.select(".x.axis")
+            //         .call(xAxis)
+            //       .selectAll("g")
+            //         .delay(delay);
+            // }
+
+            // var showGenders = setTimeout(function() {
+            //     d3.select("#genders").property("checked", true).each(change2);
+            // }, 5000);
+
+            // function change2() {
+            //     clearTimeout(showGenders);
+
+            //     // Copy-on-write since tweens are evaluated after a delay.
+            //     // var x0 = x.domain(data.sort(this.checked
+            //     //     ? function(a, b) { return b.females - a.females; }
+            //     //     : function(a, b) { return d3.ascending(a.year, b.year); })
+            //     //     .map(function(d) { return d.year; }))
+            //     //     .copy();
+
+            //     // var transition = svg.transition().duration(750),
+            //     //     delay = function(d, i) { return i * 50; };
+
+            //     // transition.selectAll(".bar")
+            //     //     .delay(delay)
+            //     //     .attr("x", function(d) { return x0(d.year); });
+
+            //     // transition.select(".x.axis")
+            //     //     .call(xAxis)
+            //     //   .selectAll("g")
+            //     //     .delay(delay);
+
+            //     // svg.selectAll(".bar")
+            //     //     .data(data)
+            //     //     .enter().append("rect")
+            //     //         .attr("class", "bar")
+            //     //         .attr("x", function(d) { return x(d.year); })
+            //     //         .attr("width", x.rangeBand())
+            //     //         .attr("y", function(d) { return y(d.males); })
+            //     //         .attr("height", function(d) { return height - y(d.males); })
+            //     //         .on('mouseover', tip.show)
+            //     //         .on('mouseout', tip.hide);
+
+            //     // tip = d3.tip()
+            //     //     .attr('class', 'd3-tip')
+            //     //     .offset([-10, 0])
+            //     //     .html(function(d) {
+            //     //         return "<strong>Males:</strong> <span style='color:blue'>" + d.males + "</span>";
+            //     //     });
+
+            //     // svg.call(tip);
+            // }
+        });
+
+
+
+        function type(d) {
+            d.females = +d.females;
+            return d;
+        }
+
+
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     <script type="text/javascript" src="{{ url_for('static', filename='js/gcharts.js') }}"></script>
 

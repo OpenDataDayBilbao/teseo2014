@@ -25,11 +25,15 @@
 }
 
 .fa-female {
-    color: #ffa3b1;
+    color: pink;
 }
 
 .fa-male {
-    color: #4d6df3;
+    color: lightblue;
+}
+
+.fa-question {
+    color: orange;
 }
 
 .page-header {
@@ -77,4 +81,74 @@ body {
 
 .container .text-muted {
     margin: 20px 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.x.axis path {
+  display: none;
+}
+
+.d3-tip {
+    line-height: 1;
+    padding: 1.5em;
+    background: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    border-radius: 1em;
+    text-align: center;
+}
+
+/* Creates a small triangle extender for the tooltip */
+.d3-tip:after {
+  box-sizing: border-box;
+  display: inline;
+  font-size: 1.5em;
+  width: 100%;
+  line-height: 1;
+  color: rgba(0, 0, 0, 0.8);
+  content: "\25BC";
+  position: absolute;
+}
+
+/* Style northward tooltips differently */
+.d3-tip.n:after {
+  margin: -1px 0 0 0;
+  top: 100%;
+  left: 0;
+}
+
+.d3-tip > h1 {
+    font-size: 2em;
+    font-weight: bold;
+    margin: 0.3em;
+    text-align: center;
+    border-bottom: 3px double white;
+}
+
+.d3-tip > p.genders {
+    text-align: left;
+}
+
+.d3-tip > p {
+    font-size: 1.25em;
+    line-height: 1.5em;
+    text-align: center;
 }
