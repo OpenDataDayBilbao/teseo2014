@@ -125,12 +125,9 @@
                 .attr("class", "yaxis")
                 .call(yAxis)
                 .append("text")
-                    .attr("transform", "rotate(-90)")
-                    .attr("y", 6)
+                    .attr("y", -35)
                     .attr("dy", ".71em")
-                    .attr("class", "yaxis-text")
-                    .style("text-anchor", "end")
-                    .text("Theses");
+                    .attr("class", "yaxis-text");
 
             drawData("females");
 
@@ -164,7 +161,7 @@
                     .orient("left");
 
                 d3.select(".yaxis")
-                    .transition().duration(1000).ease("sin-in-out")  // https://github.com/mbostock/d3/wiki/Transitions#wiki-d3_ease
+                    .transition().duration(1000).ease("quad")  // https://github.com/mbostock/d3/wiki/Transitions#wiki-d3_ease
                     .call(yAxis);
 
                 var tip = d3.tip()
@@ -186,14 +183,14 @@
                 svg.call(tip);
 
                 svg.selectAll("line.horizontalGrid")
-                    .data(yScale.ticks(4))
+                    .data(yScale.ticks())
                     .enter().append("line")
                         .attr({
                             "class":"horizontalGrid",
-                            "x1" : margin.right,
+                            "x1" : -5,
                             "x2" : width,
-                            "y1" : function(d){ return yScale(d);},
-                            "y2" : function(d){ return yScale(d);},
+                            "y1" : function(d){ return yScale(d); },
+                            "y2" : function(d){ return yScale(d); },
                             "fill" : "none",
                             "shape-rendering" : "crispEdges",
                             "stroke" : "#ccc",
@@ -206,6 +203,8 @@
                     .attr('class', 'bar')
                     .on('mouseover', tip.show)
                     .on('mouseout', tip.hide);
+
+                b.call(tip);
 
                 b.append("rect")
                     .attr("x", function(d) { return xScale(new Date(d.year, 01, 01)); })
@@ -242,14 +241,14 @@
                     return bigger;
                 })]);
 
-                $(".yaxis-text").text("% por género");
+                $(".yaxis-text").text("Nº total de tesis");
 
                 yAxis = d3.svg.axis()
                     .scale(yScale)
                     .orient("left");
 
                 d3.select(".yaxis")
-                    .transition().duration(1500).ease("sin-in-out")  // https://github.com/mbostock/d3/wiki/Transitions#wiki-d3_ease
+                    .transition().duration(1000).ease("quad")  // https://github.com/mbostock/d3/wiki/Transitions#wiki-d3_ease
                     .call(yAxis);
 
                 var color = null;
@@ -278,14 +277,14 @@
                 svg.call(tip);
 
                 svg.selectAll("line.horizontalGrid")
-                    .data(yScale.ticks(4))
+                    .data(yScale.ticks())
                     .enter().append("line")
                         .attr({
                             "class":"horizontalGrid",
-                            "x1" : margin.right,
+                            "x1" : -5,
                             "x2" : width,
-                            "y1" : function(d){ return yScale(d);},
-                            "y2" : function(d){ return yScale(d);},
+                            "y1" : function(d){ return yScale(d); },
+                            "y2" : function(d){ return yScale(d); },
                             "fill" : "none",
                             "shape-rendering" : "crispEdges",
                             "stroke" : "#ccc",
