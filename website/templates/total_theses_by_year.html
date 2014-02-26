@@ -188,7 +188,7 @@
                     .orient("left");
 
                 d3.select(".yaxis")
-                    .transition().duration(1000).ease("quad")  // https://github.com/mbostock/d3/wiki/Transitions#wiki-d3_ease
+                    .transition().duration(1000).ease("quad")
                     .call(yAxis);
 
                 var tip = d3.tip()
@@ -335,98 +335,8 @@
                         .style("fill", color)
                         .attr("y", function(d) { return yScale(d[String(variable)]); })
                         .attr("height", function(d) { return height - yScale(d[String(variable)]); });
-                };
-
-            // var sortTimeout = setTimeout(function() {
-            //     d3.select("input").property("checked", true).each(change);
-            // }, 2000);
-
-            // function change() {
-            //     clearTimeout(sortTimeout);
-
-            //     // Copy-on-write since tweens are evaluated after a delay.
-            //     var x0 = x.domain(data.sort(this.checked
-            //         ? function(a, b) { return b.females - a.females; }
-            //         : function(a, b) { return d3.ascending(a.year, b.year); })
-            //         .map(function(d) { return d.year; }))
-            //         .copy();
-
-            //     var transition = svg.transition().duration(750),
-            //         delay = function(d, i) { return i * 50; };
-
-            //     transition.selectAll(".bar")
-            //         .delay(delay)
-            //         .attr("x", function(d) { return x0(d.year); });
-
-            //     transition.select(".x.axis")
-            //         .call(xAxis)
-            //       .selectAll("g")
-            //         .delay(delay);
-            // }
+            };
         });
-
-
-
-</script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <script type="text/javascript" src="{{ url_for('static', filename='js/gcharts.js') }}"></script>
-
-    <script type="text/javascript">
-        google.load("visualization", "1", {packages:["corechart"]});
-        google.setOnLoadCallback(drawChart);
-
-        function drawChart() {
-            var dataTable = new google.visualization.DataTable();
-
-            dataTable.addColumn('string', 'Year');
-            dataTable.addColumn('number', 'Nº de tesis');
-
-            var gender_json;
-            $.getJSON("static/data/processed_data/genders_total.json", function(json) {
-                gender_json = json;
-
-                for (var element in gender_json) {
-                    var number = gender_json[element];
-                    var total_per_year = number.None + number.male + number.female;
-
-                    if (! isNaN(total_per_year)) {
-                        dataTable.addRow([String(element), total_per_year]);
-                    }
-                }
-
-                var options = {
-                    title: 'Número total de tesis por año',
-                    width: 850,
-                    height: 450,
-                    hAxis: {
-                        title: 'Año',
-                    },
-                    yAxis: {
-                        title: 'Nº de tesis',
-                    },
-                    colors: ['blue'],
-                    dataOpacity: 0.75,
-                };
-
-                var chart = new google.visualization.ColumnChart(document.getElementById('chart')).draw(dataTable, options);
-            });
-        }
     </script>
 
 {% endblock %}
