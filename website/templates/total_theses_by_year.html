@@ -15,11 +15,25 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title" id="myModalLabel">Información sobre el gráfico</h4>
+                    <h4 class="modal-title" id="myModalLabel">Chart information</h4>
                 </div>
 
                 <div class="modal-body">
-                    ...
+                    <p>
+                        This chart shows the total number of dissertations by gender registered in Spain since 1977.
+                    </p>
+
+                    <p>
+                        The user can compare the gender distribution filtering the information through the radio buttons. When hovering over each bar, a tooltip with extra information shows up.
+                    </p>
+
+                    <p>
+                        To calculate the presence of each gender in the total number of theses, the number of gender-unknown authors (marked as <i class="fa fa-question"></i>) is deducted from that year's total count. This could lead to data misinterpretations, as some data are missing in the analysis.
+                    </p>
+
+                    <p>
+                        Improving the gender desambiguation could lead to more realistic results.
+                    </p>
                 </div>
 
                 <div class="modal-footer">
@@ -33,19 +47,19 @@
         <div class="radio">
             <label>
                 <input type="radio" name="optionsRadios" id="females" value="" checked>
-                Mujeres
+                Females
             </label>
         </div>
         <div class="radio">
             <label>
                 <input type="radio" name="optionsRadios" id="males" value="">
-                Hombres
+                Males
             </label>
         </div>
         <div class="radio">
             <label>
                 <input type="radio" name="optionsRadios" id="both" value="">
-                Ambos
+                Both
             </label>
         </div>
     </form>
@@ -65,7 +79,7 @@
 
     {% raw %}
     <script id="total-tooltip-template" type="text/x-handlebars-template">
-        <h1>Año {{ year }}</h1>
+        <h1>Year {{ year }}</h1>
 
         <p class="genders">
             &emsp;<i class="fa fa-female"></i>&emsp;{{ females }}
@@ -83,7 +97,7 @@
 
     {% raw %}
     <script id="percentage-tooltip-template" type="text/x-handlebars-template">
-        <h1>Año {{ year }}</h1>
+        <h1>Year {{ year }}</h1>
 
         <p class="genders">
             &emsp;<i class="fa fa-female"></i>&emsp;{{ females }} %
@@ -92,7 +106,7 @@
         </p>
 
         <p>
-            {{ total }} tesis registradas
+            {{ total }} registered theses
         </p>
     </script>
     {% endraw %}
@@ -181,7 +195,7 @@
 
                 yScale.domain([0, 100]);
 
-                $(".yaxis-text").text("% por género");
+                $(".yaxis-text").text("gender presence (%)");
 
                 yAxis = d3.svg.axis()
                     .scale(yScale)
@@ -270,7 +284,7 @@
                     return bigger;
                 })]);
 
-                $(".yaxis-text").text("Nº total de tesis");
+                $(".yaxis-text").text("Total number of theses");
 
                 yAxis = d3.svg.axis()
                     .scale(yScale)
