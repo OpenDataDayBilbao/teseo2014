@@ -101,6 +101,11 @@ def evolution_topic_comparison(topic_1, topic_2):
 #     return render_template("topic_analysis/topic_list.html", topics=topics)
 
 
+@app.route('/topic_evolution/')
+def topic_evolution():
+    return render_template("topic_analysis/single_evolution.html")
+
+
 @app.route('/gender_by_topic/<min_year>/<max_year>')
 def gender_by_topic(min_year, max_year):
     return render_template("gender_analysis_by_topics.html", min_year=min_year, max_year=max_year)
