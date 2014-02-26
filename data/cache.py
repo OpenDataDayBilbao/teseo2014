@@ -5,11 +5,18 @@ Created on Tue Feb 18 11:29:20 2014
 @author: aitor
 """
 
-import pickle
+# Own stuff imports
 import gender
+import thesaurus
+from teseo_model import Descriptor
+
+# Library imports
+import pickle
 import difflib
 import math
 import os
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
 
 base_dir = os.path.dirname(os.path.abspath(__file__))
 
@@ -177,28 +184,46 @@ def check_similar_names():
 
     return repeated
 
-
 def load_descriptor_codes():
     with open( base_dir + "/cache/descriptor_codes.p", "rb" ) as infile:
         result = pickle.load(infile)
     return result
 
 def load_codes_descriptor():
-    with open( base_dir + "/cache/descriptor_codes.p", "rb" ) as infile:
+    with open( base_dir + "/cache/codes_descriptor.p", "rb" ) as infile:
         result = pickle.load(infile)
+    return result
 
-    inverted_result = {}
-    for name in result:
-        code = result[name]
-        inverted_result[code] = name
+def save_descriptor_codes():
+    config = load_config
 
-    return inverted_result
+    # Load from DB
+    engine = create_engine('mysql://%s:%s@%s/%s?charset=utf8' % (config['user'], config['password'], config['host'], config['database']))
 
+    Session = sessionmaker(bind=engine)
+    session = Session()
 
+    # Load all descriptors in DB
+    db_descriptors = []
+    for descriptor in session.query(Descriptor).distinct(Descriptor.text):
+        db_descriptors.append(descriptor.text)
 
+    # Search each descriptor in Unesco thesaurus making posts to Teseo
+    db_descriptors_len = str(len(db_descriptors))
+    descriptor_codes = {}
+    codes_descriptor = {}
+    for i, descriptor in enumerate(db_descriptors):
+        print '%s/%s - %s' % (str(i), db_descriptors_len, descriptor)
+        unesco_code = thesaurus.search_in_unesco_thesaurus(descriptor=descriptor.encode('utf-8'))
+        descriptor_codes[descriptor] = unesco_code
+        codes_descriptor[unesco_code] = descriptor
 
+    # Harcoded ones (not found in Teseo for character limitation or other problems)
+    descriptor_codes['LUZ'] = '220911'
+    codes_descriptor['220911'] = 'LUZ'
 
-
+    pickle.dump( descriptor_codes, open( base_dir + '/cache/descriptor_codes.p', 'wb' ) )
+    pickle.dump( codes_descriptor, open( base_dir + '/cache/codes_descriptor.p', 'wb' ) )
 
 
 
