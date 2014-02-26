@@ -1,14 +1,8 @@
 # -*- coding: utf-8 -*-
 
-from teseo_model import Descriptor #, Thesis
-
-from sqlalchemy import create_engine #, func, and_
-from sqlalchemy.orm import sessionmaker
-
 import urllib
 import urllib2
 import cookielib
-import pickle
 
 from bs4 import BeautifulSoup
 
@@ -65,58 +59,3 @@ def search_in_unesco_thesaurus(code = None, descriptor = None):
         return None
     except:
         return None
-
-
-if __name__ == '__main__':
-    USER = ''
-    PASS = ''
-    DB_NAME = ''
-    DB_HOST = ''
-
-    # Descriptors from DB
-    try:
-        # Load from pickle
-        db_descriptors = pickle.load( open( 'cache/db_descriptors_no_slug.p', 'rb' ) )
-    except:
-        # Load from DB
-        engine = create_engine('mysql://%s:%s@%s/%s?charset=utf8' % (USER, PASS, DB_HOST, DB_NAME))
-
-        Session = sessionmaker(bind=engine)
-        session = Session()
-        db_descriptors = []
-        for descriptor in session.query(Descriptor).distinct(Descriptor.text):
-            db_descriptors.append(descriptor.text)
-        pickle.dump( db_descriptors, open( 'cache/db_descriptors_no_slug.p', 'wb' ) )
-
-    # Dictionary with Descriptor - Unesco Code relationships
-    try:
-        # Load from pickle
-        descriptor_codes = pickle.load( open( 'cache/descriptor_codes.p', 'rb' ) )
-        code_descriptor = pickle.load( open( 'cache/code_descriptor.p', 'rb' ) )
-
-        # Harcoded ones (not found in Teseo for character limitation or other problems)
-        descriptor_codes['LUZ'] = '220911' if not descriptor_codes['LUZ'] else descriptor_codes['LUZ']
-        pickle.dump( descriptor_codes, open( 'cache/descriptor_codes.p', 'wb' ) )
-
-        code_descriptor['220911'] = 'LUZ'
-        pickle.dump( code_descriptor, open( 'cache/code_descriptor.p', 'wb' ) )
-    except:
-        # Make posts to Teseo
-        db_descriptors_len = str(len(db_descriptors))
-        descriptor_codes = {}
-        code_descriptor = {}
-        for i, descriptor in enumerate(db_descriptors):
-            print '%s/%s - %s' % (str(i), db_descriptors_len, descriptor)
-            unesco_code = search_in_unesco_thesaurus(descriptor=descriptor.encode('utf-8'))
-            descriptor_codes[descriptor] = unesco_code
-            code_descriptor[unesco_code] = descriptor
-
-        # Harcoded ones (not found in Teseo for character limitation or other problems)
-        descriptor_codes['LUZ'] = '220911' if not descriptor_codes['LUZ'] else descriptor_codes['LUZ']
-        code_descriptor['220911'] = 'LUZ'
-
-        pickle.dump( descriptor_codes, open( 'cache/descriptor_codes.p', 'wb' ) )
-        pickle.dump( code_descriptor, open( 'cache/code_descriptor.p', 'wb' ) )
-
-    print len(descriptor_codes)
-    print len(code_descriptor)
