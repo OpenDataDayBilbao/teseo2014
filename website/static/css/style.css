@@ -25,7 +25,7 @@
 }
 
 .fa-female {
-    color: #ffa3b1;
+    color: #ff69b4;
 }
 
 .fa-male {
@@ -110,10 +110,6 @@ body {
 
 .x.axis path {
   display: none;
-}
-
-.bar {
-    opacity: 0.75;
 }
 
 .d3-tip {

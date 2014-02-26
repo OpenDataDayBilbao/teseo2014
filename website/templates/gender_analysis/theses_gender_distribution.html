@@ -5,7 +5,7 @@
 {% block content %}
 
     <!-- Button trigger modal -->
-    <button class="btn btn-default" data-toggle="modal" data-target="#info-modal">
+    <button class="btn btn-info" data-toggle="modal" data-target="#info-modal">
         <i class="fa fa-info"></i>
     </button>
 
@@ -59,7 +59,7 @@
         <div class="radio">
             <label>
                 <input type="radio" name="optionsRadios" id="both" value="">
-                Both
+                Percentage
             </label>
         </div>
     </form>
@@ -114,7 +114,7 @@
     <script>
         var page_width = $(".container").width();
 
-        var margin = {top: 40, right: 20, bottom: 30, left: 50},
+        var margin = {top: 40, right: 50, bottom: 30, left: 50},
             width = page_width - margin.left - margin.right,
             height = 500 - margin.top - margin.bottom;
 
@@ -162,12 +162,12 @@
                 .call(xAxis);
 
             svg.append("g")
-                .attr("class", "yaxis")
+                .attr("class", "y axis y-left")
                 .call(yAxis)
                 .append("text")
                     .attr("y", -35)
                     .attr("dy", ".71em")
-                    .attr("class", "yaxis-text");
+                    .attr("class", "y-left-text");
 
             drawData("females");
 
@@ -192,18 +192,43 @@
             function drawTotal() {
 
                 svg.selectAll('.bar').remove();
+                svg.selectAll('.bars').remove();
 
                 yScale.domain([0, 100]);
 
-                $(".yaxis-text").text("gender presence (%)");
+                $(".y-left-text").text("female presence (%)");
 
                 yAxis = d3.svg.axis()
                     .scale(yScale)
                     .orient("left");
 
-                d3.select(".yaxis")
+                d3.select(".y-left")
                     .transition().duration(1000).ease("quad")
+                    .style("fill", "#ff69b4")
                     .call(yAxis);
+
+                var yScale2 = d3.scale.linear().range([height, 0]);
+                yScale2.domain([100, 0]);
+
+                var yAxis2 = d3.svg.axis()
+                    .scale(yScale2)
+                    .orient("right");
+
+                svg.append("g")
+                    .attr("class", "y axis y-right")
+                    .attr("transform", "translate(" + width + ", 0)")
+                    .style("fill", "#4d6df3")
+                    .append("text")
+                        .attr("x", -120)
+                        .attr("y", -35)
+                        .attr("dy", ".71em")
+                        .attr("class", "y-right-text");
+
+                d3.select(".y-right")
+                    .transition().duration(1000).ease("quad")
+                    .call(yAxis2);
+
+                $(".y-right-text").text("male presence (%)");
 
                 var tip = d3.tip()
                     .attr('class', 'd3-tip')
@@ -223,28 +248,11 @@
 
                 svg.call(tip);
 
-                svg.selectAll("line.horizontalGrid")
-                    .data(yScale.ticks())
-                    .enter().append("line")
-                        .attr({
-                            "class":"horizontalGrid",
-                            "x1" : -5,
-                            "x2" : width,
-                            "y1" : function(d){ return yScale(d); },
-                            "y2" : function(d){ return yScale(d); },
-                            "fill" : "none",
-                            "shape-rendering" : "crispEdges",
-                            "stroke" : "#ccc",
-                        })
-                        .attr("stroke-width", function(d, i) {
-                            return (i == 5) ? "3px" : "1px";
-                        });
-
                 var b = svg.selectAll(".bar").data(data);
 
                 b.enter().append('g')
                     .attr('class', 'bar')
-                    .on('mouseover', tip.show)
+                   . on('mouseover', tip.show)
                     .on('mouseout', tip.hide);
 
                 b.call(tip);
@@ -255,8 +263,8 @@
                     .attr("y", function(d) { return height; })
                     .attr("height", function(d) { return 0; })
                     .transition().duration(1000).ease("quad")
-                        .style("fill-opacity", 1)
-                        .style("fill", "#ffa3b1")
+                        .style("fill-opacity", 0.75)
+                        .style("fill", "#ff69b4")
                         .attr("y", function(d) { return yScale(d.females / (d.females + d.males) * 100); })
                         .attr("height", function(d) { return height - yScale(d.females / (d.females + d.males) * 100); });
 
@@ -266,10 +274,27 @@
                     .attr("y", function(d) { return height; })
                     .attr("height", function(d) { return 0; })
                     .transition().duration(1000).ease("quad")
-                        .style("fill-opacity", 1)
+                        .style("fill-opacity", 0.75)
                         .style("fill", "#4d6df3")
                         .attr("y", function(d) { return 0; })
                         .attr("height", function(d) { return height - yScale(d.males / (d.females + d.males) * 100); });
+
+                svg.selectAll("line.horizontalGrid")
+                    .data(yScale.ticks())
+                    .enter().append("line")
+                        .attr({
+                            "class":"horizontalGrid",
+                            "x1" : 0,
+                            "x2" : width,
+                            "y1" : function(d){ return yScale(d); },
+                            "y2" : function(d){ return yScale(d); },
+                            "fill" : "none",
+                            "shape-rendering" : "crispEdges",
+                            "stroke" : "#ccc",
+                        })
+                        .attr("stroke-width", function(d, i) {
+                            return (i == 5) ? "3px" : "1px";
+                        });
             }
 
             function drawData(variable) {
@@ -278,26 +303,25 @@
                     svg.selectAll('.bar').remove();
                 }
 
-                yScale.domain([0, d3.max(data, function(d) {
-                    var bigger = (d.females > d.males) ? d.females : d.males;
-                    bigger = Math.ceil(bigger / 500) * 500;
-                    return bigger;
-                })]);
+                svg.selectAll('.y-right').remove();
 
-                $(".yaxis-text").text("Total number of theses - " + variable);
+                yScale.domain([0, d3.max(data, function(d) { return Math.ceil((d.females + d.males + d.none) / 500) * 500; })]);
+
+                $(".y-left-text").text("Total number of theses - " + variable);
 
                 yAxis = d3.svg.axis()
                     .scale(yScale)
                     .orient("left");
 
-                d3.select(".yaxis")
-                    .transition().duration(1000).ease("quad")  // https://github.com/mbostock/d3/wiki/Transitions#wiki-d3_ease
+                d3.select(".y-left")
+                    .transition().duration(1000).ease("quad")
+                    .style("fill", "black")
                     .call(yAxis);
 
                 var color = null;
 
                 if (variable == "females")
-                    color = '#ffa3b1';
+                    color = '#ff69b4';
                 else
                     color = '#4d6df3';
 
@@ -319,12 +343,39 @@
 
                 svg.call(tip);
 
+                var b = svg.selectAll(".bar").data(data)
+
+                b.enter().append("rect")
+                    .attr("class", "bar")
+                    .attr("x", function(d) { return xScale(new Date(d.year, 01, 01)); })
+                    .attr("width", xScale.rangeBand())
+                    .attr("y", function(d) { return yScale(d.females + d.males + d.none); })
+                    .attr("height", function(d) { return height - yScale(d.females + d.males + d.none); })
+                    .style("fill-opacity", 0.75)
+                    .style("fill", "#cdc5bf")
+                    .on('mouseover', tip.show)
+                    .on('mouseout', tip.hide);
+
+                var bars = svg.selectAll(".bars").data(data)
+
+                bars.enter().append("rect")
+                    .attr("class", "bars")
+                    .attr("x", function(d) { return xScale(new Date(d.year, 01, 01)); })
+                    .attr("width", xScale.rangeBand())
+                    .attr("y", function(d) { return height; })
+                    .attr("height", function(d) { return 0; })
+                bars.transition().duration(1000).ease("quad")
+                    .style("fill-opacity", 1)
+                    .style("fill", color)
+                    .attr("y", function(d) { return yScale(d[String(variable)]); })
+                    .attr("height", function(d) { return height - yScale(d[String(variable)]); });
+
                 svg.selectAll("line.horizontalGrid")
                     .data(yScale.ticks())
                     .enter().append("line")
                         .attr({
                             "class":"horizontalGrid",
-                            "x1" : -5,
+                            "x1" : 0,
                             "x2" : width,
                             "y1" : function(d){ return yScale(d); },
                             "y2" : function(d){ return yScale(d); },
@@ -333,22 +384,6 @@
                             "stroke" : "#ccc",
                             "stroke-width" : "1px"
                         });
-
-                var b = svg.selectAll(".bar").data(data)
-
-                b.enter().append("rect")
-                        .attr("class", "bar")
-                        .attr("x", function(d) { return xScale(new Date(d.year, 01, 01)); })
-                        .attr("width", xScale.rangeBand())
-                        .attr("y", function(d) { return height; })
-                        .attr("height", function(d) { return 0; })
-                        .on('mouseover', tip.show)
-                        .on('mouseout', tip.hide)
-                b.transition().duration(1000).ease("quad")
-                        .style("fill-opacity", 1)
-                        .style("fill", color)
-                        .attr("y", function(d) { return yScale(d[String(variable)]); })
-                        .attr("height", function(d) { return height - yScale(d[String(variable)]); });
             };
         });
     </script>
