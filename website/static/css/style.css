@@ -33,7 +33,7 @@
 }
 
 .fa-question {
-    color: orange;
+    color: #ffa500;
 }
 
 .page-header {
@@ -160,4 +160,8 @@ body {
     font-size: 1.25em;
     line-height: 1.5em;
     text-align: center;
+}
+
+.modal-body > p {
+    text-align: justify;
 }

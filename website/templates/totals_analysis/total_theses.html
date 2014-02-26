@@ -1,0 +1,181 @@
+{% extends "base.html" %}
+
+
+
+{% block content %}
+
+    <!-- Button trigger modal -->
+    <button class="btn btn-default" data-toggle="modal" data-target="#info-modal">
+        <i class="fa fa-info"></i>
+    </button>
+
+    <!-- Modal -->
+    <div class="modal fade" id="info-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel">Theses gender distribution</h4>
+                </div>
+
+                <div class="modal-body">
+                    <p>
+                        This chart shows the total number of dissertations registered in Spain since 1977, as the records kept by the Spanish Government's Doctoral Theses dissertation database <a target="_blank" href="https://www.educacion.gob.es/teseo/">Teseo</a>.
+                    </p>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="svg" class="centered"></div>
+
+{% endblock %}
+
+
+
+{% block scripts %}
+
+    <script type="text/javascript" src="{{ url_for('static', filename='js/d3.min.js') }}"></script>
+    <script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
+
+    <script type="text/javascript" src="{{ url_for('static', filename='js/handlebars-v1.3.0.js') }}"></script>
+
+    {% raw %}
+    <script id="total-tooltip-template" type="text/x-handlebars-template">
+        <h1>Year {{ year }}</h1>
+
+        <p class="genders">
+            &emsp;<i class="fa fa-female"></i>&emsp;{{ females }}
+            <br>
+            &emsp;<i class="fa fa-male"></i>&emsp;{{ males }}
+            <br>
+            &emsp;<i class="fa fa-question"></i>&emsp;{{ none }}
+        </p>
+
+        <p>
+            <strong>Total:</strong>&emsp;{{ total }}
+        </p>
+    </script>
+    {% endraw %}
+
+    <script>
+        var page_width = $(".container").width();
+
+        var margin = {top: 40, right: 20, bottom: 30, left: 50},
+            width = page_width - margin.left - margin.right,
+            height = 500 - margin.top - margin.bottom;
+
+        var year_format = d3.time.format("%y");
+
+        var xScale = d3.scale.ordinal().rangeRoundBands([0, width], .1);
+        var yScale = d3.scale.linear().range([height, 0]);
+
+        var xAxis = d3.svg.axis()
+            .scale(xScale)
+            .orient("bottom")
+            .tickFormat(year_format);
+
+        var yAxis = d3.svg.axis()
+            .scale(yScale)
+            .orient("left");
+
+        var svg = d3.select("#svg").append("svg")
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", height + margin.top + margin.bottom)
+            .append("g")
+            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+        var data = [];
+        $.getJSON("{{ url_for('static', filename='data/processed_data/genders_total.json') }}", function(json) {
+            for (var element in json) {
+
+                if (element > 1976) {
+                    var data_obj = {
+                        "year": element,
+                        "none": json[element]["None"],
+                        "females": json[element]["female"],
+                        "males": json[element]["male"]
+                    };
+                    data.push(data_obj);
+                };
+
+            }
+
+            xScale.domain(data.map(function(d) { return new Date(d.year, 01, 01); }));
+            yScale.domain([0, d3.max(data, function(d) { return Math.ceil((d.females + d.males + d.none) / 500) * 500; })]);
+
+            svg.append("g")
+                .attr("class", "x axis")
+                .attr("transform", "translate(0," + height + ")")
+                .call(xAxis);
+
+            svg.append("g")
+                .attr("class", "yaxis")
+                .call(yAxis)
+                .append("text")
+                    .attr("y", -35)
+                    .attr("dy", ".71em")
+                    .attr("class", "yaxis-text");
+
+            $(".yaxis-text").text("Total number of theses");
+
+            d3.select(".yaxis")
+                .transition().duration(1000).ease("quad")
+                .call(yAxis);
+
+            var tip = d3.tip()
+                .attr('class', 'd3-tip')
+                .offset([-10, 0])
+                .html(function(d) {
+                    var template_source = $('#total-tooltip-template').html();
+                    var template = Handlebars.compile(template_source);
+                    var tooltip_data = {
+                        year: d.year,
+                        females: d.females,
+                        males: d.males,
+                        none: d.none,
+                        total: d.females + d.males + d.none
+                    }
+                    return template(tooltip_data);
+                });
+
+            svg.call(tip);
+
+            svg.selectAll("line.horizontalGrid")
+                .data(yScale.ticks())
+                .enter().append("line")
+                    .attr({
+                        "class":"horizontalGrid",
+                        "x1" : -5,
+                        "x2" : width,
+                        "y1" : function(d){ return yScale(d); },
+                        "y2" : function(d){ return yScale(d); },
+                        "fill" : "none",
+                        "shape-rendering" : "crispEdges",
+                        "stroke" : "#ccc",
+                        "stroke-width" : "1px"
+                    });
+
+            var b = svg.selectAll(".bar").data(data)
+
+            b.enter().append("rect")
+                    .attr("class", "bar")
+                    .attr("x", function(d) { return xScale(new Date(d.year, 01, 01)); })
+                    .attr("width", xScale.rangeBand())
+                    .attr("y", function(d) { return height; })
+                    .attr("height", function(d) { return 0; })
+                    .on('mouseover', tip.show)
+                    .on('mouseout', tip.hide)
+            b.transition().duration(1000).ease("quad")
+                    .style("fill-opacity", 1)
+                    .style("fill", "#696969")
+                    .attr("y", function(d) { return yScale(d.females + d.males + d.none); })
+                    .attr("height", function(d) { return height - yScale(d.females + d.males + d.none); });
+        });
+    </script>
+
+{% endblock %}
