@@ -28,7 +28,7 @@ def gender_in_panel():
 
 @app.route('/theses_gender_distribution')
 def theses_gender_distribution():
-    return render_template("theses_gender_distribution.html")
+    return render_template("gender_analysis/theses_gender_distribution.html")
 
 
 @app.route('/topics/<min_year>/<max_year>')
