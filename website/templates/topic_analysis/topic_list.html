@@ -1,17 +1,17 @@
-{% extends "index.html" %}
+{% extends "base.html" %}
 
 
 
 {% block content %}
 
-    <h1>Temáticas:</h1>
+    <h1>Topics:</h1>
 
     <br>
 
     <ul>
         {% for topic in topics %}
             <li>
-                <a href="{{ url_for('evolution_topic', topic=topic) }}">{{ topic }}</a>
+                <a href="{{ url_for('topic_evolution', topic=topic) }}">{{ topic }}</a>
             </li>
         {% endfor %}
     </ul>

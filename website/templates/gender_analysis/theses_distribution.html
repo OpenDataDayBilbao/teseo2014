@@ -28,11 +28,7 @@
                     </p>
 
                     <p>
-                        To calculate the presence of each gender in the total number of theses, the number of gender-unknown authors (marked as <i class="fa fa-question"></i>) is deducted from that year's total count. This could lead to data misinterpretations, as some data are missing in the analysis.
-                    </p>
-
-                    <p>
-                        Improving the gender desambiguation could lead to more realistic results.
+                        To calculate the presence of each gender in the total number of theses, the number of gender-unknown authors (marked as <i class="fa fa-question"></i>) is deducted from that year's total count. This could lead to data misinterpretations, as some data are missing in the analysis. Improving the gender desambiguation could lead to more realistic results.
                     </p>
                 </div>
 
@@ -139,7 +135,7 @@
             .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
         var data = [];
-        $.getJSON("{{ url_for('static', filename='data/processed_data/genders_total.json') }}", function(json) {
+        $.getJSON("{{ url_for('static', filename='data/genders_total.json') }}", function(json) {
             for (var element in json) {
 
                 if (element > 1976) {

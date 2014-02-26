@@ -4,7 +4,7 @@
 # all the imports
 from flask import Flask, request, session, g, redirect, url_for, render_template, flash
 import json
-from static.data.cache import codes_descriptor
+# from static.data.cache import codes_descriptor
 
 
 app = Flask(__name__)
@@ -28,7 +28,12 @@ def gender_in_panel():
 
 @app.route('/theses_gender_distribution')
 def theses_gender_distribution():
-    return render_template("gender_analysis/theses_gender_distribution.html")
+    return render_template("gender_analysis/theses_distribution.html")
+
+
+@app.route('/panel_gender_distribution')
+def panel_gender_distribution():
+    return render_template("gender_analysis/panel_distribution.html")
 
 
 @app.route('/topics/<min_year>/<max_year>')
@@ -85,15 +90,15 @@ def evolution_topic_comparison(topic_1, topic_2):
     return render_template("evolution_topic_comparison.html", topic_1=topic_1, topic_2=topic_2)
 
 
-@app.route('/evolution_topic/')
-def evolution_topic_list():
-    topics = []
+# @app.route('/topic_list/')
+# def topic_list():
+#     topics = []
 
-    for key, value in codes_descriptor.items():
-        if str(key)[2:6] == '0000':
-            topics.append(value)
+#     for key, value in codes_descriptor.items():
+#         if str(key)[2:6] == '0000':
+#             topics.append(value)
 
-    return render_template("evolution_topic_list.html", topics=topics)
+#     return render_template("topic_analysis/topic_list.html", topics=topics)
 
 
 @app.route('/gender_by_topic/<min_year>/<max_year>')
