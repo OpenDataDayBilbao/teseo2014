@@ -15,7 +15,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title" id="myModalLabel">Chart information</h4>
+                    <h4 class="modal-title" id="myModalLabel">Theses gender distribution</h4>
                 </div>
 
                 <div class="modal-body">
@@ -284,7 +284,7 @@
                     return bigger;
                 })]);
 
-                $(".yaxis-text").text("Total number of theses");
+                $(".yaxis-text").text("Total number of theses - " + variable);
 
                 yAxis = d3.svg.axis()
                     .scale(yScale)
