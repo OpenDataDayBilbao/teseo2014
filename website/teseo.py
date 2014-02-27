@@ -4,7 +4,7 @@
 # all the imports
 from flask import Flask, request, session, g, redirect, url_for, render_template, flash
 import json
-from static.cache import codes_descriptor
+# from static.cache import codes_descriptor
 
 
 app = Flask(__name__)
@@ -90,15 +90,15 @@ def evolution_topic_comparison(topic_1, topic_2):
     return render_template("evolution_topic_comparison.html", topic_1=topic_1, topic_2=topic_2)
 
 
-@app.route('/topic_list/')
-def topic_list():
-    topics = []
+# @app.route('/topic_list/')
+# def topic_list():
+#     topics = []
 
-    for key, value in codes_descriptor.items():
-        if str(key)[2:6] == '0000':
-            topics.append(value)
+#     for key, value in codes_descriptor.items():
+#         if str(key)[2:6] == '0000':
+#             topics.append(value)
 
-    return render_template("topic_analysis/topic_list.html", topics=topics)
+#     return render_template("topic_analysis/topic_list.html", topics=topics)
 
 
 @app.route('/topic_evolution/')
