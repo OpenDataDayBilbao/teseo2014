@@ -102,7 +102,7 @@ def topic_list():
         if str(key)[2:6] == '0000':
             topics.append(value)
 
-    return render_template("topic_analysis/topic_list.html", topics=topics)
+    return render_template("topic_analysis/topic_list.html", topics=sorted(topics))
 
 
 @app.route('/topic_evolution/')
