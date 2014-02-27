@@ -19,6 +19,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
 base_dir = os.path.dirname(os.path.abspath(__file__))
+base_dir += '/../website/static'
 
 
 def load_config():
