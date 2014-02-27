@@ -3,7 +3,10 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
-from thesaurus_model import Descriptor
+import os, sys
+lib_path = os.path.abspath('../')
+sys.path.append(lib_path)
+from model.thesaurus_model import Descriptor
 
 from rdflib import Graph, URIRef
 

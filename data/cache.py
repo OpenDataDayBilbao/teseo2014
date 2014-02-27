@@ -8,19 +8,20 @@ Created on Tue Feb 18 11:29:20 2014
 # Own stuff imports
 import gender
 import thesaurus
-from teseo_model import Descriptor
+
+import os, sys
+lib_path = os.path.abspath('../')
+sys.path.append(lib_path)
+from model.thesaurus_model import Descriptor
 
 # Library imports
 import pickle
 import difflib
 import math
-import os
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
 base_dir = os.path.dirname(os.path.abspath(__file__))
-base_dir += '/../website/static'
-
 
 def load_config():
 

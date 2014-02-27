@@ -2,9 +2,12 @@
 
 from bs4 import BeautifulSoup
 
-from teseo_model import Thesis, Person, Descriptor, Department
-from teseo_model import University, Advisor, PanelMember
-from teseo_model import Base
+import os, sys
+lib_path = os.path.abspath('../')
+sys.path.append(lib_path)
+from model.teseo_model import Thesis, Person, Descriptor, Department
+from model.teseo_model import University, Advisor, PanelMember
+from model.teseo_model import Base
 
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy import create_engine
@@ -40,23 +43,23 @@ def extract_groups(source_str):
 def scrap_data(file, id):
     soup = BeautifulSoup(file.read().decode('utf-8'))
     data_section = soup.find_all('div', attrs={'class': 'datos-resultado'})
-    
+
     if len(data_section) != 1:
         raise Exception('Error getting data section element')
-    
+
     thesis = Thesis(id)
-    
+
     for field in data_section[0].find_all('li'):
         identifier = field.strong
         if identifier is not None:
             key = unicode(identifier.next).strip().replace(':', '')
-            
+
             if key == u'Dirección':
                 #multiple values
                 for advisor in field.ul.find_all('li'):
                     name, role = extract_groups(clean_str(advisor.next))
                     advisor = Advisor(Person(name), role)
-                    thesis.advisors.append(advisor)                    
+                    thesis.advisors.append(advisor)
             elif key == u'Tribunal':
                 #multiple values
                 for panel_member in field.ul.find_all('li'):
@@ -79,7 +82,7 @@ def scrap_data(file, id):
             	if university is None:
             		university = University(university_name)
 
-            	thesis.university = university            
+            	thesis.university = university
             else:
                 value = clean_str(identifier.next_sibling)
                 if key == u'Título':

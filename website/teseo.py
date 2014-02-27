@@ -4,7 +4,11 @@
 # all the imports
 from flask import Flask, request, session, g, redirect, url_for, render_template, flash
 import json
-# from static.cache import codes_descriptor
+
+import os, sys
+lib_path = os.path.abspath('../')
+sys.path.append(lib_path)
+from data.cache import codes_descriptor
 
 
 app = Flask(__name__)
@@ -38,7 +42,7 @@ def panel_gender_distribution():
 
 @app.route('/topics/<min_year>/<max_year>')
 def topics_by_five_years(min_year, max_year):
-    json_data = open('static/data/processed_data/first_level_areas_temporal.json')
+    json_data = open('static/data/first_level_areas_temporal.json')
     data = json.load(json_data)
     json_data.close
 
@@ -60,7 +64,7 @@ def topics_by_five_years(min_year, max_year):
 
 @app.route('/all_topics/<min_year>/<max_year>')
 def all_topics_by_five_years(min_year, max_year):
-    json_data = open('static/data/processed_data/areas_temporal.json')
+    json_data = open('static/data/areas_temporal.json')
     data = json.load(json_data)
     json_data.close
 
@@ -90,15 +94,15 @@ def evolution_topic_comparison(topic_1, topic_2):
     return render_template("evolution_topic_comparison.html", topic_1=topic_1, topic_2=topic_2)
 
 
-# @app.route('/topic_list/')
-# def topic_list():
-#     topics = []
+@app.route('/topic_list/')
+def topic_list():
+    topics = []
 
-#     for key, value in codes_descriptor.items():
-#         if str(key)[2:6] == '0000':
-#             topics.append(value)
+    for key, value in codes_descriptor.items():
+        if str(key)[2:6] == '0000':
+            topics.append(value)
 
-#     return render_template("topic_analysis/topic_list.html", topics=topics)
+    return render_template("topic_analysis/topic_list.html", topics=topics)
 
 
 @app.route('/topic_evolution/')
