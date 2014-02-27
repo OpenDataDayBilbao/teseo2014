@@ -1,4 +1,4 @@
-{% extends "index.html" %}
+{% extends "base.html" %}
 
 
 
@@ -45,7 +45,7 @@
             dataTable.addColumn('number', 'Male');
 
             var gender_json;
-            $.getJSON("/static/data/processed_data/gender_panel_temporal.json", function(json) {
+            $.getJSON("/static/data/gender_panel_temporal.json", function(json) {
                 gender_json = json;
 
                 for (var element in gender_json) {

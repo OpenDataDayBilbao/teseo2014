@@ -1,4 +1,4 @@
-{% extends "index.html" %}
+{% extends "base.html" %}
 
 
 
@@ -26,7 +26,7 @@
             dataTable.addColumn('number', '{{ topic_2 }}');
 
             var gender_json;
-            $.getJSON("/static/data/processed_data/first_level_areas_temporal.json", function(json) {
+            $.getJSON("/static/data/first_level_areas_temporal.json", function(json) {
                 gender_json = json;
 
                 for (var element in gender_json) {
