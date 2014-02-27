@@ -20,9 +20,9 @@ def index():
     return render_template("index.html")
 
 
-@app.route('/geo_chart')
-def geochart():
-    return render_template("totals_analysis/geo_chart.html")
+@app.route('/theses_geographical_distribution')
+def theses_geographical_distribution():
+    return render_template("totals_analysis/theses_geographical_distribution.html")
 
 
 @app.route('/genero_del_tribunal')

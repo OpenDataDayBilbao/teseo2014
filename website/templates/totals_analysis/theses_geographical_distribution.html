@@ -23,28 +23,20 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title" id="myModalLabel">Theses gender distribution</h4>
+                    <h4 class="modal-title" id="myModalLabel">Theses geographical distribution</h4>
                 </div>
 
                 <div class="modal-body">
                     <p>
-                        This chart shows the panel member's gender distribution from all the doctoral defenses registered in Spain since 1977.
+                        This chart shows the geographical distribution of all the doctoral thesis dissertations registered in Spain since 1977.
                     </p>
 
                     <p>
-                        When hovering over each bar, a tooltip with gender distribution information shows up.
+                        The analysis can be performed over a given range of years, moving the slider to select the desired time frame.
                     </p>
 
                     <p>
-                        Remember that viva panels in Spain are formed by 5 tribunal members.
-                    </p>
-
-                    <p>
-                        To calculate the presence of each gender in those panels, the number of gender-unknown members is deducted from that year's total count. This could lead to data misinterpretations, as some data are missing in the analysis. Improving the gender desambiguation could lead to more realistic results.
-                    </p>
-
-                    <p>
-                        This chart is closely related with the <a href="{{ url_for('theses_gender_distribution') }}">Thesis gender distribution</a> chart.
+                        To assign each dissertation to a Spanish Autonomous Community, the location of the University it belongs to is taken into account. Given the case of a University present in different geographical areas, where its headquarters are located is considered.
                     </p>
                 </div>
 
@@ -55,7 +47,14 @@
         </div>
     </div>
 
+    <br>
+    <br>
+
+    <strong id="min-year">1977</strong>&emsp;
+
     <input id="year-selector" type="text" class="span6" value="" data-slider-min="1977" data-slider-max="2014" data-slider-step="1" data-slider-value="[1977,2014]"/>
+
+    &emsp;<strong id="max-year">2014</strong>
 
     <div id="geo-chart" class="centered"></div>
 
@@ -106,25 +105,30 @@
         google.load('visualization', '1', {'packages': ['geochart']});
         google.setOnLoadCallback(drawRegionsMap);
 
+        console.log("init");
+
         function drawRegionsMap() {
             var dataTable = new google.visualization.DataTable();
 
             dataTable.addColumn('string', 'Region');
             dataTable.addColumn('number', 'Number of theses');
 
-
             var regions_count = [];
 
-            for (var region in regions) {
-                regions_count.push([String(region), 0]);
+            for (var key in regions) {
+                regions_count[String(regions[key])] = 0;
             }
 
             for (var y in _.range(min_year, max_year + 1)) {
                 var count_year = min_year + parseInt(y);
 
                 for (var element in regions_json[String(count_year)]) {
-                    regions_count[String(element)] += regions_json[String(count_year)][String(element)];
+                    regions_count[String(regions[element])] += parseInt(regions_json[String(count_year)][String(element)]);
                 }
+            }
+
+            for (var key in regions) {
+                dataTable.addRow([regions[key] , regions_count[String(regions[key])]]);
             }
 
             var options = {
@@ -150,40 +154,15 @@
                 max_year = range[1];
             }
 
+            $('#min-year').text(min_year);
+            $('#max-year').text(max_year);
+
             drawRegionsMap();
         };
 
         var ys = $('#year-selector').slider()
             .on('slide', yearSelectorChange)
             .data('slider');
-
-
-
-        // d3.xml("{{ url_for('static', filename='spain.svg') }}", "image/svg+xml", function(xml) {
-        //     document.body.appendChild(xml.documentElement);
-        // });
-
-        // // http://en.wikipedia.org/wiki/ISO_3166-2:ES
-
-        // $('#xxx').attr("id","ES-AN");   // Andalucía
-        // $('#xxx').attr("id","ES-AR");   // Aragón
-        // $('#xxx').attr("id","ES-AS");   // Asturias
-        // $('#xxx').attr("id","ES-CN");   // Canarias
-        // $('#xxx').attr("id","ES-CB");   // Cantabria
-        // $('#xxx').attr("id","ES-CM");   // Castilla la Mancha
-        // $('#xxx').attr("id","ES-CL");   // Castilla y León
-        // $('#xxx').attr("id","ES-CT");   // Cataluña
-        // $('#xxx').attr("id","ES-EX");   // Extremadura
-        // $('#xxx').attr("id","ES-GA");   // Galicia
-        // $('#xxx').attr("id","ES-IB");   // Islas Baleares
-        // $('#xxx').attr("id","ES-RI");   // La Rioja
-        // $('#xxx').attr("id","ES-MD");   // Comunidad de Madrid
-        // $('#xxx').attr("id","ES-MC");   // Murcia
-        // $('#xxx').attr("id","ES-NC");   // Navarra
-        // $('#xxx').attr("id","ES-PV");   // País Vasco
-        // $('#xxx').attr("id","ES-VC");   // Comunidad Valenciana
-        // $('#xxx').attr("id","ES-CE");   // Ceuta
-        // $('#xxx').attr("id","ES-ML");   // Melilla
     </script>
 
 {% endblock %}
