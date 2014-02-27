@@ -5,6 +5,8 @@
 from flask import Flask, request, session, g, redirect, url_for, render_template, flash
 import json
 
+from slugify import slugify
+
 import os, sys
 lib_path = os.path.abspath('../')
 sys.path.append(lib_path)
@@ -13,6 +15,11 @@ from data.cache import codes_descriptor
 
 app = Flask(__name__)
 app.config.from_object(__name__)
+
+
+@app.template_filter('slugify')
+def _jinja2_filter_slugify(string):
+    return slugify(string)
 
 
 @app.route('/')
@@ -103,6 +110,17 @@ def topic_list():
             topics.append(value)
 
     return render_template("topic_analysis/topic_list.html", topics=sorted(topics))
+
+
+@app.route('/topic_geographical_distribution')
+def topic_geographical_distribution():
+    topics = []
+
+    for key, value in codes_descriptor.items():
+        if str(key)[2:6] == '0000':
+            topics.append(value)
+
+    return render_template("topic_analysis/topic_geographical_distribution.html", topics=sorted(topics))
 
 
 @app.route('/topic_evolution/')

@@ -1,0 +1,182 @@
+{% extends "base.html" %}
+
+
+
+{% block stylesheets %}
+
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/slider.css') }}">
+
+{% endblock %}
+
+
+
+{% block content %}
+
+    <!-- Button trigger modal -->
+    <button class="btn btn-info" data-toggle="modal" data-target="#info-modal">
+        <i class="fa fa-info"></i>
+    </button>
+
+    <!-- Modal -->
+    <div class="modal fade" id="info-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel">Theses geographical distribution</h4>
+                </div>
+
+                <div class="modal-body">
+                    <p>
+                        This chart shows the geographical distribution of all the doctoral thesis dissertations registered in Spain since 1977.
+                    </p>
+
+                    <p>
+                        The analysis can be performed over a given range of years, moving the slider to select the desired time frame.
+                    </p>
+
+                    <p>
+                        To assign each dissertation to a Spanish Autonomous Community, the location of the University it belongs to is taken into account. Given the case of a University present in different geographical areas, where its headquarters are located is considered.
+                    </p>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <br>
+    <br>
+
+    <strong id="min-year">1977</strong>&emsp;
+
+    <input id="year-selector" type="text" class="span6" value="" data-slider-min="1977" data-slider-max="2014" data-slider-step="1" data-slider-value="[1977,2014]"/>
+
+    &emsp;<strong id="max-year">2014</strong>
+
+    <br>
+    <br>
+
+    <div class="row">
+        <div class="col-md-4">
+            <select class="form-control">
+                {% for topic in topics %}
+                    <option value="{{ topic|slugify }}">{{ topic }}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+
+    <div id="geo-chart" class="centered"></div>
+
+{% endblock %}
+
+
+
+{% block scripts %}
+
+    <script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap-slider.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/underscore.min.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/d3.min.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/gcharts.js') }}"></script>
+
+    <script>
+        $('#year-selector').slider();
+
+        var regions = {
+            "Andalucía": "ES-AN",
+            "Aragon": "ES-AR",
+            "Asturias": "ES-AS",
+            "Islas Canarias": "ES-CN",
+            "Cantabria": "ES-CB",
+            "Castilla La Mancha": "ES-CM",
+            "Castilla y León": "ES-CL",
+            "Cataluña": "ES-CT",
+            "Extremadura": "ES-EX",
+            "Galicia": "ES-GA",
+            "Islas Baleares": "ES-IB",
+            "La Rioja": "ES-RI",
+            "Madrid": "ES-MD",
+            "Murcia": "ES-MC",
+            "Navarra": "ES-NC",
+            "País Vasco": "ES-PV",
+            "Valencia": "ES-VC",
+            "Ceuta": "ES-CE",
+            "Melilla": "ES-ML",
+        }
+
+        var regions_json;
+        $.getJSON("{{ url_for('static', filename='data/regions_temporal.json') }}", function(json) {
+            regions_json = json;
+        });
+
+        var min_year = 1977;
+        var max_year = 2014;
+        var topic = "ANTROPOLOGIA";
+
+        google.load('visualization', '1', {'packages': ['geochart']});
+        google.setOnLoadCallback(drawRegionsMap);
+
+        console.log("init");
+
+        function drawRegionsMap() {
+            var dataTable = new google.visualization.DataTable();
+
+            dataTable.addColumn('string', 'Region');
+            dataTable.addColumn('number', 'Number of theses');
+
+            var regions_count = [];
+
+            for (var key in regions) {
+                regions_count[String(regions[key])] = 0;
+            }
+
+            for (var y in _.range(min_year, max_year + 1)) {
+                var count_year = min_year + parseInt(y);
+
+                for (var element in regions_json[String(count_year)]) {
+                    regions_count[String(regions[element])] += parseInt(regions_json[String(count_year)][String(element)]);
+                }
+            }
+
+            for (var key in regions) {
+                dataTable.addRow([regions[key] , regions_count[String(regions[key])]]);
+            }
+
+            var options = {
+                region: 'ES',
+                resolution: 'provinces',
+                displayMode: 'regions',
+                colorAxis: {minValue: 0,  colors: ['#fff', '#00f']}
+            };
+
+            var chart = new google.visualization.GeoChart(document.getElementById('geo-chart'));
+            chart.draw(dataTable, options);
+        };
+
+        var yearSelectorChange = function() {
+            var range = ys.getValue();
+
+            if (range[0] > range[1]) {
+                min_year = range[1];
+                max_year = range[0];
+            }
+            else {
+                min_year = range[0];
+                max_year = range[1];
+            }
+
+            $('#min-year').text(min_year);
+            $('#max-year').text(max_year);
+
+            drawRegionsMap();
+        };
+
+        var ys = $('#year-selector').slider()
+            .on('slide', yearSelectorChange)
+            .data('slider');
+    </script>
+
+{% endblock %}
