@@ -77,14 +77,16 @@
     <script>
         $('#year-selector').slider();
 
-        var min_year = 1977;
-        var max_year = 2014;
+        var min_year = {{ min_year }};
+        var max_year = {{ max_year }};
 
-        generateWordArray();
+        var tags_json = {};
 
-        function generateWordArray() {
-            var tags_json = {};
+        {% if high_level %}
             $.getJSON("{{ url_for('static', filename='data/first_level_areas_temporal.json') }}", function(json) {
+        {% else %}
+            $.getJSON("{{ url_for('static', filename='data/areas_temporal.json') }}", function(json) {
+        {% endif %}
                 for (var y in _.range(min_year, max_year + 1)) {
                     var tags = json[min_year + parseInt(y)];
 
@@ -96,6 +98,8 @@
                     }
                 }
 
+                // $("#publication_tag_cloud").empty();
+
                 var word_array = [];
 
                 for (key in tags_json) {
@@ -103,10 +107,8 @@
                     word_array.push({ text: key, weight: tags_json[key], link: url});
                 }
 
-                $("#publication_tag_cloud").empty();
                 $("#publication_tag_cloud").jQCloud(word_array);
             });
-        };
 
         function replaceAll(find, replace, str) {
             return str.replace(new RegExp(find, 'g'), replace);
@@ -124,15 +126,24 @@
                 max_year = range[1];
             }
 
-            $('#min-year').text(min_year);
-            $('#max-year').text(max_year);
+            var url;
 
-            generateWordArray();
+            {% if high_level %}
+                url = "{{ url_for('topics_by_range', min_year='min_year', max_year='max_year') }}";
+            {% else %}
+                url = "{{ url_for('topics_by_range', min_year='min_year', max_year='max_year') }}";
+            {% endif %}
+
+            url = url.replace("min_year", min_year).replace("max_year", max_year);
+
+            window.location.href = url;
         };
 
         var ys = $('#year-selector').slider()
             .on('slide', yearSelectorChange)
             .data('slider');
+
+        ys.setValue([{{ min_year }}, {{ max_year }}]);
     </script>
 
 {% endblock %}

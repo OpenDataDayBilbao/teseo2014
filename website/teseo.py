@@ -32,9 +32,14 @@ def theses_geographical_distribution():
     return render_template("totals_analysis/theses_geographical_distribution.html")
 
 
-@app.route('/topics_by_range')
-def topics_by_range():
-    return render_template("topic_analysis/topics_by_range.html")
+@app.route('/all_topics_by_range/<min_year>/<max_year>')
+def all_topics_by_range(min_year, max_year):
+    return render_template("topic_analysis/topics_by_range.html", high_level=False, min_year=min_year, max_year=max_year)
+
+
+@app.route('/topics_by_range/<min_year>/<max_year>')
+def topics_by_range(min_year, max_year):
+    return render_template("topic_analysis/topics_by_range.html", high_level=True, min_year=min_year, max_year=max_year)
 
 
 @app.route('/theses_gender_distribution')
@@ -135,7 +140,12 @@ def topic_evolution(topic=None):
     if topic:
         topic = topic.upper().replace("-", " ")
 
-    return render_template("topic_analysis/single_evolution.html", topic=topic, topics=sorted(topics))
+    low_level_topic = False
+
+    if (topic and topic not in topics):
+        low_level_topic = True
+
+    return render_template("topic_analysis/single_evolution.html", topic=topic, low_level_topic=low_level_topic, topics=sorted(topics))
 
 
 @app.route('/gender_by_topic/<min_year>/<max_year>')

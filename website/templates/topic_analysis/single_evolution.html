@@ -41,13 +41,16 @@
             </div>
         </div>
 
-        <div class="col-md-4">
-            <select id="topic-selector" class="form-control">
-                {% for topic in topics %}
-                    <option value="{{ topic|slugify }}">{{ topic }}</option>
-                {% endfor %}
-            </select>
-        </div>
+        {% if not low_level_topic %}
+
+            <div class="col-md-4">
+                <select id="topic-selector" class="form-control">
+                    {% for topic in topics %}
+                        <option value="{{ topic|slugify }}">{{ topic }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        {% endif %}
     </div>
 
     <br>
@@ -70,8 +73,8 @@
     <script id="percentage-tooltip-template" type="text/x-handlebars-template">
         <h1>Year {{ year }}</h1>
 
-        <p class="genders">
-            &emsp;<i class="fa fa-female"></i>&emsp;{{ count }}
+        <p>
+            {{ count }} theses tagged
         </p>
     </script>
     {% endraw %}
@@ -127,9 +130,12 @@
 
             var years = [];
             var data = [];
-            var missingData = [];
             var lineData = [];
-            $.getJSON("{{ url_for('static', filename='data/first_level_areas_temporal.json') }}", function(json) {
+            {% if low_level_topic %}
+                $.getJSON("{{ url_for('static', filename='data/areas_temporal.json') }}", function(json) {
+            {% else %}
+                $.getJSON("{{ url_for('static', filename='data/first_level_areas_temporal.json') }}", function(json) {
+            {% endif %}
                 for (var element in json) {
                     if (element > 1976) {
                         var data_obj = {
@@ -143,22 +149,13 @@
                             data.push(data_obj);
                             lineData.push([parseInt(data_obj.year), data_obj.count]);
                         }
-                        else {
-                            var prev_count = json[parseInt(element) - 1][String(topic)];
-                            var post_count = json[parseInt(element) + 1][String(topic)];
-
-                            var missing_data_obj = {
-                                "year": element,
-                                "count": (prev_count + post_count) / 2
-                            };
-
-                            missingData.push(missing_data_obj);
-                        }
                     };
                 }
 
                 xScale.domain(years.map(function(d) { return d.year; }));
-                yScale.domain([0, d3.max(data, function(d) { return Math.ceil(d.count / 100) * 100; })]);
+                var max = d3.max(data, function(d) { return d.count });
+                var units = (max > 250) ? 100 : 10;
+                yScale.domain([0, Math.ceil(max / units) * units]);
 
                 svg.append("g")
                     .attr("class", "x axis ev-axis")
@@ -197,38 +194,6 @@
 
                 svg.call(tip);
 
-                var line = d3.svg.line()
-                    .x(function(d) { return xScale(d[0]); })
-                    .y(function(d) { return yScale(d[1]); });
-
-                svg.append("path")
-                    .data([lineData])
-                    .attr("class", "line")
-                    .attr("d", line)
-                    .style("stroke", "blue");
-
-                var circles = svg.selectAll(".circle")
-                    .data(data)
-                    .enter().append("circle")
-                    .attr("class", "circle")
-                    .attr("r", 3)
-                    .attr("cx", function(d) { return xScale(d.year); })
-                    .attr("cy",function(d) { return yScale(d.count); })
-                    .style("stroke", "blue")
-                    .style("fill", "blue")
-                    .on('mouseover', tip.show)
-                    .on('mouseout', tip.hide);
-
-                var circles = svg.selectAll(".missing-circle")
-                    .data(missingData)
-                    .enter().append("circle")
-                    .attr("class", "missing-circle")
-                    .attr("r", 15)
-                    .attr("cx", function(d) { return xScale(d.year); })
-                    .attr("cy",function(d) { return yScale(d.count); })
-                    .style("stroke", "white")
-                    .style("fill", "white");
-
                 svg.selectAll("line.horizontalGrid")
                     .data(yScale.ticks())
                     .enter().append("line")
@@ -243,6 +208,28 @@
                             "stroke" : "#ccc",
                             "stroke-width" : "1px"
                         });
+
+                var line = d3.svg.line()
+                    .x(function(d) { return xScale(d[0]); })
+                    .y(function(d) { return yScale(d[1]); });
+
+                svg.append("path")
+                    .data([lineData])
+                    .attr("class", "line")
+                    .attr("d", line)
+                    .style("stroke", "#9999ff");
+
+                var circles = svg.selectAll(".circle")
+                    .data(data)
+                    .enter().append("circle")
+                    .attr("class", "circle")
+                    .attr("r", 3)
+                    .attr("cx", function(d) { return xScale(d.year); })
+                    .attr("cy",function(d) { return yScale(d.count); })
+                    .style("stroke", "blue")
+                    .style("fill", "blue")
+                    .on('mouseover', tip.show)
+                    .on('mouseout', tip.hide);
             });
         };
     </script>
