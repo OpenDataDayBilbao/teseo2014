@@ -4,50 +4,54 @@
 
 {% block content %}
 
-    <!-- Button trigger modal -->
-    <button class="btn btn-info" data-toggle="modal" data-target="#info-modal">
-        <i class="fa fa-info"></i>
-    </button>
+    <div class="row">
 
-    <!-- Modal -->
-    <div class="modal fade" id="info-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title" id="myModalLabel">Theses gender distribution</h4>
-                </div>
+        <!-- Button trigger modal -->
+        <button class="btn btn-info col-md-1 col-md-offset-1" data-toggle="modal" data-target="#info-modal">
+            <i class="fa fa-info"></i>&emsp;Info
+        </button>
 
-                <div class="modal-body">
-                    <p>
-                        This chart shows the panel member's gender distribution from all the doctoral defenses registered in Spain since 1977.
-                    </p>
 
-                    <p>
-                        When hovering over each bar, a tooltip with gender distribution information shows up.
-                    </p>
+        <!-- Modal -->
+        <div class="modal fade" id="info-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title" id="myModalLabel">Theses gender distribution</h4>
+                    </div>
 
-                    <p>
-                        Remember that viva panels in Spain are formed by 5 tribunal members, with the following roles:
+                    <div class="modal-body">
+                        <p>
+                            This chart shows the panel member's gender distribution from all the doctoral defenses registered in Spain since 1977.
+                        </p>
 
-                        <ul>
-                            <li>1 president</li>
-                            <li>1 secretary</li>
-                            <li>3 vocals</li>
-                        </ul>
-                    </p>
+                        <p>
+                            When hovering over each bar, a tooltip with gender distribution information shows up.
+                        </p>
 
-                    <p>
-                        To calculate the presence of each gender in those panels, the number of gender-unknown members is deducted from that year's total count. This could lead to data misinterpretations, as some data are missing in the analysis. Improving the gender desambiguation could lead to more realistic results.
-                    </p>
+                        <p>
+                            Remember that viva panels in Spain are formed by 5 tribunal members, with the following roles:
 
-                    <p>
-                        This chart is closely related with the <a href="{{ url_for('theses_gender_distribution') }}">Thesis gender distribution</a> chart.
-                    </p>
-                </div>
+                            <ul>
+                                <li>1 president</li>
+                                <li>1 secretary</li>
+                                <li>3 vocals</li>
+                            </ul>
+                        </p>
 
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <p>
+                            To calculate the presence of each gender in those panels, the number of gender-unknown members is deducted from that year's total count. This could lead to data misinterpretations, as some data are missing in the analysis. Improving the gender desambiguation could lead to more realistic results.
+                        </p>
+
+                        <p>
+                            This chart is closely related with the <a href="{{ url_for('theses_gender_distribution') }}">Thesis gender distribution</a> chart.
+                        </p>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
                 </div>
             </div>
         </div>

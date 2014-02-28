@@ -4,36 +4,40 @@
 
 {% block content %}
 
-    <!-- Button trigger modal -->
-    <button class="btn btn-info" data-toggle="modal" data-target="#info-modal">
-        <i class="fa fa-info"></i>
-    </button>
+    <div class="row">
 
-    <!-- Modal -->
-    <div class="modal fade" id="info-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title" id="myModalLabel">Theses gender distribution</h4>
-                </div>
+        <!-- Button trigger modal -->
+        <button class="btn btn-info col-md-1 col-md-offset-1" data-toggle="modal" data-target="#info-modal">
+            <i class="fa fa-info"></i>&emsp;Info
+        </button>
 
-                <div class="modal-body">
-                    <p>
-                        This chart shows the total number of dissertations by gender registered in Spain since 1977.
-                    </p>
 
-                    <p>
-                        The user can compare the gender distribution filtering the information through the radio buttons. When hovering over each bar, a tooltip with extra information shows up.
-                    </p>
+        <!-- Modal -->
+        <div class="modal fade" id="info-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title" id="myModalLabel">Theses gender distribution</h4>
+                    </div>
 
-                    <p>
-                        To calculate the presence of each gender in the total number of theses, the number of gender-unknown authors (marked as <i class="fa fa-question"></i>) is deducted from that year's total count. This could lead to data misinterpretations, as some data are missing in the analysis. Improving the gender desambiguation could lead to more realistic results.
-                    </p>
-                </div>
+                    <div class="modal-body">
+                        <p>
+                            This chart shows the total number of dissertations by gender registered in Spain since 1977.
+                        </p>
 
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <p>
+                            The user can compare the gender distribution filtering the information through the radio buttons. When hovering over each bar, a tooltip with extra information shows up.
+                        </p>
+
+                        <p>
+                            To calculate the presence of each gender in the total number of theses, the number of gender-unknown authors (marked as <i class="fa fa-question"></i>) is deducted from that year's total count. This could lead to data misinterpretations, as some data are missing in the analysis. Improving the gender desambiguation could lead to more realistic results.
+                        </p>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
                 </div>
             </div>
         </div>

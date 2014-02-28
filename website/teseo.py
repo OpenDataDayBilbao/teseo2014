@@ -124,8 +124,18 @@ def topic_geographical_distribution():
 
 
 @app.route('/topic_evolution/')
-def topic_evolution():
-    return render_template("topic_analysis/single_evolution.html")
+@app.route('/topic_evolution/<topic>')
+def topic_evolution(topic=None):
+    topics = []
+
+    for key, value in codes_descriptor.items():
+        if str(key)[2:6] == '0000':
+            topics.append(value)
+
+    if topic:
+        topic = topic.upper().replace("-", " ")
+
+    return render_template("topic_analysis/single_evolution.html", topic=topic, topics=sorted(topics))
 
 
 @app.route('/gender_by_topic/<min_year>/<max_year>')

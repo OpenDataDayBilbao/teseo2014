@@ -165,3 +165,7 @@ body {
 .modal-body > p {
     text-align: justify;
 }
+
+g.x.axis > g.tick > text {
+    -webkit-transform:rotate(-75deg);
+}

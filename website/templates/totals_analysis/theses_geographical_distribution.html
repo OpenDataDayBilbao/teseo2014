@@ -12,49 +12,52 @@
 
 {% block content %}
 
-    <!-- Button trigger modal -->
-    <button class="btn btn-info" data-toggle="modal" data-target="#info-modal">
-        <i class="fa fa-info"></i>
-    </button>
+    <div class="row">
 
-    <!-- Modal -->
-    <div class="modal fade" id="info-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title" id="myModalLabel">Theses geographical distribution</h4>
-                </div>
+        <!-- Button trigger modal -->
+        <button class="btn btn-info col-md-1 col-md-offset-1" data-toggle="modal" data-target="#info-modal">
+            <i class="fa fa-info"></i>&emsp;Info
+        </button>
 
-                <div class="modal-body">
-                    <p>
-                        This chart shows the geographical distribution of all the doctoral thesis dissertations registered in Spain since 1977.
-                    </p>
 
-                    <p>
-                        The analysis can be performed over a given range of years, moving the slider to select the desired time frame.
-                    </p>
+        <!-- Modal -->
+        <div class="modal fade" id="info-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title" id="myModalLabel">Theses geographical distribution</h4>
+                    </div>
 
-                    <p>
-                        To assign each dissertation to a Spanish Autonomous Community, the location of the University it belongs to is taken into account. Given the case of a University present in different geographical areas, where its headquarters are located is considered.
-                    </p>
-                </div>
+                    <div class="modal-body">
+                        <p>
+                            This chart shows the geographical distribution of all the doctoral thesis dissertations registered in Spain since 1977.
+                        </p>
 
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <p>
+                            The analysis can be performed over a given range of years, moving the slider to select the desired time frame.
+                        </p>
+
+                        <p>
+                            To assign each dissertation to a Spanish Autonomous Community, the location of the University it belongs to is taken into account. Given the case of a University present in different geographical areas, where its headquarters are located is considered.
+                        </p>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
                 </div>
             </div>
         </div>
+
+        <div class="col-md-4 col-md-offset-1">
+            <strong id="min-year">1977</strong>&emsp;
+
+            <input id="year-selector" type="text" class="span6" value="" data-slider-min="1977" data-slider-max="2014" data-slider-step="1" data-slider-value="[1977,2014]"/>
+
+            &emsp;<strong id="max-year">2014</strong>
+        </div>
     </div>
-
-    <br>
-    <br>
-
-    <strong id="min-year">1977</strong>&emsp;
-
-    <input id="year-selector" type="text" class="span6" value="" data-slider-min="1977" data-slider-max="2014" data-slider-step="1" data-slider-value="[1977,2014]"/>
-
-    &emsp;<strong id="max-year">2014</strong>
 
     <div id="geo-chart" class="centered"></div>
 
