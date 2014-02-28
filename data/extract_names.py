@@ -2,11 +2,23 @@ import MySQLdb
 import sys
 import re
 
-host = 'localhost'
-user = 'teseo'
-password = 'teseo'
-database='teseo'
-conn = MySQLdb.Connection(db=database, host=host, user=user, passwd=password)
+config = {
+      'user': 'foo',
+      'password': 'bar',
+      'host': '127.0.0.1',
+      'database': 'teseo',
+    }
+
+with open('pass.config', 'r') as inputfile:
+    for i, line in enumerate(inputfile):
+        if i == 0:
+            config['user'] = line
+        elif i == 1:
+            config['password'] = line
+        elif i > 1:
+            break
+
+conn = MySQLdb.Connection(db=config['database'], host=config['host'], user=config['user'], passwd=config['password'])
 cursor = conn.cursor()
 
 cursor.execute('select count(*) from person;')
@@ -20,33 +32,33 @@ result = cursor.fetchall()
 total = len(result)
 
 missing = 0
-for (index, (id, name)) in enumerate(result):    
+for (index, (id, name)) in enumerate(result):
     match = re.search(pattern, name)
     if match:
         if match.group(1) is not None:
             first_surname = match.group(1).strip()
         else:
             first_surname = ''
-        
+
         if match.group(2) is not None:
-            second_surname = match.group(2).strip()    
+            second_surname = match.group(2).strip()
         else:
             second_surname = ''
-        
+
         if match.group(3) is not None:
             first_name = match.group(3).strip()
         else:
             first_name = ''
-            
+
         if first_surname is '' and second_surname is '' and first_name is '':
             missing = missing + 1
-        
+
         cursor.execute("update person set first_name='%s', first_surname='%s', second_surname='%s' where id=%s;" % (first_name, first_surname, second_surname, id))
 
     sys.stdout.write('\r Processed %s of %s' % (index + 1, total))
     sys.stdout.flush()
 
-sys.stdout.write('\n')    
+sys.stdout.write('\n')
 
 conn.commit()
 
