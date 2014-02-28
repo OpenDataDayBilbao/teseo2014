@@ -12,7 +12,7 @@ import thesaurus
 import os, sys
 lib_path = os.path.abspath('../')
 sys.path.append(lib_path)
-from model.thesaurus_model import Descriptor
+from model.teseo_model import Descriptor
 
 # Library imports
 import pickle
@@ -137,6 +137,8 @@ def save_name_genders():
             print name, infered_gender, prob
             if infered_gender == 'None' or prob < 0.6:
                 bad_names.append(name)
+            # else:
+            #     cursor.execute('UPDATE person SET gender=%s WHERE')
             result[name] = infered_gender
 
     with open( base_dir + "/cache/genders.p", "wb" ) as outfile:
@@ -323,6 +325,9 @@ university_locations = {
     u'INTERNACIONAL DE ANDALUC\xcdA' :u'Andalucía',
     u'EUROPEA MIGUEL DE CERVANTES' :u'Castilla y León',
     u'INTERNACIONAL DE LA RIOJA' :u'La Rioja',
+    u'EUROPEA DE CANARIAS' :u'Islas Canarias',
+    u'TECNOLOGÍA Y EMPRESA' :u'Madrid',
+    u'INTERNACIONAL DE BURGOS' :u'Castilla y León',
 }
 
 university_ids = {
