@@ -2,7 +2,10 @@ import MySQLdb
 import sys
 import re
 
-from dbconnection import dbconfig
+import os
+lib_path = os.path.abspath('../')
+sys.path.append(lib_path)
+from model.dbconnection import dbconfig
 
 config = dbconfig
 

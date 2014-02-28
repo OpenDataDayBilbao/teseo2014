@@ -24,7 +24,7 @@ from sqlalchemy.orm import sessionmaker
 base_dir = os.path.dirname(os.path.abspath(__file__))
 
 def load_config():
-    from dbconnection import dbconfig
+    from model.dbconnection import dbconfig
 
     return dbconfig
 
