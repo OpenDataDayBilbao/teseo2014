@@ -4,15 +4,16 @@ import urllib
 import urllib2
 import cookielib
 
-from bs4 import BeautifulSoup
+from BeautifulSoup import BeautifulSoup
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from sqlalchemy.ext.declarative import declarative_base
+# from sqlalchemy.ext.declarative import declarative_base
 
 import os, sys
 lib_path = os.path.abspath('../')
 sys.path.append(lib_path)
-from model.thesaurus_model import Descriptor
+from model.teseo_model import Descriptor
+from model.dbconnection import dbconfig
 
 
 def search_in_unesco_thesaurus(code = None, descriptor = None):
@@ -57,7 +58,7 @@ def search_in_unesco_thesaurus(code = None, descriptor = None):
     soup = BeautifulSoup(response.read().decode('utf-8'))
 
     try:
-        for materia in soup.find_all('label', attrs = {'for': 'materias'}):
+        for materia in soup.findAll('label', attrs = {'for': 'materias'}):
             scrapped_code = materia.a.next.split(' - ')[0][1:-1]
             scrapped_name = materia.a.next.split(' - ')[1]
             if code:
@@ -81,10 +82,10 @@ def get_full_thesaurus(session, starting_code, ending_code, multiple, codes_in_o
             print code
 
             # Create the descriptor object
-            desc = Descriptor(id=int(code), text=name)
+            desc = Descriptor(code=int(code), text=name)
 
             # Check if it has any parent, and if so, make the relationship
-            parent = session.query(Descriptor).get(starting_code)
+            parent = session.query(Descriptor).filter(Descriptor.code == starting_code).first()
             if parent:
                 desc.parent_code = parent.id
 
@@ -146,8 +147,16 @@ def get_full_thesaurus_from_lists(session):
     # Get parent codes (XX0000)
     parent_codes = get_thesaurus_codes_in_page('', '00', '00')
     for parent_code, parent_label in parent_codes.items():
+        # Get from DB if it already exists
+        parent_desc = session.query(Descriptor).filter(Descriptor.text == parent_label).first()
+        if parent_desc:
+            print 'Found in DB'
+            parent_desc.code = int(parent_code)
+        else:
+            print 'Not found'
+            parent_desc = Descriptor(code=int(parent_code), text=parent_label)
+
         # Save in DB
-        parent_desc = Descriptor(id=int(parent_code), text=parent_label)
         session.add(parent_desc)
         session.commit()
 
@@ -160,7 +169,13 @@ def get_full_thesaurus_from_lists(session):
                 print '\t' + sub_code
 
                 # Save in DB
-                sub_desc = Descriptor(id=int(sub_code), text=sub_code_label)
+                sub_desc = session.query(Descriptor).filter(Descriptor.text == sub_code_label).first()
+                if sub_desc:
+                    print '\tFound in DB'
+                    sub_desc.code = int(sub_code)
+                else:
+                    print '\tNot found'
+                    sub_desc = Descriptor(code=int(sub_code), text=sub_code_label)
                 sub_desc.parent = parent_desc
                 session.add(sub_desc)
                 session.commit()
@@ -171,18 +186,27 @@ def get_full_thesaurus_from_lists(session):
                         print '\t\t' + sub_sub_code
 
                         # Save in DB
-                        sub_sub_desc = Descriptor(id=int(sub_sub_code), text=sub_sub_code_label)
+                        sub_sub_desc = session.query(Descriptor).filter(Descriptor.text == sub_sub_code_label).first()
+                        if sub_sub_desc:
+                            print '\t\tFound in DB'
+                            sub_sub_desc.code = int(sub_sub_code)
+                        else:
+                            print '\t\tNot found'
+                            sub_sub_desc = Descriptor(code=int(sub_sub_code), text=sub_sub_code_label)
                         sub_sub_desc.parent = sub_desc
                         session.add(sub_sub_desc)
                         session.commit()
 
 
 def fullfil_thesaurus_db():
-    engine = create_engine('sqlite:///thesaurus.db')
+    config = dbconfig
 
-    Base = declarative_base()
-    Base.metadata.drop_all(engine)
-    Base.metadata.create_all(engine)
+    # Load from DB
+    engine = create_engine('mysql://%s:%s@%s/%s?charset=utf8' % (config['user'], config['password'], config['host'], dbconfig['database']))
+
+    # Base = declarative_base()
+    # Base.metadata.drop_all(engine)
+    # Base.metadata.create_all(engine)
 
     Session = sessionmaker(bind=engine)
     session = Session()
