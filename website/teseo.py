@@ -32,9 +32,14 @@ def theses_geographical_distribution():
     return render_template("totals_analysis/theses_geographical_distribution.html")
 
 
-@app.route('/genero_del_tribunal')
-def gender_in_panel():
-    return render_template("gender_in_panel.html")
+@app.route('/all_topics_by_range/<min_year>/<max_year>')
+def all_topics_by_range(min_year, max_year):
+    return render_template("topic_analysis/topics_by_range.html", high_level=False, min_year=min_year, max_year=max_year)
+
+
+@app.route('/topics_by_range/<min_year>/<max_year>')
+def topics_by_range(min_year, max_year):
+    return render_template("topic_analysis/topics_by_range.html", high_level=True, min_year=min_year, max_year=max_year)
 
 
 @app.route('/theses_gender_distribution')
@@ -45,6 +50,12 @@ def theses_gender_distribution():
 @app.route('/panel_gender_distribution')
 def panel_gender_distribution():
     return render_template("gender_analysis/panel_distribution.html")
+
+
+@app.route('/topic_gender_distribution/<topic>')
+def topic_gender_distribution(topic):
+    topic = topic.upper().replace("-", " ")
+    return render_template("gender_analysis/topic_distribution.html", topic=topic)
 
 
 @app.route('/topics/<min_year>/<max_year>')
@@ -125,17 +136,24 @@ def topic_geographical_distribution():
 
 @app.route('/topic_evolution/')
 @app.route('/topic_evolution/<topic>')
-def topic_evolution(topic=None):
+def topic_evolution(topic="antropologia"):
     topics = []
 
     for key, value in codes_descriptor.items():
         if str(key)[2:6] == '0000':
             topics.append(value)
 
+    topic_slug = topic
+
     if topic:
         topic = topic.upper().replace("-", " ")
 
-    return render_template("topic_analysis/single_evolution.html", topic=topic, topics=sorted(topics))
+    low_level_topic = False
+
+    if (topic and topic not in topics):
+        low_level_topic = True
+
+    return render_template("topic_analysis/single_evolution.html", topic=topic, topic_slug=topic_slug, low_level_topic=low_level_topic, topics=sorted(topics))
 
 
 @app.route('/gender_by_topic/<min_year>/<max_year>')

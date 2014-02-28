@@ -17,7 +17,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title" id="myModalLabel">Theses gender distribution</h4>
+                        <h4 class="modal-title" id="myModalLabel">Topic evolution</h4>
                     </div>
 
                     <div class="modal-body">
@@ -26,11 +26,19 @@
                         </p>
 
                         <p>
-                            The selector input allows to choose different high-level topics, rendering its tendency over the years.
+                            If the topic is considered a high level category, a selector allows to change to other high-level topics, rendering its tendency over the years. Otherwise, just the name of the sub-topic appears.
                         </p>
 
                         <p>
                             When changing between topics, take care of the y-axis scale, which may change.
+                        </p>
+
+                        <p>
+                            If a solid point is missing for a given year, there is no recorded data for that particular year, so the tendency line is maintained, but no data is displayed.
+                        </p>
+
+                        <p>
+                            <strong>Note:</strong> In every chart a decreasing tendency can be observed between 2002 and 2004. As the <a href="{{ url_for('theses_gender_distribution') }}">number of total theses</a> doesn't show this particular patter, we suppose there was a loss of dissertation tagging information.
                         </p>
                     </div>
 
@@ -42,11 +50,23 @@
         </div>
 
         <div class="col-md-4">
-            <select id="topic-selector" class="form-control">
-                {% for topic in topics %}
-                    <option value="{{ topic|slugify }}">{{ topic }}</option>
-                {% endfor %}
-            </select>
+            {% if low_level_topic %}
+                <h5>
+                    {{ topic }}
+                </h5>
+            {% else %}
+                <select id="topic-selector" class="form-control">
+                    {% for topic in topics %}
+                        <option value="{{ topic|slugify }}">{{ topic }}</option>
+                    {% endfor %}
+                </select>
+            {% endif %}
+        </div>
+
+        <div class="col-md-2 col-md-offset-4">
+            <a id="gender_distribution" class="btn btn-primary" href="/topic_gender_distribution/{{ topic_slug }}">
+                Gender distribution
+            </a>
         </div>
     </div>
 
@@ -70,8 +90,8 @@
     <script id="percentage-tooltip-template" type="text/x-handlebars-template">
         <h1>Year {{ year }}</h1>
 
-        <p class="genders">
-            &emsp;<i class="fa fa-female"></i>&emsp;{{ count }}
+        <p>
+            {{ count }} theses tagged
         </p>
     </script>
     {% endraw %}
@@ -107,7 +127,7 @@
 
         {% if topic != None %}
             topic = '{{ topic }}';
-            $('#topic-selector').val('{{ topic|slugify }}');
+            $('#topic-selector').val('{{ topic_slug }}');
         {% else %}
             topic = "ANTROPOLOGIA";
         {% endif %}
@@ -115,6 +135,11 @@
 
         $('#topic-selector').change(function() {
             topic = $( "#topic-selector option:selected" ).text();
+            var url = "{{ url_for('topic_gender_distribution', topic='topic_slug') }}";
+            var topic_slug = topic.
+            url = url.replace("topic_slug", "{{ topic_slug }}");
+            console.log(url);
+            $('#gender_distribution').attr('href', url);
             drawChart();
         });
 
@@ -127,9 +152,12 @@
 
             var years = [];
             var data = [];
-            var missingData = [];
             var lineData = [];
-            $.getJSON("{{ url_for('static', filename='data/first_level_areas_temporal.json') }}", function(json) {
+            {% if low_level_topic %}
+                $.getJSON("{{ url_for('static', filename='data/areas_temporal.json') }}", function(json) {
+            {% else %}
+                $.getJSON("{{ url_for('static', filename='data/first_level_areas_temporal.json') }}", function(json) {
+            {% endif %}
                 for (var element in json) {
                     if (element > 1976) {
                         var data_obj = {
@@ -143,22 +171,13 @@
                             data.push(data_obj);
                             lineData.push([parseInt(data_obj.year), data_obj.count]);
                         }
-                        else {
-                            var prev_count = json[parseInt(element) - 1][String(topic)];
-                            var post_count = json[parseInt(element) + 1][String(topic)];
-
-                            var missing_data_obj = {
-                                "year": element,
-                                "count": (prev_count + post_count) / 2
-                            };
-
-                            missingData.push(missing_data_obj);
-                        }
                     };
                 }
 
                 xScale.domain(years.map(function(d) { return d.year; }));
-                yScale.domain([0, d3.max(data, function(d) { return Math.ceil(d.count / 100) * 100; })]);
+                var max = d3.max(data, function(d) { return d.count });
+                var units = (max > 250) ? 100 : 10;
+                yScale.domain([0, Math.ceil(max / units) * units]);
 
                 svg.append("g")
                     .attr("class", "x axis ev-axis")
@@ -197,38 +216,6 @@
 
                 svg.call(tip);
 
-                var line = d3.svg.line()
-                    .x(function(d) { return xScale(d[0]); })
-                    .y(function(d) { return yScale(d[1]); });
-
-                svg.append("path")
-                    .data([lineData])
-                    .attr("class", "line")
-                    .attr("d", line)
-                    .style("stroke", "blue");
-
-                var circles = svg.selectAll(".circle")
-                    .data(data)
-                    .enter().append("circle")
-                    .attr("class", "circle")
-                    .attr("r", 3)
-                    .attr("cx", function(d) { return xScale(d.year); })
-                    .attr("cy",function(d) { return yScale(d.count); })
-                    .style("stroke", "blue")
-                    .style("fill", "blue")
-                    .on('mouseover', tip.show)
-                    .on('mouseout', tip.hide);
-
-                var circles = svg.selectAll(".missing-circle")
-                    .data(missingData)
-                    .enter().append("circle")
-                    .attr("class", "missing-circle")
-                    .attr("r", 15)
-                    .attr("cx", function(d) { return xScale(d.year); })
-                    .attr("cy",function(d) { return yScale(d.count); })
-                    .style("stroke", "white")
-                    .style("fill", "white");
-
                 svg.selectAll("line.horizontalGrid")
                     .data(yScale.ticks())
                     .enter().append("line")
@@ -243,6 +230,28 @@
                             "stroke" : "#ccc",
                             "stroke-width" : "1px"
                         });
+
+                var line = d3.svg.line()
+                    .x(function(d) { return xScale(d[0]); })
+                    .y(function(d) { return yScale(d[1]); });
+
+                svg.append("path")
+                    .data([lineData])
+                    .attr("class", "line")
+                    .attr("d", line)
+                    .style("stroke", "#9999ff");
+
+                var circles = svg.selectAll(".circle")
+                    .data(data)
+                    .enter().append("circle")
+                    .attr("class", "circle")
+                    .attr("r", 3)
+                    .attr("cx", function(d) { return xScale(d.year); })
+                    .attr("cy",function(d) { return yScale(d.count); })
+                    .style("stroke", "blue")
+                    .style("fill", "blue")
+                    .on('mouseover', tip.show)
+                    .on('mouseout', tip.hide);
             });
         };
     </script>
