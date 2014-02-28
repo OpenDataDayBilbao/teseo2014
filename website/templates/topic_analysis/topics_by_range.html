@@ -27,12 +27,12 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title" id="myModalLabel">Theses geographical distribution</h4>
+                        <h4 class="modal-title" id="myModalLabel">Topic word cloud by range</h4>
                     </div>
 
                     <div class="modal-body">
                         <p>
-                            This chart shows the geographical distribution of all the doctoral thesis dissertations registered in Spain since 1977.
+                            This tag cloud shows the topic usage through all the thesis dissertations registered in Spain since 1977.
                         </p>
 
                         <p>
@@ -40,7 +40,7 @@
                         </p>
 
                         <p>
-                            To assign each dissertation to a Spanish Autonomous Community, the location of the University it belongs to is taken into account. Given the case of a University present in different geographical areas, where its headquarters are located is considered.
+                            Clicking on each topic, a more detailed view about its evolution can be consulted.
                         </p>
                     </div>
 
@@ -52,11 +52,11 @@
         </div>
 
         <div class="col-md-4 col-md-offset-1">
-            <strong id="min-year">1977</strong>&emsp;
+            <strong id="min-year">{{ min_year }}</strong>&emsp;
 
             <input id="year-selector" type="text" class="span6" value="" data-slider-min="1977" data-slider-max="2014" data-slider-step="1" data-slider-value="[1977,2014]"/>
 
-            &emsp;<strong id="max-year">2014</strong>
+            &emsp;<strong id="max-year">{{ max_year }}</strong>
         </div>
     </div>
 
@@ -131,7 +131,7 @@
             {% if high_level %}
                 url = "{{ url_for('topics_by_range', min_year='min_year', max_year='max_year') }}";
             {% else %}
-                url = "{{ url_for('topics_by_range', min_year='min_year', max_year='max_year') }}";
+                url = "{{ url_for('all_topics_by_range', min_year='min_year', max_year='max_year') }}";
             {% endif %}
 
             url = url.replace("min_year", min_year).replace("max_year", max_year);

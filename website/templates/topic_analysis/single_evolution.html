@@ -17,7 +17,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title" id="myModalLabel">Theses gender distribution</h4>
+                        <h4 class="modal-title" id="myModalLabel">Topic evolution</h4>
                     </div>
 
                     <div class="modal-body">
@@ -26,11 +26,19 @@
                         </p>
 
                         <p>
-                            The selector input allows to choose different high-level topics, rendering its tendency over the years.
+                            If the topic is considered a high level category, a selector allows to change to other high-level topics, rendering its tendency over the years. Otherwise, just the name of the sub-topic appears.
                         </p>
 
                         <p>
                             When changing between topics, take care of the y-axis scale, which may change.
+                        </p>
+
+                        <p>
+                            If a solid point is missing for a given year, there is no recorded data for that particular year, so the tendency line is maintained, but no data is displayed.
+                        </p>
+
+                        <p>
+                            <strong>Note:</strong> In every chart a decreasing tendency can be observed between 2002 and 2004. As the <a href="{{ url_for('theses_gender_distribution') }}">number of total theses</a> doesn't show this particular patter, we suppose there was a loss of dissertation tagging information.
                         </p>
                     </div>
 
@@ -41,16 +49,19 @@
             </div>
         </div>
 
-        {% if not low_level_topic %}
-
-            <div class="col-md-4">
+        <div class="col-md-4">
+            {% if low_level_topic %}
+                <h5>
+                    {{ topic }}
+                </h5>
+            {% else %}
                 <select id="topic-selector" class="form-control">
                     {% for topic in topics %}
                         <option value="{{ topic|slugify }}">{{ topic }}</option>
                     {% endfor %}
                 </select>
-            </div>
-        {% endif %}
+            {% endif %}
+        </div>
     </div>
 
     <br>
