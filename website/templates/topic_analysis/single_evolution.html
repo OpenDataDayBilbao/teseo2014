@@ -161,11 +161,11 @@
                 yScale.domain([0, d3.max(data, function(d) { return Math.ceil(d.count / 100) * 100; })]);
 
                 svg.append("g")
-                    .attr("class", "x axis")
+                    .attr("class", "x axis ev-axis")
                     .attr("transform", "translate(0," + height + ")")
                     .call(xAxis);
 
-                d3.selectAll("g.x.axis").selectAll(".tick").selectAll("text")
+                d3.selectAll("g.ev-axis").selectAll(".tick").selectAll("text")
                     .attr("y", 0)
                     .attr("x", -25);
 

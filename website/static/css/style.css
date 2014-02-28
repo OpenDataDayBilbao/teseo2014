@@ -166,6 +166,6 @@ body {
     text-align: justify;
 }
 
-g.x.axis > g.tick > text {
+g.ev-axis > g.tick > text {
     -webkit-transform:rotate(-75deg);
 }
