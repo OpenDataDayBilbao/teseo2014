@@ -24,24 +24,27 @@ from sqlalchemy.orm import sessionmaker
 base_dir = os.path.dirname(os.path.abspath(__file__))
 
 def load_config():
+    from model.dbconnection import dbconfig
 
-    config = {
-          'user': 'foo',
-          'password': 'bar',
-          'host': '127.0.0.1',
-          'database': 'teseo',
-        }
+    return dbconfig
 
-    with open('pass.config', 'r') as inputfile:
-        for i, line in enumerate(inputfile):
-            if i == 0:
-                config['user'] = line
-            elif i == 1:
-                config['password'] = line
-            elif i > 1:
-                break
+    # config = {
+    #       'user': 'foo',
+    #       'password': 'bar',
+    #       'host': '127.0.0.1',
+    #       'database': 'teseo',
+    #     }
 
-    return config
+    # with open('pass.config', 'r') as inputfile:
+    #     for i, line in enumerate(inputfile):
+    #         if i == 0:
+    #             config['user'] = line
+    #         elif i == 1:
+    #             config['password'] = line
+    #         elif i > 1:
+    #             break
+
+    # return config
 
 def get_university_ids():
     import mysql.connector
