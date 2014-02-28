@@ -1,0 +1,138 @@
+{% extends "base.html" %}
+
+
+
+{% block stylesheets %}
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/jqcloud.css') }}"></script>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/slider.css') }}">
+
+{% endblock %}
+
+
+
+{% block content %}
+
+    <div class="row">
+
+        <!-- Button trigger modal -->
+        <button class="btn btn-info col-md-1 col-md-offset-1" data-toggle="modal" data-target="#info-modal">
+            <i class="fa fa-info"></i>&emsp;Info
+        </button>
+
+
+        <!-- Modal -->
+        <div class="modal fade" id="info-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title" id="myModalLabel">Theses geographical distribution</h4>
+                    </div>
+
+                    <div class="modal-body">
+                        <p>
+                            This chart shows the geographical distribution of all the doctoral thesis dissertations registered in Spain since 1977.
+                        </p>
+
+                        <p>
+                            The analysis can be performed over a given range of years, moving the slider to select the desired time frame.
+                        </p>
+
+                        <p>
+                            To assign each dissertation to a Spanish Autonomous Community, the location of the University it belongs to is taken into account. Given the case of a University present in different geographical areas, where its headquarters are located is considered.
+                        </p>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 col-md-offset-1">
+            <strong id="min-year">1977</strong>&emsp;
+
+            <input id="year-selector" type="text" class="span6" value="" data-slider-min="1977" data-slider-max="2014" data-slider-step="1" data-slider-value="[1977,2014]"/>
+
+            &emsp;<strong id="max-year">2014</strong>
+        </div>
+    </div>
+
+    <br>
+
+    <div id="publication_tag_cloud" style="width: 1200px; height: 450px;"></div>
+
+{% endblock %}
+
+
+
+{% block scripts %}
+
+    <script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap-slider.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/jqcloud-1.0.4.min.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/underscore.min.js') }}"></script>
+
+    <script>
+        $('#year-selector').slider();
+
+        var min_year = 1977;
+        var max_year = 2014;
+
+        generateWordArray();
+
+        function generateWordArray() {
+            var tags_json = {};
+            $.getJSON("{{ url_for('static', filename='data/first_level_areas_temporal.json') }}", function(json) {
+                for (var y in _.range(min_year, max_year + 1)) {
+                    var tags = json[min_year + parseInt(y)];
+
+                    for (key in tags) {
+                        if (key in tags_json)
+                            tags_json[key] = tags_json[key] + tags[key]
+                        else
+                            tags_json[key] = tags[key]
+                    }
+                }
+
+                var word_array = [];
+
+                for (key in tags_json) {
+                    var url = "{{ url_for('topic_evolution') }}" + replaceAll(" ", "-", key).toLowerCase();
+                    word_array.push({ text: key, weight: tags_json[key], link: url});
+                }
+
+                $("#publication_tag_cloud").empty();
+                $("#publication_tag_cloud").jQCloud(word_array);
+            });
+        };
+
+        function replaceAll(find, replace, str) {
+            return str.replace(new RegExp(find, 'g'), replace);
+        };
+
+        var yearSelectorChange = function() {
+            var range = ys.getValue();
+
+            if (range[0] > range[1]) {
+                min_year = range[1];
+                max_year = range[0];
+            }
+            else {
+                min_year = range[0];
+                max_year = range[1];
+            }
+
+            $('#min-year').text(min_year);
+            $('#max-year').text(max_year);
+
+            generateWordArray();
+        };
+
+        var ys = $('#year-selector').slider()
+            .on('slide', yearSelectorChange)
+            .data('slider');
+    </script>
+
+{% endblock %}

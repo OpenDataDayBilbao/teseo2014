@@ -32,9 +32,9 @@ def theses_geographical_distribution():
     return render_template("totals_analysis/theses_geographical_distribution.html")
 
 
-@app.route('/genero_del_tribunal')
-def gender_in_panel():
-    return render_template("gender_in_panel.html")
+@app.route('/topics_by_range')
+def topics_by_range():
+    return render_template("topic_analysis/topics_by_range.html")
 
 
 @app.route('/theses_gender_distribution')
