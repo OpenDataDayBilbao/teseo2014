@@ -14,8 +14,9 @@ class University(Base):
     name = Column(UnicodeText, nullable=False)
     location = Column(UnicodeText, nullable=True)
 
-    def __init__(self, name):
+    def __init__(self, name, location=None):
         self.name = name
+        self.location = location
 
 class Department(Base):
     __tablename__ = 'department'
@@ -36,8 +37,12 @@ class Person(Base):
     second_surname = Column(UnicodeText, nullable=True)
     gender = Column(UnicodeText, nullable=True)
 
-    def __init__(self, name):
+    def __init__(self, name, first_name=None, first_surname=None, second_surname=None, gender=None):
         self.name = name
+        self.first_name = first_name
+        self.first_surname = first_surname
+        self.second_surname = second_surname
+        self.gender = gender
 
 class Descriptor(Base):
     __tablename__ = 'descriptor'
@@ -49,8 +54,9 @@ class Descriptor(Base):
     parent_code = Column(Integer, ForeignKey('descriptor.id'))
     parent = relationship('Descriptor', remote_side=[id], backref='children')
 
-    def __init__(self, text):
+    def __init__(self, text, code=None):
         self.text = text
+        self.code = code
 
 class Advisor(Base):
     __tablename__ = 'advisor'
