@@ -19,11 +19,6 @@ import gzip
 import re
 import sys
 
-# USER = 'teseo'
-# PASS = 'teseo'
-
-# DB_NAME = 'teseo'
-
 # engine = create_engine('mysql://%s:%s@localhost/%s?charset=utf8' % (USER, PASS, DB_NAME))
 
 engine = create_engine('sqlite:///minotaur.db')

@@ -1,20 +1,8 @@
 import MySQLdb
 
-config = {
-      'user': 'foo',
-      'password': 'bar',
-      'host': '127.0.0.1',
-      'database': 'teseo',
-    }
+from dbconnection import dbconfig
 
-with open('pass.config', 'r') as inputfile:
-    for i, line in enumerate(inputfile):
-        if i == 0:
-            config['user'] = line
-        elif i == 1:
-            config['password'] = line
-        elif i > 1:
-            break
+config = dbconfig
 
 conn = MySQLdb.Connection(db=config['database'], host=config['host'], user=config['user'], passwd=config['password'])
 cursor = conn.cursor()

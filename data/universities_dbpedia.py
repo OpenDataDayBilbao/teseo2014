@@ -57,13 +57,12 @@ def get_uri_types(uri, lang):
     return [ str(typ) for typ in g.objects(URIRef(uri), RDF.type) ]
 
 if __name__ == '__main__':
-    USER = 'teseo'
-    PASS = 'teseo2014'
-    DB_NAME = 'teseo_old'
-    DB_HOST = 'thor'
+    from dbconnection import dbconfig
+
+    config = dbconfig
 
     # Load from DB
-    engine = create_engine('mysql://%s:%s@%s/%s?charset=utf8' % (USER, PASS, DB_HOST, DB_NAME))
+    engine = create_engine('mysql://%s:%s@%s/%s?charset=utf8' % (config['user'], config['password'], config['host'], dbconfig['database']))
 
     Session = sessionmaker(bind=engine)
     session = Session()
