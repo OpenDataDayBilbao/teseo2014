@@ -52,6 +52,12 @@ def panel_gender_distribution():
     return render_template("gender_analysis/panel_distribution.html")
 
 
+@app.route('/topic_gender_distribution/<topic>')
+def topic_gender_distribution(topic):
+    topic = topic.upper().replace("-", " ")
+    return render_template("gender_analysis/topic_distribution.html", topic=topic)
+
+
 @app.route('/topics/<min_year>/<max_year>')
 def topics_by_five_years(min_year, max_year):
     json_data = open('static/data/first_level_areas_temporal.json')
@@ -130,12 +136,14 @@ def topic_geographical_distribution():
 
 @app.route('/topic_evolution/')
 @app.route('/topic_evolution/<topic>')
-def topic_evolution(topic=None):
+def topic_evolution(topic="antropologia"):
     topics = []
 
     for key, value in codes_descriptor.items():
         if str(key)[2:6] == '0000':
             topics.append(value)
+
+    topic_slug = topic
 
     if topic:
         topic = topic.upper().replace("-", " ")
@@ -145,7 +153,7 @@ def topic_evolution(topic=None):
     if (topic and topic not in topics):
         low_level_topic = True
 
-    return render_template("topic_analysis/single_evolution.html", topic=topic, low_level_topic=low_level_topic, topics=sorted(topics))
+    return render_template("topic_analysis/single_evolution.html", topic=topic, topic_slug=topic_slug, low_level_topic=low_level_topic, topics=sorted(topics))
 
 
 @app.route('/gender_by_topic/<min_year>/<max_year>')

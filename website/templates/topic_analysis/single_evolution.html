@@ -62,6 +62,12 @@
                 </select>
             {% endif %}
         </div>
+
+        <div class="col-md-2 col-md-offset-4">
+            <a id="gender_distribution" class="btn btn-primary" href="/topic_gender_distribution/{{ topic_slug }}">
+                Gender distribution
+            </a>
+        </div>
     </div>
 
     <br>
@@ -121,7 +127,7 @@
 
         {% if topic != None %}
             topic = '{{ topic }}';
-            $('#topic-selector').val('{{ topic|slugify }}');
+            $('#topic-selector').val('{{ topic_slug }}');
         {% else %}
             topic = "ANTROPOLOGIA";
         {% endif %}
@@ -129,6 +135,11 @@
 
         $('#topic-selector').change(function() {
             topic = $( "#topic-selector option:selected" ).text();
+            var url = "{{ url_for('topic_gender_distribution', topic='topic_slug') }}";
+            var topic_slug = topic.
+            url = url.replace("topic_slug", "{{ topic_slug }}");
+            console.log(url);
+            $('#gender_distribution').attr('href', url);
             drawChart();
         });
 
