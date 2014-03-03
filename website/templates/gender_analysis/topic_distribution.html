@@ -168,7 +168,7 @@
                     }
 
                     try {
-                        none = json[element]["{{ topic }}"]["none"];
+                        none = json[element]["{{ topic }}"]["None"];
                         if (typeof none == 'undefined') {
                             none = 0
                         }
@@ -187,8 +187,6 @@
                     data.push(data_obj);
                 };
             }
-
-            console.log(data);
 
             xScale.domain(data.map(function(d) { return new Date(d.year, 01, 01); }));
 
