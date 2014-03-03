@@ -1,0 +1,239 @@
+{% extends "base.html" %}
+
+
+
+{% block content %}
+
+    <div class="row">
+
+        <!-- Button trigger modal -->
+        <button class="btn btn-info col-md-1 col-md-offset-1" data-toggle="modal" data-target="#info-modal">
+            <i class="fa fa-info"></i>&emsp;Info
+        </button>
+
+
+        <!-- Modal -->
+        <div class="modal fade" id="info-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title" id="myModalLabel">Theses gender distribution</h4>
+                    </div>
+
+                    <div class="modal-body">
+                        <p>
+                            This chart shows the panel member's gender distribution from all the doctoral defenses registered in Spain since 1977.
+                        </p>
+
+                        <p>
+                            When hovering over each bar, a tooltip with gender distribution information shows up.
+                        </p>
+
+                        <p>
+                            Remember that viva panels in Spain are formed by 5 tribunal members, with the following roles:
+
+                            <ul>
+                                <li>1 president</li>
+                                <li>1 secretary</li>
+                                <li>3 vocals</li>
+                            </ul>
+                        </p>
+
+                        <p>
+                            To calculate the presence of each gender in those panels, the number of gender-unknown members is deducted from that year's total count. This could lead to data misinterpretations, as some data are missing in the analysis. Improving the gender desambiguation could lead to more realistic results.
+                        </p>
+
+                        <p>
+                            This chart is closely related with the <a href="{{ url_for('theses_gender_distribution') }}">Thesis gender distribution</a> chart.
+                        </p>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="svg" class="centered"></div>
+
+{% endblock %}
+
+
+
+{% block scripts %}
+
+    <script type="text/javascript" src="{{ url_for('static', filename='js/d3.min.js') }}"></script>
+    <script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
+
+    <script type="text/javascript" src="{{ url_for('static', filename='js/handlebars-v1.3.0.js') }}"></script>
+
+    {% raw %}
+    <script id="percentage-tooltip-template" type="text/x-handlebars-template">
+        <h1>Year {{ year }}</h1>
+
+        <p class="genders">
+            &emsp;<i class="fa fa-female"></i>&emsp;{{ females }} %
+            <br>
+            &emsp;<i class="fa fa-male"></i>&emsp;{{ males }} %
+        </p>
+    </script>
+    {% endraw %}
+
+    <script>
+        var page_width = $(".container").width();
+
+        var margin = {top: 40, right: 50, bottom: 30, left: 50},
+            width = page_width - margin.left - margin.right,
+            height = 500 - margin.top - margin.bottom;
+
+        var year_format = d3.time.format("%y");
+
+        var xScale = d3.scale.ordinal().rangeRoundBands([0, width], .1);
+
+        var yScale = d3.scale.linear().range([height, 0]);
+        var yScale2 = d3.scale.linear().range([height, 0]);
+
+        yScale.domain([0, 100]);
+        yScale2.domain([100, 0]);
+
+        var xAxis = d3.svg.axis()
+            .scale(xScale)
+            .orient("bottom")
+            .tickFormat(year_format);
+
+        var yAxis = d3.svg.axis()
+            .scale(yScale)
+            .orient("left");
+
+        var yAxis2 = d3.svg.axis()
+            .scale(yScale2)
+            .orient("right");
+
+        var svg = d3.select("#svg").append("svg")
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", height + margin.top + margin.bottom)
+            .append("g")
+            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+        var data = [];
+        $.getJSON("{{ url_for('static', filename='data/advisor_gender.json') }}", function(json) {
+            for (var element in json) {
+
+                if (element > 1976) {
+                    var data_obj = {
+                        "year": element,
+                        "none": json[element]["None"],
+                        "females": json[element]["female"],
+                        "males": json[element]["male"]
+                    };
+                    data.push(data_obj);
+                };
+
+            }
+
+            xScale.domain(data.map(function(d) { return new Date(d.year, 01, 01); }));
+
+            svg.append("g")
+                .attr("class", "x axis")
+                .attr("transform", "translate(0," + height + ")")
+                .call(xAxis);
+
+            svg.append("g")
+                .attr("class", "y axis y-left")
+                .call(yAxis)
+                .append("text")
+                    .attr("y", -35)
+                    .attr("dy", ".71em")
+                    .attr("class", "y-left-text")
+                    .text("female presence (%)");
+
+            d3.select(".y-left")
+                .transition().duration(1000).ease("quad")
+                .style("fill", "#ff69b4")
+                .call(yAxis);
+
+            svg.append("g")
+                .attr("class", "y axis y-right")
+                .attr("transform", "translate(" + width + ", 0)")
+                .style("fill", "#4d6df3")
+                .append("text")
+                    .attr("x", -120)
+                    .attr("y", -35)
+                    .attr("dy", ".71em")
+                    .attr("class", "y-right-text")
+                    .text("male presence(%)");
+
+            d3.select(".y-right")
+                .transition().duration(1000).ease("quad")
+                .call(yAxis2);
+
+            var tip = d3.tip()
+                .attr('class', 'd3-tip')
+                .offset([-10, 0])
+                .html(function(d) {
+                    var template_source = $('#percentage-tooltip-template').html();
+                    var template = Handlebars.compile(template_source);
+                    var total = d.females + d.males;
+                    var tooltip_data = {
+                        year: d.year,
+                        females: (d.females/total * 100).toFixed(2),
+                        males: (d.males/total * 100).toFixed(2),
+                        total: d.females + d.males + d.none
+                    }
+                    return template(tooltip_data);
+                });
+
+            svg.call(tip);
+
+            var b = svg.selectAll(".bar").data(data);
+
+            b.enter().append('g')
+                .attr('class', 'bar')
+               . on('mouseover', tip.show)
+                .on('mouseout', tip.hide);
+
+            b.call(tip);
+
+            b.append("rect")
+                .attr("x", function(d) { return xScale(new Date(d.year, 01, 01)); })
+                .attr("width", xScale.rangeBand())
+                .attr("y", function(d) { return height; })
+                .attr("height", function(d) { return 0; })
+                .transition().duration(1000).ease("quad")
+                    .style("fill-opacity", 0.75)
+                    .style("fill", "#ff69b4")
+                    .attr("y", function(d) { return yScale(d.females / (d.females + d.males) * 100); })
+                    .attr("height", function(d) { return height - yScale(d.females / (d.females + d.males) * 100); });
+
+            b.append("rect")
+                .attr("x", function(d) { return xScale(new Date(d.year, 01, 01)); })
+                .attr("width", xScale.rangeBand())
+                .attr("y", function(d) { return height; })
+                .attr("height", function(d) { return 0; })
+                .transition().duration(1000).ease("quad")
+                    .style("fill-opacity", 0.75)
+                    .style("fill", "#4d6df3")
+                    .attr("y", function(d) { return 0; })
+                    .attr("height", function(d) { return height - yScale(d.males / (d.females + d.males) * 100); });
+
+            svg.selectAll("line.horizontalGrid")
+                .data(yScale.ticks())
+                .enter().append("line")
+                    .attr({
+                        "class":"horizontalGrid",
+                        "x1" : 0,
+                        "x2" : width,
+                        "y1" : function(d){ return yScale(d); },
+                        "y2" : function(d){ return yScale(d); },
+                        "fill" : "none",
+                        "shape-rendering" : "crispEdges",
+                        "stroke" : "#ccc",
+                        "stroke-width" : function(d, i) { return (i == 5) ? "3px" : "1px"; }
+                    });
+        });
+    </script>
+
+{% endblock %}

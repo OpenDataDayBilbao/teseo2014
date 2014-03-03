@@ -52,6 +52,11 @@ def panel_gender_distribution():
     return render_template("gender_analysis/panel_distribution.html")
 
 
+@app.route('/advisor_gender_distribution')
+def advisor_gender_distribution():
+    return render_template("gender_analysis/advisor_distribution.html")
+
+
 @app.route('/topic_gender_distribution/<topic>')
 def topic_gender_distribution(topic):
     topic = topic.upper().replace("-", " ")
