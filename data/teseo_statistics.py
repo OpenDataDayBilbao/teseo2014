@@ -19,6 +19,22 @@ from model.dbconnection import dbconfig
 
 config = dbconfig
 
+config = {
+      'user': 'foo',
+      'password': 'bar',
+      'host': '127.0.0.1',
+      'database': 'teseo',
+    }
+    
+with open('pass.config', 'r') as inputfile:
+    for i, line in enumerate(inputfile):
+        if i == 0:
+            config['user'] = line
+        elif i == 1:
+            config['password'] = line
+        elif i > 1:
+            break
+
 def get_university_ids():
     cnx = mysql.connector.connect(**config)
     cursor_unis = cnx.cursor()
@@ -401,6 +417,48 @@ def create_gender_panel_evolution_by_year():
     cursor.close()
 
     return results
+    
+    
+def create_gender_advisor_evolution_by_year():
+    cnx = mysql.connector.connect(**config)
+    cnx2 = mysql.connector.connect(**config)
+    cursor = cnx.cursor()
+    query = 'SELECT thesis.id, thesis.defense_date from thesis'
+    cursor.execute(query)
+    results = {}
+    for i, thesis in enumerate(cursor):
+        print 'Thesis advisor gender distribution temporal evolution', i
+        cursor_names = cnx2.cursor()
+        query_names = 'SELECT person.first_name FROM advisor, person WHERE person.id = advisor.person_id AND advisor.thesis_id=' + str(thesis[0])
+        cursor_names.execute(query_names)
+        genders = {'male':0, 'female':0, 'None':0}
+        for name in cursor_names:
+            try:
+                gender = name_genders[name[0]]
+            except:
+                gender = 'None'
+            genders[gender] += 1
+        cursor_names.close()
+
+
+
+        try:
+            year = thesis[1].year
+            if year in results.keys():
+                gender_cont = results[year]
+                for g in genders:
+                    if g in gender_cont.keys():
+                        gender_cont[g] += genders[g]
+                    else:
+                        gender_cont[g] = genders[g]
+            else:
+                results[year] = genders
+        except AttributeError:
+            print 'The thesis has no year in the database'
+
+    cursor.close()
+
+    return results
 
 
 def create_gender_meta_area_evolution():
@@ -494,7 +552,7 @@ if __name__=='__main__':
 
     print 'Calculating statistics and graphs'
     pp = pprint.PrettyPrinter(indent=4)
-
+#
 #    #create the thesis panel social network
 #    G = build_panel_relations()
 #    filter_panel_relations(G)
@@ -554,11 +612,17 @@ if __name__=='__main__':
 #    pp.pprint(panel_gender)
 #    json.dump(panel_gender, open('../website/static/data/gender_panel_temporal.json', 'w'), indent = 4)
 #
-#    #Create the temporal evolution of the genders in first leve areas
+#    #Create the temporal evolution of the genders in first level areas
 #    print 'Temporal evolution of the student genders by first level area'
 #    meta_area_gender = create_gender_meta_area_evolution()
 #    pp.pprint(meta_area_gender)
 #    json.dump(meta_area_gender, open('../website/static/data/gender_first_level_areas_temporal.json', 'w'), indent = 4)
+
+     #Create the temporal evolution of the genders of the thesis advisors
+    print 'Temporal evolution of the advisors genders'
+    advisor_gender = create_gender_advisor_evolution_by_year()
+    pp.pprint(advisor_gender)
+    json.dump(advisor_gender, open('../website/static/data/advisor_gender.json', 'w'), indent = 4)
 
 
     #create month distribution
