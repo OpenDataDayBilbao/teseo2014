@@ -1,15 +1,16 @@
 from thesaurus import fullfil_thesaurus_db
 from extract_names import extract_names
-from cache import name_genders, university_locations, save_name_genders
+from cache import name_genders, university_locations
 
 import os, sys
 lib_path = os.path.abspath('../')
 sys.path.append(lib_path)
-from model.teseo_model import Person, University
+from model.teseo_model import University
 from model.dbconnection import dbconfig
 
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
+import mysql.connector
 
 if __name__ == '__main__':
     # Get names and surnames for people
@@ -23,15 +24,23 @@ if __name__ == '__main__':
     Session = sessionmaker(bind=engine)
     session = Session()
 
-    for name, gender in name_genders.items():
-        if gender and gender != 'None':
-            for person in session.query(Person).filter(Person.first_name.startswith(name)):
-                if person.first_name.encode('utf-8').split()[0] == name:
-                    person.gender = gender
-                    sys.stdout.write('\r %s - %s' % (person.name, gender))
-                    sys.stdout.flush()
-                    session.add(person)
-                    session.commit()
+    cnx = mysql.connector.connect(**config)
+    update_cnx = mysql.connector.connect(**config)
+
+    cursor_pers = cnx.cursor()
+    cursor_update_pers = update_cnx.cursor()
+
+    cursor_pers.execute("SELECT id, first_name FROM person WHERE first_name <> '' ")
+    for pers in cursor_pers:
+        pers_id = pers[0]
+        pers_name = pers[1].encode('utf-8').split()[0]
+        if pers_name in name_genders and name_genders[pers_name] and name_genders[pers_name] != 'None':
+            sys.stdout.write('%s - %s       \r' % (pers_id, name_genders[pers_name]))
+            sys.stdout.flush()
+            cursor_update_pers.execute("UPDATE person SET gender='%s' WHERE id=%s" % (name_genders[pers_name], pers_id))
+
+    cursor_pers.close()
+    cursor_update_pers.close()
 
     # Generate the full hierarchy of unesco descriptors with codes
     print "\n\nGenerating Unesco hierarchy..."

@@ -137,8 +137,6 @@ def save_name_genders():
             print name, infered_gender, prob
             if infered_gender == 'None' or prob < 0.6:
                 bad_names.append(name)
-            # else:
-            #     cursor.execute('UPDATE person SET gender=%s WHERE')
             result[name] = infered_gender
 
     with open( base_dir + "/cache/genders.p", "wb" ) as outfile:
