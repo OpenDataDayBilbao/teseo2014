@@ -136,7 +136,7 @@
         $('#topic-selector').change(function() {
             topic = $( "#topic-selector option:selected" ).text();
             var url = "{{ url_for('topic_gender_distribution', topic='topic_slug') }}";
-            var topic_slug = topic.replaceAll(" ", "-", key).toLowerCase();
+            var topic_slug = replaceAll(" ", "-", topic).toLowerCase();
             url = url.replace("topic_slug", topic_slug);
             $('#gender_distribution').attr('href', url);
             drawChart();

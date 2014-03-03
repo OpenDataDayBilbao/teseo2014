@@ -94,10 +94,9 @@ body {
     margin: 0 1em;
 }
 
-
-
-
-
+.form-inline > .university-checkbox {
+    margin: 0;
+}
 
 .line {
   fill: none;
@@ -172,4 +171,9 @@ g.ev-axis > g.tick > text {
 
 .row {
     margin-bottom: 1em;
+}
+
+.university-checkbox > label {
+    font-size: 0.7em;
+    font-weight: bold;
 }

@@ -10,7 +10,7 @@ from slugify import slugify
 import os, sys
 lib_path = os.path.abspath('../')
 sys.path.append(lib_path)
-from data.cache import codes_descriptor
+from data.cache import codes_descriptor, university_locations
 
 
 app = Flask(__name__)
@@ -20,6 +20,11 @@ app.config.from_object(__name__)
 @app.template_filter('slugify')
 def _jinja2_filter_slugify(string):
     return slugify(string)
+
+
+@app.template_filter('divisibleby')
+def _jinja2_filter_divisibleby(dividend, divisor):
+    return ((dividend % divisor) == 0)
 
 
 @app.route('/')
@@ -105,6 +110,16 @@ def all_topics_by_five_years(min_year, max_year):
                 tag_dict[key] = value
 
     return render_template("topics_per_five_years.html", tag_dict=tag_dict, min_year=min_year, max_year=max_year)
+
+
+@app.route('/theses_by_university/')
+def theses_by_university():
+    universities = []
+
+    for university in university_locations.keys():
+        universities.append(university)
+
+    return render_template("totals_analysis/theses_by_university.html", universities=sorted(universities))
 
 
 @app.route('/evolution_topic/<topic>')
