@@ -169,3 +169,7 @@ body {
 g.ev-axis > g.tick > text {
     -webkit-transform:rotate(-75deg);
 }
+
+.row {
+    margin-bottom: 1em;
+}
