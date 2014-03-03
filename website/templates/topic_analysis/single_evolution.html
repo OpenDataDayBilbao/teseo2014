@@ -136,12 +136,15 @@
         $('#topic-selector').change(function() {
             topic = $( "#topic-selector option:selected" ).text();
             var url = "{{ url_for('topic_gender_distribution', topic='topic_slug') }}";
-            var topic_slug = topic.
-            url = url.replace("topic_slug", "{{ topic_slug }}");
-            console.log(url);
+            var topic_slug = topic.replaceAll(" ", "-", key).toLowerCase();
+            url = url.replace("topic_slug", topic_slug);
             $('#gender_distribution').attr('href', url);
             drawChart();
         });
+
+        function replaceAll(find, replace, str) {
+            return str.replace(new RegExp(find, 'g'), replace);
+        };
 
         function drawChart() {
             svg.selectAll(".axis").remove();
