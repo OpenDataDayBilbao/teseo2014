@@ -18,12 +18,12 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title" id="myModalLabel">Panel gender distribution</h4>
+                        <h4 class="modal-title" id="myModalLabel">Advisor gender distribution</h4>
                     </div>
 
                     <div class="modal-body">
                         <p>
-                            This chart shows the panel member's gender distribution from all the doctoral defenses registered in Spain since 1977.
+                            This chart shows the advisor's gender distribution from all the doctoral defenses registered in Spain since 1977.
                         </p>
 
                         <p>
@@ -31,17 +31,7 @@
                         </p>
 
                         <p>
-                            Remember that viva panels in Spain are formed by 5 tribunal members, with the following roles:
-
-                            <ul>
-                                <li>1 president</li>
-                                <li>1 secretary</li>
-                                <li>3 vocals</li>
-                            </ul>
-                        </p>
-
-                        <p>
-                            To calculate the presence of each gender in those panels, the number of gender-unknown members is deducted from that year's total count. This could lead to data misinterpretations, as some data are missing in the analysis. Improving the gender desambiguation could lead to more realistic results.
+                            To calculate the presence of each gender as advisors (an co-advisors, they are treated at the same level), the number of gender-unknown members is deducted from that year's total count. This could lead to data misinterpretations, as some data are missing in the analysis. Improving the gender desambiguation could lead to more realistic results.
                         </p>
 
                         <p>
@@ -119,7 +109,7 @@
             .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
         var data = [];
-        $.getJSON("{{ url_for('static', filename='data/gender_panel_temporal.json') }}", function(json) {
+        $.getJSON("{{ url_for('static', filename='data/advisor_gender.json') }}", function(json) {
             for (var element in json) {
 
                 if (element > 1976) {

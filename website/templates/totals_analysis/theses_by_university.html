@@ -1,0 +1,344 @@
+{% extends "base.html" %}
+
+
+
+{% block content %}
+
+    <div class="row">
+
+        <!-- Button trigger modal -->
+        <button class="btn btn-info col-md-1 col-md-offset-1" data-toggle="modal" data-target="#info-modal">
+            <i class="fa fa-info"></i>&emsp;Info
+        </button>
+
+        <!-- Modal -->
+        <div class="modal fade" id="info-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title" id="myModalLabel">Theses by university</h4>
+                    </div>
+
+                    <div class="modal-body">
+                        <p>
+                            This chart shows the number of doctoral thesis dissertations defended in each spanish university since 1977.
+                        </p>
+
+                        <p>
+                            The user can select different universities to compare data between them, by selecting the adjacent checkbox to the university's name.
+                        </p>
+
+                        <p>
+                            When selecting different universities, take care of the y-axis scale, which may change.
+                        </p>
+
+                        <p>
+                            If a solid point is missing for a given year, there is no recorded data for that particular year, so the tendency line is maintained, but no data is displayed.
+                        </p>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <br>
+
+    <div id="svg" class="centered"></div>
+
+    <br>
+
+    <form class="form-inline row" role="form">
+    {% for university in universities %}
+        {% if loop.index|divisibleby(4) %}{% endif %}
+            <div class="checkbox col-md-3 university-checkbox">
+                <label>
+                    <input type="checkbox" value="{{ university }}">&emsp;{{ university }}
+                </label>
+            </div>
+    {% endfor %}
+    </form>
+
+{% endblock %}
+
+
+
+{% block scripts %}
+
+    <script type="text/javascript" src="{{ url_for('static', filename='js/d3.min.js') }}"></script>
+    <script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/underscore.min.js') }}"></script>
+
+    <script type="text/javascript" src="{{ url_for('static', filename='js/handlebars-v1.3.0.js') }}"></script>
+
+    {% raw %}
+    <script id="percentage-tooltip-template" type="text/x-handlebars-template">
+        <h1>Year {{ year }}</h1>
+
+        <p>
+            <i class="fa fa-book" style="color: {{ color }};"></i>&emsp;{{ university }}
+            <br>
+            {{ count }} theses tagged
+        </p>
+    </script>
+    {% endraw %}
+
+    <script>
+        var page_width = $(".container").width();
+
+        var margin = {top: 40, right: 50, bottom: 50, left: 50},
+            width = page_width - margin.left - margin.right,
+            height = 500 - margin.top - margin.bottom;
+
+        var year_format = d3.time.format("%y");
+
+        var xScale = d3.scale.ordinal().rangeRoundBands([0, width], 1);
+
+        var xAxis = d3.svg.axis()
+            .scale(xScale)
+            .orient("bottom");
+
+        var yScale = d3.scale.linear().range([height, 0]);
+
+        var yAxis = d3.svg.axis()
+            .scale(yScale)
+            .orient("left");
+
+        var svg = d3.select("#svg").append("svg")
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", height + margin.top + margin.bottom)
+            .append("g")
+            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+        var years = [];
+        for (var year in _.range(1977, new Date().getFullYear() + 1)) {
+            years.push({"year": 1977 + parseInt(year)});
+        }
+
+        xScale.domain(years.map(function(d) { return d.year; }));
+        yScale.domain([0, 50]);
+
+        svg.append("g")
+            .attr("class", "y axis y-left")
+            .call(yAxis)
+            .append("text")
+                .attr("y", -35)
+                .attr("dy", ".71em")
+                .attr("class", "y-left-text")
+                .text("Number of theses");
+
+        d3.select(".y-left")
+            .transition().duration(1000).ease("quad")
+            .call(yAxis);
+
+        svg.append("g")
+            .attr("class", "x axis ev-axis")
+            .attr("transform", "translate(0," + height + ")")
+            .call(xAxis);
+
+        d3.selectAll("g.ev-axis").selectAll(".tick").selectAll("text")
+            .attr("y", 0)
+            .attr("x", -25);
+
+        var legend = svg.append("g")
+            .attr("class", "legend")
+            .attr("x", 50)
+            .attr("y", 25)
+            .attr("height", 100)
+            .attr("width", 100);
+
+        var universities = [];
+        universities.push("{{ university }}");
+
+        var color = d3.scale.category20(); // category10() | category20() | category20b() | category20c()
+        color.domain(d3.keys(universities));
+
+        var selected_universities = [];
+
+        $(function() {
+            $('input[type="checkbox"]').bind('click',function() {
+                var selected_university = $(this).val();
+                if($(this).is(':checked')) {
+                    selected_universities.push(selected_university);
+                }
+                else {
+                    selected_universities.splice(selected_universities.indexOf(selected_university), 1);
+                }
+
+                $(".legend").empty();
+                svg.selectAll(".circle").remove();
+                svg.selectAll(".line").remove();
+                svg.selectAll("line.horizontalGrid").remove();
+
+                parseFullJSON(function(receivedData) {
+                    var units = (receivedData["max"] > 250) ? 100 : 10;
+                    yScale.domain([0, Math.ceil(receivedData["max"] / units) * units]);
+
+                    d3.select(".y-left")
+                        .transition().duration(1000).ease("quad")
+                        .call(yAxis);
+
+                    svg.selectAll("line.horizontalGrid")
+                        .data(yScale.ticks())
+                        .enter().append("line")
+                            .attr({
+                                "class":"horizontalGrid",
+                                "x1" : 0,
+                                "x2" : width,
+                                "y1" : function(d){ return yScale(d); },
+                                "y2" : function(d){ return yScale(d); },
+                                "fill" : "none",
+                                "shape-rendering" : "crispEdges",
+                                "stroke" : "#ccc",
+                                "stroke-width" : "1px"
+                            });
+
+                    for (var index in receivedData["selected_universities"]) {
+                        var selected_university = receivedData["selected_universities"][index];
+
+                        displayElements(selected_university, receivedData, function() {});
+                    };
+                });
+            });
+        });
+
+        function replaceAll(find, replace, str) {
+            return str.replace(new RegExp(find, 'g'), replace);
+        };
+
+        function parseFullJSON(callback) {
+            $.getJSON("{{ url_for('static', filename='data/universities_temporal.json') }}", function(json) {
+                var dataToReturn = {};
+
+                dataToReturn["max"] = 0;
+
+
+                legend.selectAll('g')
+                    .data(selected_universities)
+                    .enter().append('g').each(function(d, i) {
+                        var g = d3.select(this);
+                        g.append("rect")
+                            .attr("class", "legend-rect")
+                            .attr("x", 10)
+                            .attr("y", i*20)
+                            .attr("width", 10)
+                            .attr("height", 10)
+                            .style("fill", color(d));
+
+                        g.append("text")
+                            .attr("x", 25)
+                            .attr("y", i * 20 + 8)
+                            .attr("height",30)
+                            .attr("width",100)
+                            .style("fill", 'black')
+                            .text(d);
+                    });
+
+                for (var index in selected_universities) {
+                    var selected_university = selected_universities[index];
+                    var data = [];
+                    var lineData = [];
+                    for (var year in json) {
+                        if (year > 1976) {
+                            for(var university in json[year]) {
+                                if (university == selected_university) {
+                                    var data_obj = {
+                                        "year": year,
+                                        "count": json[year][university]
+                                    };
+
+                                    if (typeof data_obj.count != 'undefined') {
+                                        data.push(data_obj);
+                                        lineData.push([parseInt(data_obj.year), data_obj.count]);
+                                    };
+                                };
+                            };
+                        };
+                    };
+
+                    dataToReturn[selected_university + "data"] = data;
+                    dataToReturn[selected_university + "lineData"] = lineData;
+
+                    var local_max = d3.max(data, function(d) { return d.count });
+                    dataToReturn["max"] = (dataToReturn["max"] > local_max) ? dataToReturn["max"] : local_max;
+                };
+
+                dataToReturn["selected_universities"] = selected_universities;
+
+                callback(dataToReturn);
+            });
+        };
+
+        function displayElements(selected_university, receivedData, callback) {
+            var data = receivedData[selected_university + "data"];
+            var lineData = receivedData[selected_university + "lineData"];
+
+            var tip = d3.tip()
+                .attr('class', 'd3-tip')
+                .offset([-10, 0])
+                .html(function(d) {
+                    var template_source = $('#percentage-tooltip-template').html();
+                    var template = Handlebars.compile(template_source);
+                    var tooltip_data = {
+                        year: d.year,
+                        university: selected_university,
+                        color: color(selected_university),
+                        count: d.count
+                    }
+                    return template(tooltip_data);
+                });
+
+            svg.call(tip);
+
+            var line = d3.svg.line()
+                .x(function(d) { return xScale(d[0]); })
+                .y(function(d) { return yScale(d[1]); });
+
+            svg.append("path")
+                .data([lineData])
+                .attr("class", "line")
+                .attr("d", line)
+                .style("fill", "none")
+                .style("stroke", function(d) { return color(selected_university); });
+
+            svg.selectAll("circle")
+                .data(data)
+                .enter().append("circle")
+                    .attr("class", "circle")
+                    .attr("r", 3)
+                    .attr("cx", function(d) { return xScale(d.year); })
+                    .attr("cy",function(d) { return yScale(d.count); })
+                    .style("stroke", function(d) { return color(selected_university); })
+                    .style("fill", function(d) { return color(selected_university); })
+                    .on('mouseover', tip.show)
+                    .on('mouseout', tip.hide);
+
+            // var legend = svg.selectAll('g')
+            //     .data(selected_university)
+            //     .enter().append('g')
+            //         .attr('class', 'legend');
+
+            // legend.append('rect')
+            //     .attr('class', 'class-rect')
+            //     .attr('x', width - 20)
+            //     .attr('y', function(d, i) { return i *  20;})
+            //     .attr('width', 10)
+            //     .attr('height', 10)
+            //     .style('fill', color(selected_university) );
+
+            // legend.append('text')
+            //     .attr('class', 'class-text')
+            //     .attr('x', width - 8)
+            //     .attr('y', function(d, i) { return (i *  20) + 9;})
+            //     .text(selected_university);
+
+            callback();
+        };
+    </script>
+
+{% endblock %}
