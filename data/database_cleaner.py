@@ -7,8 +7,12 @@ Created on Tue Mar 04 10:41:28 2014
 
 import difflib
 import json
-import os
 import mysql.connector
+
+import os, sys
+
+lib_path = os.path.abspath('../')
+sys.path.append(lib_path)
 
 
 base_dir = os.path.dirname(os.path.abspath(__file__))
@@ -19,6 +23,8 @@ def load_config():
     return dbconfig
 
 config = load_config()
+
+
 
 def get_complete_names():
     cnx = mysql.connector.connect(**config)
@@ -72,8 +78,7 @@ def get_repeated_thesis_ids(distinct_titles):
     cursor = cnx.cursor()
     repeated_ids = []
     for title in distinct_titles:
-        query = "SELECT id FROM thesis WHERE title='" + title  + "'"
-        cursor.execute(query)
+        cursor.execute("SELECT id FROM thesis WHERE title= %s", (title,))
         name_ids = []
         for thesis_id in cursor:
             name_ids.append(thesis_id[0])
@@ -82,6 +87,12 @@ def get_repeated_thesis_ids(distinct_titles):
             
     cursor.close()
     return repeated_ids
+    
+#def merge_repeated_thesis():
+#    cnx = mysql.connector.connect(**config)
+#    cursor = cnx.cursor()
+#    for id_group in repeated_ids:
+#        
     
 if __name__=='__main__':
     print 'Getting names'
