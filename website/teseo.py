@@ -4,13 +4,13 @@
 from flask import Flask, render_template
 from slugify import slugify
 
-from data.cache import codes_descriptor, university_locations
-
 import os
 import sys
 
 lib_path = os.path.abspath('../')
 sys.path.append(lib_path)
+
+from data.cache import codes_descriptor, university_locations
 
 app = Flask(__name__)
 app.config.from_object(__name__)
