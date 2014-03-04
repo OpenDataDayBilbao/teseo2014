@@ -5,7 +5,6 @@ Created on Tue Mar 04 10:41:28 2014
 @author: aitor
 """
 
-import cache
 import difflib
 import json
 import os
@@ -18,11 +17,23 @@ def load_config():
     from model.dbconnection import dbconfig
 
     return dbconfig
+
+config = load_config()
+
+def get_complete_names():
+    cnx = mysql.connector.connect(**config)
+    cursor = cnx.cursor()
+    cursor.execute("SELECT DISTINCT(name) FROM person")
+    result = []
+    for name in cursor:
+        result.append(name[0])
+    cursor.close()
+    return result
     
 #checks for similar names
 def check_similar_names():
     print 'Getting names'
-    names = cache.get_complete_names()
+    names = get_complete_names()
     print 'Total names:', len(names)
     # min similarity ratio between strings
     threshold_ratio = 0.85
@@ -46,7 +57,6 @@ def check_similar_names():
     return repeated
     
 def get_thesis_names():
-    config = load_config()
     cnx = mysql.connector.connect(**config)
     cursor = cnx.cursor()
     cursor.execute("SELECT DISTINCT(title) FROM thesis")
@@ -55,4 +65,30 @@ def get_thesis_names():
         result.append(name[0])
     cursor.close()
     return result
+    
+
+def get_repeated_thesis_ids(distinct_titles):
+    cnx = mysql.connector.connect(**config)
+    cursor = cnx.cursor()
+    repeated_ids = []
+    for title in distinct_titles:
+        query = "SELECT id FROM thesis WHERE title='" + title  + "'"
+        cursor.execute(query)
+        name_ids = []
+        for thesis_id in cursor:
+            name_ids.append(thesis_id[0])
+        if len(name_ids) > 1:
+            repeated_ids.append(name_ids)
+            
+    cursor.close()
+    return repeated_ids
+    
+if __name__=='__main__':
+    print 'Getting names'
+    distinct_names = get_thesis_names()
+    print 'Distinct names: ', len(distinct_names)
+    repeated_ids = get_repeated_thesis_ids(distinct_names)
+    print repeated_ids
+            
+    
     
