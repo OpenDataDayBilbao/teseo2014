@@ -77,15 +77,23 @@ def get_repeated_thesis_ids(distinct_titles):
     cnx = mysql.connector.connect(**config)
     cursor = cnx.cursor()
     repeated_ids = []
-    for title in distinct_titles:
+    total = float(len(distinct_titles))
+    for i, title in enumerate(distinct_titles):
+        if i%100 == 0:
+            print 'Getting repeated ids:', (i/total)*100
         cursor.execute("SELECT id FROM thesis WHERE title= %s", (title,))
         name_ids = []
         for thesis_id in cursor:
             name_ids.append(thesis_id[0])
         if len(name_ids) > 1:
+            print 'Repeated ids', name_ids
             repeated_ids.append(name_ids)
             
     cursor.close()
+    
+    with open( base_dir + "/cache/repeated_thesis_ids.json", "wb" ) as outfile:
+        json.dump(repeated_ids, outfile)
+
     return repeated_ids
     
 #def merge_repeated_thesis():
