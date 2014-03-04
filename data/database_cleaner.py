@@ -7,10 +7,10 @@ Created on Tue Mar 04 10:41:28 2014
 
 import difflib
 import json
-import os
 import mysql.connector
 
 import os, sys
+
 lib_path = os.path.abspath('../')
 sys.path.append(lib_path)
 
@@ -22,7 +22,15 @@ def load_config():
 
     return dbconfig
 
-config = load_config()
+#config = load_config()
+
+config = dbconfig = {
+    'user': 'teseo',
+    'password': '',
+    'host': 'thor.deusto.es',
+    'database': 'teseo_clean',
+}
+
 
 
 def get_complete_names():
@@ -77,8 +85,7 @@ def get_repeated_thesis_ids(distinct_titles):
     cursor = cnx.cursor()
     repeated_ids = []
     for title in distinct_titles:
-        query = "SELECT id FROM thesis WHERE title='" + title  + "'"
-        cursor.execute(query)
+        cursor.execute("SELECT id FROM thesis WHERE title= %s", (title,))
         name_ids = []
         for thesis_id in cursor:
             name_ids.append(thesis_id[0])
