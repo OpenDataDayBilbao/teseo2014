@@ -10,6 +10,10 @@ import json
 import os
 import mysql.connector
 
+import os, sys
+lib_path = os.path.abspath('../')
+sys.path.append(lib_path)
+
 
 base_dir = os.path.dirname(os.path.abspath(__file__))
 
@@ -19,6 +23,7 @@ def load_config():
     return dbconfig
 
 config = load_config()
+
 
 def get_complete_names():
     cnx = mysql.connector.connect(**config)
@@ -82,6 +87,12 @@ def get_repeated_thesis_ids(distinct_titles):
             
     cursor.close()
     return repeated_ids
+    
+#def merge_repeated_thesis():
+#    cnx = mysql.connector.connect(**config)
+#    cursor = cnx.cursor()
+#    for id_group in repeated_ids:
+#        
     
 if __name__=='__main__':
     print 'Getting names'
