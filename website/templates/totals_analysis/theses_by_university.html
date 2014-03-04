@@ -140,21 +140,6 @@
             .transition().duration(1000).ease("quad")
             .call(yAxis);
 
-        svg.selectAll("line.horizontalGrid")
-        .data(yScale.ticks())
-        .enter().append("line")
-            .attr({
-                "class":"horizontalGrid",
-                "x1" : 0,
-                "x2" : width,
-                "y1" : function(d){ return yScale(d); },
-                "y2" : function(d){ return yScale(d); },
-                "fill" : "none",
-                "shape-rendering" : "crispEdges",
-                "stroke" : "#ccc",
-                "stroke-width" : "1px"
-            });
-
         svg.append("g")
             .attr("class", "x axis ev-axis")
             .attr("transform", "translate(0," + height + ")")
@@ -163,6 +148,13 @@
         d3.selectAll("g.ev-axis").selectAll(".tick").selectAll("text")
             .attr("y", 0)
             .attr("x", -25);
+
+        var legend = svg.append("g")
+            .attr("class", "legend")
+            .attr("x", 50)
+            .attr("y", 25)
+            .attr("height", 100)
+            .attr("width", 100);
 
         var universities = [];
         universities.push("{{ university }}");
@@ -182,16 +174,33 @@
                     selected_universities.splice(selected_universities.indexOf(selected_university), 1);
                 }
 
-                parseFullJSON(function(receivedData) {
-                    svg.selectAll(".circle").remove();
-                    svg.selectAll(".line").remove();
+                $(".legend").empty();
+                svg.selectAll(".circle").remove();
+                svg.selectAll(".line").remove();
+                svg.selectAll("line.horizontalGrid").remove();
 
+                parseFullJSON(function(receivedData) {
                     var units = (receivedData["max"] > 250) ? 100 : 10;
                     yScale.domain([0, Math.ceil(receivedData["max"] / units) * units]);
 
                     d3.select(".y-left")
                         .transition().duration(1000).ease("quad")
                         .call(yAxis);
+
+                    svg.selectAll("line.horizontalGrid")
+                        .data(yScale.ticks())
+                        .enter().append("line")
+                            .attr({
+                                "class":"horizontalGrid",
+                                "x1" : 0,
+                                "x2" : width,
+                                "y1" : function(d){ return yScale(d); },
+                                "y2" : function(d){ return yScale(d); },
+                                "fill" : "none",
+                                "shape-rendering" : "crispEdges",
+                                "stroke" : "#ccc",
+                                "stroke-width" : "1px"
+                            });
 
                     for (var index in receivedData["selected_universities"]) {
                         var selected_university = receivedData["selected_universities"][index];
@@ -211,6 +220,28 @@
                 var dataToReturn = {};
 
                 dataToReturn["max"] = 0;
+
+
+                legend.selectAll('g')
+                    .data(selected_universities)
+                    .enter().append('g').each(function(d, i) {
+                        var g = d3.select(this);
+                        g.append("rect")
+                            .attr("class", "legend-rect")
+                            .attr("x", 10)
+                            .attr("y", i*20)
+                            .attr("width", 10)
+                            .attr("height", 10)
+                            .style("fill", color(d));
+
+                        g.append("text")
+                            .attr("x", 25)
+                            .attr("y", i * 20 + 8)
+                            .attr("height",30)
+                            .attr("width",100)
+                            .style("fill", 'black')
+                            .text(d);
+                    });
 
                 for (var index in selected_universities) {
                     var selected_university = selected_universities[index];
@@ -290,6 +321,25 @@
                     .style("fill", function(d) { return color(selected_university); })
                     .on('mouseover', tip.show)
                     .on('mouseout', tip.hide);
+
+            // var legend = svg.selectAll('g')
+            //     .data(selected_university)
+            //     .enter().append('g')
+            //         .attr('class', 'legend');
+
+            // legend.append('rect')
+            //     .attr('class', 'class-rect')
+            //     .attr('x', width - 20)
+            //     .attr('y', function(d, i) { return i *  20;})
+            //     .attr('width', 10)
+            //     .attr('height', 10)
+            //     .style('fill', color(selected_university) );
+
+            // legend.append('text')
+            //     .attr('class', 'class-text')
+            //     .attr('x', width - 8)
+            //     .attr('y', function(d, i) { return (i *  20) + 9;})
+            //     .text(selected_university);
 
             callback();
         };
