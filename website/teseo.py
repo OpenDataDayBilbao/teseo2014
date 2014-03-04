@@ -127,6 +127,11 @@ def evolution_topic(topic):
     return render_template("evolution_topic.html", topic=topic)
 
 
+@app.route('/month_distribution/')
+def month_distribution():
+    return render_template("totals_analysis/month_distribution.html")
+
+
 @app.route('/evolution_topic/<topic_1>/<topic_2>')
 def evolution_topic_comparison(topic_1, topic_2):
     return render_template("evolution_topic_comparison.html", topic_1=topic_1, topic_2=topic_2)
