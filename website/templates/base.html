@@ -20,8 +20,12 @@
                     </div>
 
                     <div class="col-md-6">
+                        <a class="btn btn-info" href="{{ url_for('index') }}">
+                            <i class="fa fa-globe"></i>&emsp;Home
+                        </a>
+
                         <div class="btn-group">
-                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                            <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
                                 <i class="fa fa-signal"></i>&emsp;Visualizations&emsp;<span class="caret"></span>
                             </button>
 
@@ -81,6 +85,10 @@
 
                             </ul>
                         </div>
+
+                        <a class="btn btn-info" href="{{ url_for('about') }}">
+                            <i class="fa fa-info"></i>&emsp;About
+                        </a>
                     </div>
                 </div>
 
