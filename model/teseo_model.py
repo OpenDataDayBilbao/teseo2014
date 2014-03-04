@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import UnicodeText, Date, create_engine, Column
+from sqlalchemy import UnicodeText, Boolean, Date, create_engine, Column
 from sqlalchemy import Integer, ForeignKey, Table
 from sqlalchemy.orm import relationship
 
@@ -13,8 +13,9 @@ class University(Base):
     id = Column(Integer, primary_key=True)
     name = Column(UnicodeText, nullable=False)
     location = Column(UnicodeText, nullable=True)
+    private = Column(Boolean, nullable=True, default=False)
 
-    def __init__(self, name, location=None):
+    def __init__(self, name, location=None, private=None):
         self.name = name
         self.location = location
 
