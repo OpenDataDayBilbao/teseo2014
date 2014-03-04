@@ -22,14 +22,7 @@ def load_config():
 
     return dbconfig
 
-#config = load_config()
-
-config = dbconfig = {
-    'user': 'teseo',
-    'password': '',
-    'host': 'thor.deusto.es',
-    'database': 'teseo_clean',
-}
+config = load_config()
 
 
 
