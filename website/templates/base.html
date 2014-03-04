@@ -14,15 +14,89 @@
 
         <div class="container">
             <blockquote>
-                <h1>Teseo</h1>
+                <div class="row">
+                    <div class="col-md-6">
+                        <h1>Teseo</h1>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                                <i class="fa fa-signal"></i>&emsp;Visualizations&emsp;<span class="caret"></span>
+                            </button>
+
+                            <ul class="dropdown-menu" role="menu">
+                                <li role="presentation" class="dropdown-header">
+                                    Totals distribution analysis
+                                </li>
+                                    <li role="presentation" class="tab-menu">
+                                        <a href="{{ url_for('month_distribution') }}">Month</a>
+                                    <li>
+
+                                    <li role="presentation" class="tab-menu">
+                                        <a href="{{ url_for('theses_by_university') }}">Universities</a>
+                                    <li>
+
+                                    <li role="presentation" class="tab-menu">
+                                        <a href="{{ url_for('theses_geographical_distribution') }}">Geographical</a>
+                                    <li>
+
+                                <li class="divider"></li>
+
+                                <li role="presentation" class="dropdown-header">
+                                    Gender distribution analysis
+                                </li>
+                                    <li role="presentation" class="tab-menu">
+                                        <a href="{{ url_for('theses_gender_distribution') }}">Theses</a>
+                                    <li>
+
+                                    <li role="presentation" class="tab-menu">
+                                        <a href="{{ url_for('advisor_gender_distribution') }}">Advisors</a>
+                                    <li>
+
+                                    <li role="presentation" class="tab-menu">
+                                        <a href="{{ url_for('panel_gender_distribution') }}">Panels</a>
+                                    <li>
+
+                                    <li role="presentation" class="tab-menu">
+                                        <a href="{{ url_for('topic_gender_distribution') }}">Topics</a>
+                                    <li>
+
+                                <li class="divider"></li>
+
+                                <li role="presentation" class="dropdown-header">
+                                    Topic distribution analysis
+                                </li>
+                                    <li role="presentation" class="tab-menu">
+                                        <a href="{{ url_for('all_topics_by_range', min_year=1977, max_year=2014) }}">Time range (all topics)</a>
+                                    <li>
+
+                                    <li role="presentation" class="tab-menu">
+                                        <a href="{{ url_for('topics_by_range', min_year=1977, max_year=2014) }}">Time range (high level topics)</a>
+                                    <li>
+
+                                    <li role="presentation" class="tab-menu">
+                                        <a href="{{ url_for('topic_evolution') }}">Single evolution</a>
+                                    <li>
+
+                            </ul>
+                        </div>
+                    </div>
+                </div>
 
                 <p>
                     Spanish database of Doctoral Theses dissertations
                 </p>
+
             </blockquote>
+
+            <br>
 
             {% block content %}{% endblock %}
         </div>
+
+        <br>
+        <br>
 
         <div id="footer">
             <div class="container">

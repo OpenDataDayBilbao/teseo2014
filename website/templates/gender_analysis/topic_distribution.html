@@ -339,7 +339,7 @@
                 var units = (max > 250) ? 100 : 10;
                 yScale.domain([0, Math.ceil(max / units) * units]);
 
-                $(".y-left-text").text("Total number of theses - " + variable);
+                $(".y-left-text").text("Total number of theses on {{ topic }} - " + variable);
 
                 yAxis = d3.svg.axis()
                     .scale(yScale)

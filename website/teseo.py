@@ -58,8 +58,9 @@ def theses_gender_distribution():
     return render_template("gender_analysis/theses_distribution.html")
 
 
+@app.route('/topic_gender_distribution/')
 @app.route('/topic_gender_distribution/<topic>')
-def topic_gender_distribution(topic):
+def topic_gender_distribution(topic="antropologia"):
     topic = topic.upper().replace("-", " ")
     return render_template("gender_analysis/topic_distribution.html", topic=topic)
 
