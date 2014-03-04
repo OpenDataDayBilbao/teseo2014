@@ -1,6 +1,6 @@
 from thesaurus import fullfil_thesaurus_db
 from extract_names import extract_names
-from cache import name_genders, university_locations
+from cache import name_genders, university_locations, university_types
 
 import os, sys
 lib_path = os.path.abspath('../')
@@ -47,10 +47,12 @@ if __name__ == '__main__':
     fullfil_thesaurus_db()
 
     # Fulfill university tables with locations
-    print "\n\nGetting university locations..."
+    print "\n\nGetting university locations and type (private-public)..."
     for uni, location in university_locations.items():
         uni_db = session.query(University).filter(University.name == uni).first()
-        if uni_db:
-            uni_db.location = location
-            session.add(uni_db)
-            session.commit()
+        if not uni_db:
+            uni_db = University(name=uni)
+        uni_db.location = location
+        uni_db.private = university_types[uni] == 'private'
+        session.add(uni_db)
+        session.commit()
