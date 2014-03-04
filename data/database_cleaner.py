@@ -22,7 +22,15 @@ def load_config():
 
     return dbconfig
 
-config = load_config()
+#config = load_config()
+
+config = dbconfig = {
+    'user': 'teseo',
+    'password': '',
+    'host': 'thor.deusto.es',
+    'database': 'teseo_clean',
+}
+
 
 
 def get_complete_names():
@@ -76,9 +84,9 @@ def get_repeated_thesis_ids(distinct_titles):
     cnx = mysql.connector.connect(**config)
     cursor = cnx.cursor()
     repeated_ids = []
-    total = len(distinct_titles)
+    total = float(len(distinct_titles))
     for i, title in enumerate(distinct_titles):
-        if total%100 == 0:
+        if i%100 == 0:
             print 'Getting repeated ids:', (i/total)*100
         cursor.execute("SELECT id FROM thesis WHERE title= %s", (title,))
         name_ids = []
