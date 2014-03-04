@@ -1,0 +1,195 @@
+{% extends "base.html" %}
+
+
+
+{% block content %}
+
+    <div class="row">
+
+        <!-- Button trigger modal -->
+        <button class="btn btn-info col-md-1 col-md-offset-1" data-toggle="modal" data-target="#info-modal">
+            <i class="fa fa-info"></i>&emsp;Info
+        </button>
+
+
+        <!-- Modal -->
+        <div class="modal fade" id="info-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title" id="myModalLabel">Theses month distribution</h4>
+                    </div>
+
+                    <div class="modal-body">
+                        <p>
+                            This chart shows the total number of dissertations defended each month from all the registered theses in Spain since 1977.
+                        </p>
+
+                        <p>
+                            The user can compare the month distribution observing the chart. When hovering over each bar, a tooltip with extra information shows up.
+                        </p>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="svg" class="centered"></div>
+
+{% endblock %}
+
+
+
+{% block scripts %}
+
+    <script type="text/javascript" src="{{ url_for('static', filename='js/d3.min.js') }}"></script>
+    <script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
+
+    <script type="text/javascript" src="{{ url_for('static', filename='js/handlebars-v1.3.0.js') }}"></script>
+
+    {% raw %}
+    <script id="tooltip-template" type="text/x-handlebars-template">
+        <h1>{{ month }}</h1>
+
+        <p>
+            {{ count }} registered theses
+        </p>
+    </script>
+    {% endraw %}
+
+    <script>
+        var monthNames = [
+            "January",
+            "February",
+            "March",
+            "April",
+            "May",
+            "June",
+            "July",
+            "August",
+            "September",
+            "October",
+            "November",
+            "December"
+        ];
+
+        var page_width = $(".container").width();
+
+        var margin = {top: 40, right: 50, bottom: 30, left: 60},
+            width = page_width - margin.left - margin.right,
+            height = 500 - margin.top - margin.bottom;
+
+        var month_format = d3.time.format("%b");
+
+        var xScale = d3.scale.ordinal().rangeRoundBands([0, width], .1);
+        var yScale = d3.scale.linear().range([height, 0]);
+
+        var xAxis = d3.svg.axis()
+            .scale(xScale)
+            .orient("bottom")
+            .tickFormat(month_format);
+
+        var yAxis = d3.svg.axis()
+            .scale(yScale)
+            .orient("left");
+
+        var svg = d3.select("#svg").append("svg")
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", height + margin.top + margin.bottom)
+            .append("g")
+            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+        var data = [];
+        $.getJSON("{{ url_for('static', filename='data/month_distribution.json') }}", function(json) {
+            for (var month in json) {
+                var data_obj = {
+                    "month": month - 1,
+                    "count": json[month]
+                };
+                data.push(data_obj);
+            };
+
+            xScale.domain(data.map(function(d) { return new Date(2014, d.month, 01); }));
+
+            svg.append("g")
+                .attr("class", "x axis")
+                .attr("transform", "translate(0," + height + ")")
+                .call(xAxis)
+                .selectAll(".tick text")
+                    .style("text-anchor", "start")
+                    .attr("x", -15)
+                    .attr("y", 10);
+
+            svg.append("g")
+                .attr("class", "y axis y-left")
+                .call(yAxis)
+                .append("text")
+                    .attr("y", -35)
+                    .attr("dy", ".71em")
+                    .attr("class", "y-left-text");
+
+            yScale.domain([0, d3.max(data, function(d) { return Math.ceil((d.count) / 10000) * 10000; })]);
+
+            $(".y-left-text").text("Total number of theses by month");
+
+            yAxis = d3.svg.axis()
+                .scale(yScale)
+                .orient("left");
+
+            d3.select(".y-left")
+                .transition().duration(1000).ease("quad")
+                .style("fill", "black")
+                .call(yAxis);
+
+            var tip = d3.tip()
+                .attr('class', 'd3-tip')
+                .offset([-10, 0])
+                .html(function(d) {
+                    var template_source = $('#tooltip-template').html();
+                    var template = Handlebars.compile(template_source);
+                    var tooltip_data = {
+                        month: monthNames[d.month],
+                        count: d.count
+                    }
+                    return template(tooltip_data);
+                });
+
+            svg.call(tip);
+
+            svg.selectAll(".bar")
+                .data(data)
+                .enter().append("rect")
+                    .attr("class", "bar")
+                    .attr("x", function(d) { return xScale(new Date(2014, d.month, 01)); })
+                    .attr("width", xScale.rangeBand())
+                    .attr("width", width / 12)
+                    .attr("y", function(d) { return yScale(d.count); })
+                    .attr("height", function(d) { return height - yScale(d.count); })
+                    .style("fill-opacity", 0.75)
+                    .style("fill", "#cdc5bf")
+                    .on('mouseover', tip.show)
+                    .on('mouseout', tip.hide);
+
+            svg.selectAll("line.horizontalGrid")
+                .data(yScale.ticks())
+                .enter().append("line")
+                    .attr({
+                        "class":"horizontalGrid",
+                        "x1" : 0,
+                        "x2" : width,
+                        "y1" : function(d){ return yScale(d); },
+                        "y2" : function(d){ return yScale(d); },
+                        "fill" : "none",
+                        "shape-rendering" : "crispEdges",
+                        "stroke" : "#ccc",
+                        "stroke-width" : "1px"
+                    });
+        });
+    </script>
+
+{% endblock %}
