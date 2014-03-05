@@ -221,11 +221,14 @@ def get_same_name_ids(distinct_names):
         if i%50 == 0:
             print 'Getting name ids:', (i/total)*100
             print 'Last processed', name
-        cursor.execute("SELECT id FROM person WHERE name=%s", (name,))
-        ids = []
-        for person_id in cursor:
-            ids.append(person_id[0])
-        name_ids[name] = ids
+        try:
+            cursor.execute("SELECT id FROM person WHERE name=%s", (name.decode('utf-8'),))
+            ids = []
+            for person_id in cursor:
+                ids.append(person_id[0])
+            name_ids[name] = ids
+        except:
+            print 'Problem with name:', name
         
     with open( base_dir + "/cache/person_name_ids.json", "wb" ) as outfile:
         json.dump(name_ids, outfile)
