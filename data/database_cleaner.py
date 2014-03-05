@@ -22,15 +22,7 @@ def load_config():
 
     return dbconfig
 
-#config = load_config()
-
-config = dbconfig = {
-    'user': 'teseo',
-    'password': '',
-    'host': 'thor.deusto.es',
-    'database': 'teseo_clean',
-}
-
+config = load_config()
 
 
 def get_complete_names():
@@ -204,17 +196,55 @@ def nuke_unused_persons():
         cursor.execute("DELETE FROM person WHERE id=" + str(person_id))         
         deleted +=1
    
-    print 'Deleted tesis:', deleted   
+    print 'Deleted persons:', deleted   
     cursor.close()
     
+    
+def get_distinct_names():
+    cnx = mysql.connector.connect(**config)
+    cursor = cnx.cursor()
+    cursor.execute("SELECT DISTINCT(name) FROM person")
+    result = []
+    for name in cursor:
+        result.append(name[0])
+    cursor.close()
+    
+    return result
+    
+def get_same_name_ids(distinct_names):
+    cnx = mysql.connector.connect(**config)
+    cursor = cnx.cursor()
+    name_ids = {}
+    total = float(len(distinct_names))    
+    
+    for i, name in enumerate(distinct_names):
+        if i%100 == 0:
+            print 'Getting name ids:', (i/total)*100
+        cursor.execute("SELECT id FROM person WHERE name=%s", (name,))
+        ids = []
+        for person_id in cursor:
+            ids.append(person_id[0])
+        name_ids[name] = ids
         
+    with open( base_dir + "/cache/person_name_ids.json", "wb" ) as outfile:
+        json.dump(name_ids, outfile)
+    
+    cursor.close()
+    return name_ids    
         
+def check_repeated_name_ids():
+    print 'Getting distinct names'
+    distinct_names = get_distinct_names()
+    print 'Distinct names: ', len(distinct_names)
+    name_ids = get_same_name_ids(distinct_names)
+    print name_ids    
+            
     
 if __name__=='__main__':
     #check repeated thesis()
     #delete_repeated_thesis()
     #check_unused_person_ids()
-    nuke_unused_persons()
-            
+    #nuke_unused_persons()
+    check_repeated_name_ids()        
     
     
