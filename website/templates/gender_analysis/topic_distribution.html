@@ -18,20 +18,16 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title" id="myModalLabel">Theses gender distribution</h4>
+                        <h4 class="modal-title" id="myModalLabel">Topic gender distribution</h4>
                     </div>
 
                     <div class="modal-body">
                         <p>
-                            This chart shows the total number of dissertations by gender registered in Spain since 1977.
+                            This chart shows the gender distribution for each dissertation topic registered in Spain since 1977.
                         </p>
 
                         <p>
-                            The user can compare the gender distribution filtering the information through the radio buttons. When hovering over each bar, a tooltip with extra information shows up.
-                        </p>
-
-                        <p>
-                            To calculate the presence of each gender in the total number of theses, the number of gender-unknown authors (marked as <i class="fa fa-question"></i>) is deducted from that year's total count. This could lead to data misinterpretations, as some data are missing in the analysis. Improving the gender desambiguation could lead to more realistic results.
+                            When hovering over each bar, a tooltip with extra information shows up.
                         </p>
                     </div>
 
@@ -343,7 +339,7 @@
                 var units = (max > 250) ? 100 : 10;
                 yScale.domain([0, Math.ceil(max / units) * units]);
 
-                $(".y-left-text").text("Total number of theses - " + variable);
+                $(".y-left-text").text("Total number of theses on {{ topic }} - " + variable);
 
                 yAxis = d3.svg.axis()
                     .scale(yScale)

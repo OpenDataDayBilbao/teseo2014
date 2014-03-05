@@ -125,12 +125,9 @@
 
         var topic;
 
-        {% if topic != None %}
-            topic = '{{ topic }}';
-            $('#topic-selector').val('{{ topic_slug }}');
-        {% else %}
-            topic = "ANTROPOLOGIA";
-        {% endif %}
+        topic = '{{ topic }}';
+        $('#topic-selector').val('{{ topic_slug }}');
+
         drawChart();
 
         $('#topic-selector').change(function() {
@@ -165,7 +162,7 @@
                     if (element > 1976) {
                         var data_obj = {
                             "year": element,
-                            "count": json[element][String(topic)]
+                            "count": json[element][topic]
                         };
 
                         years.push({"year": data_obj.year});
