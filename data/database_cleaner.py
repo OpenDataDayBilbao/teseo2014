@@ -222,7 +222,7 @@ def get_same_name_ids(distinct_names):
             print 'Getting name ids:', (i/total)*100
             print 'Last processed', name
         try:
-            cursor.execute("SELECT id FROM person WHERE name=%s", (name.decode('utf-8'),))
+            cursor.execute("SELECT id FROM person WHERE name=%s", (unicode(name),))
             ids = []
             for person_id in cursor:
                 ids.append(person_id[0])
