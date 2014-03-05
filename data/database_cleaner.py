@@ -122,8 +122,8 @@ def delete_repeated_thesis():
         id_group.sort()
         to_delete = id_group[0:len(id_group)-1]
         for thesis_id in to_delete:
-            cursor.execute("DELETE FROM thesis WHERE id=" + thesis_id)
             print 'Deleting:', thesis_id
+            cursor.execute("DELETE FROM thesis WHERE id=" + str(thesis_id))            
             deleted +=1
    
     print 'Deleted tesis:', deleted   
