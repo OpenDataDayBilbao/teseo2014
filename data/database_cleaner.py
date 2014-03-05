@@ -128,12 +128,76 @@ def delete_repeated_thesis():
    
     print 'Deleted tesis:', deleted   
     cursor.close()
+    
+def get_person_ids():
+    cnx = mysql.connector.connect(**config)
+    cursor = cnx.cursor()
+    cursor.execute("SELECT DISTINCT(id) FROM person")
+    result = []
+    for person_id in cursor:
+        result.append(person_id[0])
+    cursor.close()
+    return result
+    
+def get_unused_person_ids(person_ids):
+    cnx = mysql.connector.connect(**config)
+    cursor = cnx.cursor()
+    unused_ids = []
+    total = float(len(person_ids))
+    
+    for i, person_id in enumerate(person_ids):
+        if i%100 == 0:
+            print 'Getting unused persons:', (i/total)*100
+            
+        author = False
+        advisor = False
+        panel = False        
+        
+        cursor.execute("SELECT COUNT(id) FROM thesis WHERE author_id=%d", (person_id,))
+        for total_thesis in cursor:
+            try:
+                if total_thesis[0] > 0:
+                    author = True
+            except:
+                pass
+                    
+        cursor.execute("SELECT COUNT(thesis_id) FROM advisor WHERE person_id=%d", (person_id,))
+        for total_thesis in cursor:
+            try:
+                if total_thesis[0] > 0:
+                    advisor = True
+            except:
+                pass
+                    
+        cursor.execute("SELECT COUNT(thesis_id) FROM panel WHERE person_id=%d", (person_id,))
+        for total_thesis in cursor:
+            try:
+                if total_thesis[0] > 0:
+                    panel = True
+            except:
+                pass
+
+        if not (author or advisor or panel):
+            unused_ids.append(person_id)
+        
+    cursor.close()
+    with open( base_dir + "/cache/unused_person_ids.json", "wb" ) as outfile:
+        json.dump(unused_ids, outfile)
+
+    return unused_ids
+    
+def check_unused_person_ids():
+    print 'Getting all person ids'
+    person_ids = get_person_ids()
+    print 'Distinct ids: ', len(person_ids)
+    unused_ids = get_unused_person_ids(person_ids)
+    print unused_ids    
         
         
     
 if __name__=='__main__':
     #check repeated thesis()
-    delete_repeated_thesis()
+    #delete_repeated_thesis()
     
             
     
