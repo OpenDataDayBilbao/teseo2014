@@ -240,7 +240,33 @@ def check_repeated_name_ids():
     print 'Distinct names: ', len(distinct_names)
     name_ids = get_same_name_ids(distinct_names)
     print name_ids    
+    
+def merge_names():
+    print 'Merging all ids of the same names'
+    name_ids = json.load(open( base_dir + "/cache/person_name_ids.json", "rb" ))
+    print 'Total names:', len(name_ids)
+    cnx = mysql.connector.connect(**config)
+    cursor = cnx.cursor()
+    total = float(len(name_ids))      
+    
+    for i, name in enumerate(name_ids):
+        if i%50 == 0:
+            print 'Merging:', (i/total)*100
             
+        id_group = name_ids[name]
+        if len(id_group) > 1:
+            base_id = id_group[0]
+            dying_ids = id_group[1:len(id_group)] 
+            for dying_id in dying_ids:
+                cursor.execute("UPDATE advisor SET person_id = " + str(base_id) + "WHERE person_id = " + str(dying_id))
+                cursor.execute("UPDATE thesis SET author = " + str(base_id) + "WHERE author = " + str(dying_id))
+                cursor.execute("UPDATE panel_member SET person_id = " + str(base_id) + "WHERE person_id = " + str(dying_id))
+   
+                cursor.execute("DELETE FROM person WHERE id=" + str(dying_id))   
+    
+    cursor.close()
+    print 'The great merge has ended, all hail the new clean database'
+
     
 if __name__=='__main__':
     #check repeated thesis()
