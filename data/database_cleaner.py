@@ -53,7 +53,6 @@ def check_similar_names():
             str_2 = names[j]
 
             if (difflib.SequenceMatcher(None, str_1, str_2).ratio() > threshold_ratio):
-                print 'Similar', str_1, str_2
                 repeated.append((str_1, str_2))
 
     with open( base_dir + "/cache/repeated_names.json", "wb" ) as outfile:
