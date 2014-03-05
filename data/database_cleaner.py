@@ -198,7 +198,7 @@ def check_unused_person_ids():
 if __name__=='__main__':
     #check repeated thesis()
     #delete_repeated_thesis()
-    
+    check_unused_person_ids()
             
     
     
