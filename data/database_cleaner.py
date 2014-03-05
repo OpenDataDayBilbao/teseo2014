@@ -43,13 +43,13 @@ def check_similar_names():
     # min similarity ratio between strings
     threshold_ratio = 0.90
     repeated = []
-    count = 0.0
+    total = float(len(names))
 
     for i, str_1 in enumerate(names):
+        if i%100 == 0:
+                print 'Name percentage processed:', str((i/total) * 100)
+        
         for j in range(i+1, len(names)):
-            if count%10000 == 0:
-                print 'Similar', count
-            count+=1
             str_2 = names[j]
 
             if (difflib.SequenceMatcher(None, str_1, str_2).ratio() > threshold_ratio):
