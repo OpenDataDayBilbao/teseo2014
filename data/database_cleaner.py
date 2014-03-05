@@ -274,6 +274,7 @@ if __name__=='__main__':
     #check_unused_person_ids()
     #nuke_unused_persons()
     #check_repeated_name_ids()
-    check_similar_names()        
+    #check_similar_names() 
+    merge_names()       
     
     
