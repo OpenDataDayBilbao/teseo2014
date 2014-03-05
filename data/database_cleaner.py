@@ -104,6 +104,14 @@ def get_repeated_thesis_ids(distinct_titles):
     return repeated_ids
     
     
+def check_repeated_thesis():
+    print 'Getting names'
+    distinct_names = get_thesis_names()
+    print 'Distinct names: ', len(distinct_names)
+    repeated_ids = get_repeated_thesis_ids(distinct_names)
+    print repeated_ids
+    
+    
     
 def delete_repeated_thesis():
     repeated_ids = json.load(open( base_dir + "/cache/repeated_thesis_ids.json", "rb" ))
@@ -115,6 +123,7 @@ def delete_repeated_thesis():
         to_delete = id_group[0:len(id_group)-1]
         for thesis_id in to_delete:
             cursor.execute("DELETE FROM thesis WHERE id=" + thesis_id)
+            print 'Deleting:', thesis_id
             deleted +=1
    
     print 'Deleted tesis:', deleted   
@@ -123,11 +132,9 @@ def delete_repeated_thesis():
         
     
 if __name__=='__main__':
-    print 'Getting names'
-    distinct_names = get_thesis_names()
-    print 'Distinct names: ', len(distinct_names)
-    repeated_ids = get_repeated_thesis_ids(distinct_names)
-    print repeated_ids
+    #check repeated thesis()
+    delete_repeated_thesis()
+    
             
     
     
