@@ -169,7 +169,7 @@ def get_unused_person_ids(person_ids):
             except:
                 pass
                     
-        cursor.execute("SELECT COUNT(thesis_id) FROM panel_menber WHERE person_id="+ str(person_id))
+        cursor.execute("SELECT COUNT(thesis_id) FROM panel_member WHERE person_id="+ str(person_id))
         for total_thesis in cursor:
             try:
                 if total_thesis[0] > 0:
