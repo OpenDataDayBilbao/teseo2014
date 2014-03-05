@@ -218,8 +218,9 @@ def get_same_name_ids(distinct_names):
     total = float(len(distinct_names))    
     
     for i, name in enumerate(distinct_names):
-        if i%100 == 0:
+        if i%50 == 0:
             print 'Getting name ids:', (i/total)*100
+            print 'Last processed', name
         cursor.execute("SELECT id FROM person WHERE name=%s", (name,))
         ids = []
         for person_id in cursor:
