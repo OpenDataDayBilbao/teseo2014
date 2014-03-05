@@ -220,9 +220,8 @@ def get_same_name_ids(distinct_names):
     for i, name in enumerate(distinct_names):
         if i%50 == 0:
             print 'Getting name ids:', (i/total)*100
-            print 'Last processed', name
         try:
-            cursor.execute("SELECT id FROM person WHERE name=%s", (unicode(name),))
+            cursor.execute("SELECT id FROM person WHERE name=%s", (name,))
             ids = []
             for person_id in cursor:
                 ids.append(person_id[0])
