@@ -153,7 +153,7 @@ def get_unused_person_ids(person_ids):
         advisor = False
         panel = False        
         
-        cursor.execute("SELECT COUNT(id) FROM thesis WHERE author_id=%d", (person_id,))
+        cursor.execute("SELECT COUNT(id) FROM thesis WHERE author_id=" + str(person_id))
         for total_thesis in cursor:
             try:
                 if total_thesis[0] > 0:
@@ -161,7 +161,7 @@ def get_unused_person_ids(person_ids):
             except:
                 pass
                     
-        cursor.execute("SELECT COUNT(thesis_id) FROM advisor WHERE person_id=%d", (person_id,))
+        cursor.execute("SELECT COUNT(thesis_id) FROM advisor WHERE person_id="+ str(person_id))
         for total_thesis in cursor:
             try:
                 if total_thesis[0] > 0:
@@ -169,7 +169,7 @@ def get_unused_person_ids(person_ids):
             except:
                 pass
                     
-        cursor.execute("SELECT COUNT(thesis_id) FROM panel WHERE person_id=%d", (person_id,))
+        cursor.execute("SELECT COUNT(thesis_id) FROM panel WHERE person_id="+ str(person_id))
         for total_thesis in cursor:
             try:
                 if total_thesis[0] > 0:
