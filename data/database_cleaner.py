@@ -192,13 +192,29 @@ def check_unused_person_ids():
     print 'Distinct ids: ', len(person_ids)
     unused_ids = get_unused_person_ids(person_ids)
     print unused_ids    
+    
+def nuke_unused_persons():
+    unused_ids = json.load(open( base_dir + "/cache/unused_person_ids.json", "rb" ))
+    cnx = mysql.connector.connect(**config)
+    cursor = cnx.cursor()
+    deleted = 0
+    for person_id in unused_ids:
+        cursor.execute("DELETE FROM advisor WHERE person_id=" + str(person_id))
+        cursor.execute("DELETE FROM panel_member WHERE person_id=" + str(person_id))   
+        cursor.execute("DELETE FROM person WHERE id=" + str(person_id))         
+        deleted +=1
+   
+    print 'Deleted tesis:', deleted   
+    cursor.close()
+    
         
         
     
 if __name__=='__main__':
     #check repeated thesis()
     #delete_repeated_thesis()
-    check_unused_person_ids()
+    #check_unused_person_ids()
+    nuke_unused_persons()
             
     
     
