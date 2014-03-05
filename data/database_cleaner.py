@@ -41,7 +41,7 @@ def check_similar_names():
     names = get_complete_names()
     print 'Total names:', len(names)
     # min similarity ratio between strings
-    threshold_ratio = 0.85
+    threshold_ratio = 0.90
     repeated = []
     count = 0.0
 
@@ -248,6 +248,7 @@ if __name__=='__main__':
     #delete_repeated_thesis()
     #check_unused_person_ids()
     #nuke_unused_persons()
-    check_repeated_name_ids()        
+    #check_repeated_name_ids()
+    check_similar_names()        
     
     
