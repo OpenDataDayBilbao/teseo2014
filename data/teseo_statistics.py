@@ -145,6 +145,9 @@ def create_university_temporal_evolution_by_year():
             print 'The thesis has no year in the database'
         except KeyError:
             print 'Unkown university:', thesis[0]
+        except TypeError:
+            print 'The thesis has no related university'
+            
     cursor.close()
     return results
 
@@ -538,16 +541,16 @@ if __name__=='__main__':
     print 'Calculating statistics and graphs'
     pp = pprint.PrettyPrinter(indent=4)
 
-    #create the thesis panel social network
-    G = build_panel_relations()
-    filter_panel_relations(G)
-    print 'Writing file'
-    nx.write_gexf(G, '../website/static/data/panel_relations_filtered.gexf')
-
-    #create the social network for the thematic areas
-    G = build_area_relations()
-    print 'Writing file'
-    nx.write_gexf(G, '../website/static/data/area_relations.gexf')
+#    #create the thesis panel social network
+#    G = build_panel_relations()
+#    filter_panel_relations(G)
+#    print 'Writing file'
+#    nx.write_gexf(G, '../website/static/data/panel_relations_filtered.gexf')
+#
+#    #create the social network for the thematic areas
+#    G = build_area_relations()
+#    print 'Writing file'
+#    nx.write_gexf(G, '../website/static/data/area_relations.gexf')
 
     #Create the temporal evolution of the universities
     print 'Temporal evolution of the universities'
