@@ -256,7 +256,7 @@ def merge_names():
         id_group = name_ids[name]
         if len(id_group) > 1:
             base_id = id_group[0]
-            dying_ids = id_group[1:len(id_group)] 
+            dying_ids = id_group[1:] 
             for dying_id in dying_ids:
                 cursor.execute("UPDATE advisor SET person_id = " + str(base_id) + "WHERE person_id = " + str(dying_id))
                 cursor.execute("UPDATE thesis SET author = " + str(base_id) + "WHERE author = " + str(dying_id))
