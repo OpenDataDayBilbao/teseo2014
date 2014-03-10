@@ -17,7 +17,6 @@ from model.teseo_model import Descriptor
 # Library imports
 import pickle
 import difflib
-import math
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
@@ -57,7 +56,7 @@ def get_university_ids():
         result[university[0]] = university[1]
     cursor_unis.close()
 
-    print result
+    return result
 
 def save_thesis_ids():
     import mysql.connector
@@ -137,6 +136,8 @@ def save_name_genders():
             print name, infered_gender, prob
             if infered_gender == 'None' or prob < 0.6:
                 bad_names.append(name)
+            # else:
+            #     cursor.execute('UPDATE person SET gender=%s WHERE')
             result[name] = infered_gender
 
     with open( base_dir + "/cache/genders.p", "wb" ) as outfile:
@@ -230,7 +231,14 @@ def save_descriptor_codes():
     pickle.dump( descriptor_codes, open( base_dir + '/cache/descriptor_codes.p', 'wb' ) )
     pickle.dump( codes_descriptor, open( base_dir + '/cache/codes_descriptor.p', 'wb' ) )
 
-
+def regenerate_cache_files():
+    print 'Creating thesis id cache'
+    save_thesis_ids()
+    print 'Creating descriptor cache'
+    save_descriptors()
+    print 'Creating gender cache'
+    save_name_genders()
+    
 
 
 ####################DATA#############################
@@ -328,175 +336,14 @@ university_locations = {
     u'INTERNACIONAL DE BURGOS' :u'Castilla y León',
 }
 
-university_types = {
-    u'OVIEDO': 'public',
-    u'AUTÓNOMA DE BARCELONA': 'public',
-    u'BURGOS': 'public',
-    u'GRANADA': 'public',
-    u'INTERNACIONAL DE VALENCIA': 'private',
-    u'ZARAGOZA': 'public',
-    u'UNIVERSITAT DE VALÈNCIA (ESTUDI GENERAL)': 'public',
-    u'RAMÓN LLULL': 'private',
-    u'ILLES BALEARS': 'public',
-    u'FRANCISCO DE VITORIA': 'private',
-    u'GIRONA': 'public',
-    u'EUROPEA MIGUEL DE CERVANTES': 'private',
-    u'ROVIRA I VIRGILI': 'public',
-    u'PONTIFICIA DE SALAMANCA': 'private',
-    u'EUROPEA DE CANARIAS': 'private',
-    u'VALLADOLID': 'public',
-    u'MONDRAGÓN UNIBERTSITATEA': 'private',
-    u'EUROPEA DE MADRID': 'private',
-    u'IE UNIVERSITY': 'private',
-    u'LEÓN': 'public',
-    u'EXTREMADURA': 'public',
-    u'PÚBLICA DE NAVARRA':'public',
-    u'POLITÉCNICA DE CARTAGENA': 'public',
-    u'SAN PABLO-CEU': 'private',
-    u'ALFONSO X EL SABIO': 'private',
-    u'COMPLUTENSE DE MADRID': 'public',
-    u'INTERNACIONAL MENÉNDEZ PELAYO': 'public',
-    u'SEVILLA': 'public',
-    u'PALMAS DE GRAN CANARIA': 'public',
-    u'A DISTANCIA DE MADRID': 'private',
-    u'CÁDIZ': 'public',
-    u'POMPEU FABRA': 'public',
-    u'ALICANTE': 'public',
-    u'JAÉN': 'public',
-    u'PONTIFICIA COMILLAS': 'private',
-    u'POLITÉCNICA DE VALENCIA': 'public',
-    u'NACIONAL DE EDUCACIÓN A DISTANCIA': 'public',
-    u'CÓRDOBA': 'public',
-    u'LLEIDA': 'public',
-    u'HUELVA': 'public',
-    u'CASTILLA-LA MANCHA': 'public',
-    u'JAUME I DE CASTELLÓN': 'public',
-    u'SAN JORGE': 'private',
-    u'POLITÉCNICA DE MADRID': 'public',
-    u'LA LAGUNA': 'public',
-    u'INTERNACIONAL DE BURGOS': 'private',
-    u'CATÓLICA SANTA TERESA DE JESÚS DE ÁVILA': 'private',
-    u'BARCELONA': 'public',
-    u'RIOJA': 'public',
-    u'PAÍS VASCO/EUSKAL HERRIKO UNIBERTSITATEA': 'public',
-    u'CAMILO JOSÉ CELA': 'private',
-    u'OBERTA DE CATALUNYA': 'private',
-    u'INTERNACIONAL DE CATALUNYA': 'private',
-    u'SANTIAGO DE COMPOSTELA':'public',
-    u'MIGUEL HERNÁNDEZ DE ELCHE': 'public',
-    u'NAVARRA': 'private',
-    u'CARDENAL HERRERA-CEU': 'private',
-    u'ABAT OLIBA CEU':'private',
-    u'VIC': 'private',
-    u'MÁLAGA':'public',
-    u'SALAMANCA': 'public',
-    u'CARLOS III DE MADRID': 'public',
-    u'ALMERÍA': 'public',
-    u'INTERNACIONAL DE ANDALUCÍA': 'public',
-    u'MURCIA': 'public',
-    u'AUTÓNOMA DE MADRID': 'public',
-    u'REY JUAN CARLOS': 'public',
-    u'A CORUÑA': 'public',
-    u'CATÓLICA SAN ANTONIO': 'private',
-    u'PABLO DE OLAVIDE': 'public',
-    u'DEUSTO': 'private',
-    u'ALCALÁ': 'public',
-    u'CANTABRIA': 'public',
-    u'VIGO': 'public',
-    u'POLITÉCNICA DE CATALUNYA': 'public',
-    u'INTERNACIONAL DE LA RIOJA': 'private',
-    u'ANTONIO DE NEBRIJA': 'private',
-    u'CATÓLICA DE VALENCIA SAN VICENTE MÁRTIR': 'private',
-    u'TECNOLOGÍA Y EMPRESA': 'private',
-}
-
-university_ids = {
-    1: u'SANTIAGO DE COMPOSTELA',
-    2: u'AUT\xd3NOMA DE BARCELONA',
-    3: u'UNIVERSITAT DE VAL\xc8NCIA (ESTUDI GENERAL)',
-    4: u'COMPLUTENSE DE MADRID',
-    5: u'OVIEDO',
-    6: u'AUT\xd3NOMA DE MADRID',
-    7: u'PA\xcdS VASCO/EUSKAL HERRIKO UNIBERTSITATEA',
-    8: u'GRANADA',
-    9: u'NACIONAL DE EDUCACI\xd3N A DISTANCIA',
-    10: u'BURGOS',
-    11: u'NAVARRA',
-    12: u'ALICANTE',
-    13: u'ROVIRA I VIRGILI',
-    14: u'POLIT\xc9CNICA DE VALENCIA',
-    15: u'SEVILLA',
-    16: u'EXTREMADURA',
-    17: u'ZARAGOZA',
-    18: u'POMPEU FABRA',
-    19: u'POLIT\xc9CNICA DE MADRID',
-    20: u'M\xc1LAGA',
-    21: u'POLIT\xc9CNICA DE CATALUNYA',
-    22: u'MIGUEL HERN\xc1NDEZ DE ELCHE',
-    23: u'RIOJA',
-    24: u'CARLOS III DE MADRID',
-    25: u'GIRONA',
-    26: u'BARCELONA',
-    27: u'VIGO',
-    28: u'SALAMANCA',
-    29: u'MURCIA',
-    30: u'P\xdaBLICA DE NAVARRA',
-    31: u'VALLADOLID',
-    32: u'PALMAS DE GRAN CANARIA',
-    33: u'ALMER\xcdA',
-    34: u'LA LAGUNA',
-    35: u'LLEIDA',
-    36: u'C\xd3RDOBA',
-    37: u'C\xc1DIZ',
-    38: u'ILLES BALEARS',
-    39: u'ABAT OLIBA CEU',
-    40: u'ALCAL\xc1',
-    41: u'DEUSTO',
-    42: u'EUROPEA DE MADRID',
-    43: u'CANTABRIA',
-    44: u'JA\xc9N',
-    45: u'PONTIFICIA DE SALAMANCA',
-    46: u'REY JUAN CARLOS',
-    47: u'LE\xd3N',
-    48: u'RAM\xd3N LLULL',
-    49: u'POLIT\xc9CNICA DE CARTAGENA',
-    50: u'PONTIFICIA COMILLAS',
-    51: u'CASTILLA-LA MANCHA',
-    52: u'JAUME I DE CASTELL\xd3N',
-    53: u'CAT\xd3LICA DE VALENCIA SAN VICENTE M\xc1RTIR',
-    54: u'A CORU\xd1A',
-    55: u'PABLO DE OLAVIDE',
-    56: u'SAN PABLO-CEU',
-    57: u'HUELVA',
-    58: u'CARDENAL HERRERA-CEU',
-    59: u'OBERTA DE CATALUNYA',
-    60: u'CAT\xd3LICA SAN ANTONIO',
-    61: u'INTERNACIONAL DE CATALUNYA',
-    62: u'ANTONIO DE NEBRIJA',
-    63: u'MONDRAG\xd3N UNIBERTSITATEA',
-    64: u'FRANCISCO DE VITORIA',
-    65: u'CAMILO JOS\xc9 CELA',
-    66: u'IE UNIVERSITY',
-    67: u'INTERNACIONAL MEN\xc9NDEZ PELAYO',
-    68: u'VIC',
-    69: u'INTERNACIONAL DE VALENCIA',
-    70: u'ALFONSO X EL SABIO',
-    71: u'A DISTANCIA DE MADRID',
-    72: u'CAT\xd3LICA SANTA TERESA DE JES\xdaS DE \xc1VILA',
-    73: u'SAN JORGE',
-    74: u'INTERNACIONAL DE ANDALUC\xcdA',
-    75: u'EUROPEA MIGUEL DE CERVANTES',
-    76: u'INTERNACIONAL DE LA RIOJA'
-}
+university_ids = load_thesis_ids()
 
 
 
 
 #this should be done the first time running this scripts
 if __name__=='__main__':
-    import pprint
-    pp = pprint.PrettyPrinter(indent=4)
-    pp.pprint(descriptor_codes)
+    regenerate_cache_files()
 
 
 
