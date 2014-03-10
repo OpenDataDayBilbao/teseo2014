@@ -258,9 +258,9 @@ def merge_names():
             base_id = id_group[0]
             dying_ids = id_group[1:] 
             for dying_id in dying_ids:
-                cursor.execute("UPDATE advisor SET person_id = " + str(base_id) + "WHERE person_id = " + str(dying_id))
-                cursor.execute("UPDATE thesis SET author = " + str(base_id) + "WHERE author = " + str(dying_id))
-                cursor.execute("UPDATE panel_member SET person_id = " + str(base_id) + "WHERE person_id = " + str(dying_id))
+                cursor.execute("UPDATE advisor SET person_id = " + str(base_id) + " WHERE person_id = " + str(dying_id))
+                cursor.execute("UPDATE thesis SET author = " + str(base_id) + " WHERE author = " + str(dying_id))
+                cursor.execute("UPDATE panel_member SET person_id = " + str(base_id) + " WHERE person_id = " + str(dying_id))
    
                 cursor.execute("DELETE FROM person WHERE id=" + str(dying_id))   
     
