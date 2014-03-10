@@ -75,7 +75,7 @@ def save_thesis_ids():
 def load_thesis_ids():
     with open( base_dir + "/cache/thesis_ids.p", "rb" ) as infile:
         result = pickle.load(infile)
-    return result
+    return list(result)
 
 def save_descriptors():
     import mysql.connector
