@@ -104,7 +104,7 @@ def get_names():
     cursor.execute("SELECT DISTINCT(first_name) FROM person")
     result = set()
     for name in cursor:
-        first = str(name[0]).split(' ')[0]
+        first = name[0].split(' ')[0]
         result.add(first)
     cursor.close()
 
