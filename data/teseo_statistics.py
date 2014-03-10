@@ -19,21 +19,6 @@ from model.dbconnection import dbconfig
 
 config = dbconfig
 
-config = {
-      'user': 'foo',
-      'password': 'bar',
-      'host': '127.0.0.1',
-      'database': 'teseo',
-    }
-    
-with open('pass.config', 'r') as inputfile:
-    for i, line in enumerate(inputfile):
-        if i == 0:
-            config['user'] = line
-        elif i == 1:
-            config['password'] = line
-        elif i > 1:
-            break
 
 def get_university_ids():
     cnx = mysql.connector.connect(**config)
