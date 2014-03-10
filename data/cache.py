@@ -209,7 +209,7 @@ def load_codes_descriptor():
     return result
 
 def save_descriptor_codes():
-    config = load_config
+    config = load_config()
 
     # Load from DB
     engine = create_engine('mysql://%s:%s@%s/%s?charset=utf8' % (config['user'], config['password'], config['host'], config['database']))
