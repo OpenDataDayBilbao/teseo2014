@@ -258,9 +258,15 @@ def merge_names():
             base_id = id_group[0]
             dying_ids = id_group[1:] 
             for dying_id in dying_ids:
-                cursor.execute("UPDATE advisor SET person_id = " + str(base_id) + " WHERE person_id = " + str(dying_id))
+                try:
+                    cursor.execute("UPDATE advisor SET person_id = " + str(base_id) + " WHERE person_id = " + str(dying_id))
+                except mysql.connector.errors.IntegrityError:
+                    print 'Already is an advisor for that thesis'
                 cursor.execute("UPDATE thesis SET author_id = " + str(base_id) + " WHERE author_id = " + str(dying_id))
-                cursor.execute("UPDATE panel_member SET person_id = " + str(base_id) + " WHERE person_id = " + str(dying_id))
+                try:                
+                    cursor.execute("UPDATE panel_member SET person_id = " + str(base_id) + " WHERE person_id = " + str(dying_id))
+                except mysql.connector.errors.IntegrityError:
+                    print 'Already is a panel member for that thesis'
    
                 cursor.execute("DELETE FROM person WHERE id=" + str(dying_id))   
     
