@@ -275,7 +275,7 @@ def create_gender_temporal_evolution_by_year():
         print 'Genders temporal evolution', i
 
         try:
-            name = str(thesis[0]).split(' ')[0] #if it is a composed name we use only the first part to identify the gender
+            name = thesis[0].split(' ')[0] #if it is a composed name we use only the first part to identify the gender
 
             try:
                 gender = name_genders[name]
@@ -319,7 +319,7 @@ def create_gender_per_area_evolution():
         try:
 
             #get gender
-            name = str(thesis[0]).split(' ')[0] #if it is a composed name we use only the first part to identify the gender
+            name = thesis[0].split(' ')[0] #if it is a composed name we use only the first part to identify the gender
             try:
                 gender = name_genders[name]
             except KeyError:
@@ -461,7 +461,7 @@ def create_gender_meta_area_evolution():
         try:
 
             #get gender
-            name = str(thesis[0]).split(' ')[0] #if it is a composed name we use only the first part to identify the gender
+            name = thesis[0].split(' ')[0] #if it is a composed name we use only the first part to identify the gender
             try:
                 gender = name_genders[name]
             except KeyError:
