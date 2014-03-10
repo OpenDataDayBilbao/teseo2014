@@ -248,6 +248,8 @@ def regenerate_cache_files():
     save_descriptors()
     print 'Creating gender cache'
     save_name_genders()
+    print 'Creating descriptor cache'
+    save_descriptor_codes()
     
 
 
