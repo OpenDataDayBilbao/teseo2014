@@ -55,8 +55,15 @@ def get_university_ids():
     for university in cursor_unis:
         result[university[0]] = university[1]
     cursor_unis.close()
-
+    
+    with open( base_dir + "/cache/university_ids.p", "wb" ) as outfile:
+        pickle.dump(result, outfile)
+        
+def load_university_ids():
+    with open( base_dir + "/cache/university_ids.p", "rb" ) as infile:
+        result = pickle.load(infile)
     return result
+
 
 def save_thesis_ids():
     import mysql.connector
@@ -233,6 +240,8 @@ def save_descriptor_codes():
     pickle.dump( codes_descriptor, open( base_dir + '/cache/codes_descriptor.p', 'wb' ) )
 
 def regenerate_cache_files():
+    print 'Creating universities id cache'
+    get_university_ids()
     print 'Creating thesis id cache'
     save_thesis_ids()
     print 'Creating descriptor cache'
@@ -337,7 +346,7 @@ university_locations = {
     u'INTERNACIONAL DE BURGOS' :u'Castilla y León',
 }
 
-university_ids = load_thesis_ids()
+university_ids = load_university_ids()
 
 
 
