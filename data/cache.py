@@ -55,10 +55,10 @@ def get_university_ids():
     for university in cursor_unis:
         result[university[0]] = university[1]
     cursor_unis.close()
-    
+
     with open( base_dir + "/cache/university_ids.p", "wb" ) as outfile:
         pickle.dump(result, outfile)
-        
+
 def load_university_ids():
     with open( base_dir + "/cache/university_ids.p", "rb" ) as infile:
         result = pickle.load(infile)
@@ -217,24 +217,30 @@ def save_descriptor_codes():
     Session = sessionmaker(bind=engine)
     session = Session()
 
-    # Load all descriptors in DB
-    db_descriptors = []
-    for descriptor in session.query(Descriptor).distinct(Descriptor.text):
-        db_descriptors.append(descriptor.text)
+    # # Load all descriptors in DB
+    # db_descriptors = []
+    # for descriptor in session.query(Descriptor).distinct(Descriptor.text):
+    #     db_descriptors.append(descriptor.text)
 
-    # Search each descriptor in Unesco thesaurus making posts to Teseo
-    db_descriptors_len = str(len(db_descriptors))
+    # # Search each descriptor in Unesco thesaurus making posts to Teseo
+    # db_descriptors_len = str(len(db_descriptors))
+    # descriptor_codes = {}
+    # codes_descriptor = {}
+    # for i, descriptor in enumerate(db_descriptors):
+    #     print '%s/%s - %s' % (str(i), db_descriptors_len, descriptor)
+    #     unesco_code = thesaurus.search_in_unesco_thesaurus(descriptor=descriptor.encode('utf-8'))
+    #     descriptor_codes[descriptor] = unesco_code
+    #     codes_descriptor[unesco_code] = descriptor
+
+    # # Harcoded ones (not found in Teseo for character limitation or other problems)
+    # descriptor_codes['LUZ'] = '220911'
+    # codes_descriptor['220911'] = 'LUZ'
+
     descriptor_codes = {}
     codes_descriptor = {}
-    for i, descriptor in enumerate(db_descriptors):
-        print '%s/%s - %s' % (str(i), db_descriptors_len, descriptor)
-        unesco_code = thesaurus.search_in_unesco_thesaurus(descriptor=descriptor.encode('utf-8'))
-        descriptor_codes[descriptor] = unesco_code
-        codes_descriptor[unesco_code] = descriptor
-
-    # Harcoded ones (not found in Teseo for character limitation or other problems)
-    descriptor_codes['LUZ'] = '220911'
-    codes_descriptor['220911'] = 'LUZ'
+    for descriptor in session.query(Descriptor).all():
+        descriptor_codes[descriptor.text] = descriptor.code
+        codes_descriptor[descriptor.code] = descriptor.text
 
     pickle.dump( descriptor_codes, open( base_dir + '/cache/descriptor_codes.p', 'wb' ) )
     pickle.dump( codes_descriptor, open( base_dir + '/cache/codes_descriptor.p', 'wb' ) )
@@ -250,7 +256,7 @@ def regenerate_cache_files():
     save_name_genders()
     print 'Creating descriptor cache'
     save_descriptor_codes()
-    
+
 
 
 ####################DATA#############################
