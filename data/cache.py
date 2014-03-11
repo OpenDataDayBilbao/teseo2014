@@ -243,8 +243,8 @@ def save_descriptor_codes():
         code = code / 10000 if code % 10000 == 0 else code
         code = code / 100 if code % 100 == 0 else code
 
-        descriptor_codes[descriptor.text] = code
-        codes_descriptor[code] = descriptor.text
+        descriptor_codes[descriptor.text] = str(code)
+        codes_descriptor[str(code)] = descriptor.text
 
     pickle.dump( descriptor_codes, open( base_dir + '/cache/descriptor_codes.p', 'wb' ) )
     pickle.dump( codes_descriptor, open( base_dir + '/cache/codes_descriptor.p', 'wb' ) )
