@@ -239,8 +239,13 @@ def save_descriptor_codes():
     descriptor_codes = {}
     codes_descriptor = {}
     for descriptor in session.query(Descriptor).all():
-        descriptor_codes[descriptor.text] = descriptor.code
-        codes_descriptor[descriptor.code] = descriptor.text
+        code = descriptor.code
+        if str(code)[-4:] == '0000':
+            code = code / 10000
+        elif str(code)[-2:] == '00':
+            code = code / 100
+        descriptor_codes[descriptor.text] = code
+        codes_descriptor[code] = descriptor.text
 
     pickle.dump( descriptor_codes, open( base_dir + '/cache/descriptor_codes.p', 'wb' ) )
     pickle.dump( codes_descriptor, open( base_dir + '/cache/codes_descriptor.p', 'wb' ) )
@@ -357,11 +362,6 @@ university_locations = {
 university_ids = load_university_ids()
 
 
-
-
 #this should be done the first time running this scripts
 if __name__=='__main__':
     regenerate_cache_files()
-
-
-
