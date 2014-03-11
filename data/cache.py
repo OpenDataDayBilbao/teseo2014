@@ -240,10 +240,9 @@ def save_descriptor_codes():
     codes_descriptor = {}
     for descriptor in session.query(Descriptor).all():
         code = descriptor.code
-        if str(code)[-4:] == '0000':
-            code = code / 10000
-        elif str(code)[-2:] == '00':
-            code = code / 100
+        code = code / 10000 if code % 10000 == 0 else code
+        code = code / 100 if code % 100 == 0 else code
+
         descriptor_codes[descriptor.text] = code
         codes_descriptor[code] = descriptor.text
 
