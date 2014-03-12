@@ -1,206 +1,194 @@
 {
-    "1960": {
-        "female": 1
-    },
-    "1197": {
-        "male": 2
-    },
     "1977": {
-        "None": 153,
-        "male": 816,
-        "female": 152
-    },
+        "None": 152, 
+        "male": 819, 
+        "female": 149
+    }, 
     "1978": {
-        "None": 155,
-        "male": 733,
-        "female": 176
-    },
+        "None": 151, 
+        "male": 734, 
+        "female": 177
+    }, 
     "1979": {
-        "None": 175,
-        "male": 805,
-        "female": 198
-    },
+        "None": 172, 
+        "male": 806, 
+        "female": 199
+    }, 
     "1980": {
-        "None": 197,
-        "male": 886,
-        "female": 219
-    },
+        "None": 199, 
+        "male": 885, 
+        "female": 218
+    }, 
     "1981": {
-        "None": 182,
-        "male": 1047,
+        "None": 180, 
+        "male": 1047, 
         "female": 243
-    },
+    }, 
     "1982": {
-        "None": 242,
-        "male": 1146,
-        "female": 297
-    },
+        "None": 244, 
+        "male": 1142, 
+        "female": 296
+    }, 
     "1983": {
-        "None": 239,
-        "male": 1191,
-        "female": 323
-    },
+        "None": 234, 
+        "male": 1190, 
+        "female": 327
+    }, 
     "1984": {
-        "None": 201,
-        "male": 795,
-        "female": 232
-    },
+        "None": 197, 
+        "male": 798, 
+        "female": 233
+    }, 
     "1985": {
-        "None": 152,
-        "male": 636,
-        "female": 211
-    },
+        "None": 150, 
+        "male": 636, 
+        "female": 212
+    }, 
     "1986": {
-        "None": 385,
-        "male": 1468,
-        "female": 490
-    },
+        "None": 377, 
+        "male": 1469, 
+        "female": 495
+    }, 
     "1987": {
-        "None": 531,
-        "male": 2097,
-        "female": 720
-    },
+        "None": 520, 
+        "male": 2097, 
+        "female": 729
+    }, 
     "1988": {
-        "None": 512,
-        "male": 1849,
-        "female": 690
-    },
+        "None": 502, 
+        "male": 1851, 
+        "female": 693
+    }, 
     "1989": {
-        "None": 571,
-        "male": 1953,
-        "female": 800
-    },
+        "None": 557, 
+        "male": 1952, 
+        "female": 812
+    }, 
     "1990": {
-        "None": 756,
-        "male": 2768,
-        "female": 1048
-    },
+        "None": 755, 
+        "male": 2765, 
+        "female": 1051
+    }, 
     "1991": {
-        "None": 749,
-        "male": 2694,
-        "female": 1056
-    },
+        "None": 740, 
+        "male": 2696, 
+        "female": 1060
+    }, 
     "1992": {
-        "None": 598,
-        "male": 2222,
-        "female": 942
-    },
+        "None": 591, 
+        "male": 2219, 
+        "female": 948
+    }, 
     "1993": {
-        "None": 816,
-        "male": 2677,
-        "female": 1266
-    },
+        "None": 803, 
+        "male": 2680, 
+        "female": 1275
+    }, 
     "1994": {
-        "None": 826,
-        "male": 2737,
-        "female": 1301
-    },
+        "None": 815, 
+        "male": 2734, 
+        "female": 1313
+    }, 
     "1995": {
-        "None": 899,
-        "male": 2924,
-        "female": 1417
-    },
+        "None": 890, 
+        "male": 2914, 
+        "female": 1431
+    }, 
     "1996": {
-        "None": 1042,
-        "male": 3284,
-        "female": 1640
-    },
+        "None": 1038, 
+        "male": 3282, 
+        "female": 1641
+    }, 
     "1997": {
-        "None": 1119,
-        "male": 3569,
-        "female": 1867
-    },
+        "None": 1102, 
+        "male": 3563, 
+        "female": 1876
+    }, 
     "1998": {
-        "None": 904,
-        "male": 3175,
-        "female": 1648
-    },
+        "None": 887, 
+        "male": 3170, 
+        "female": 1646
+    }, 
     "1999": {
-        "None": 936,
-        "male": 3200,
-        "female": 1877
-    },
+        "None": 915, 
+        "male": 3194, 
+        "female": 1899
+    }, 
     "2000": {
-        "None": 1037,
-        "male": 3467,
-        "female": 2028
-    },
+        "None": 1009, 
+        "male": 3460, 
+        "female": 2057
+    }, 
     "2001": {
-        "None": 970,
-        "male": 3246,
-        "female": 2073
-    },
+        "None": 941, 
+        "male": 3238, 
+        "female": 2102
+    }, 
     "2002": {
-        "None": 986,
-        "male": 3168,
-        "female": 2171
-    },
+        "None": 974, 
+        "male": 3158, 
+        "female": 2170
+    }, 
     "2003": {
-        "None": 1141,
-        "male": 3762,
-        "female": 2436
-    },
+        "None": 1109, 
+        "male": 3743, 
+        "female": 2442
+    }, 
     "2004": {
-        "None": 905,
-        "male": 3608,
-        "female": 2662
-    },
+        "None": 860, 
+        "male": 3561, 
+        "female": 2645
+    }, 
     "2005": {
-        "None": 657,
-        "male": 3252,
-        "female": 2597
-    },
+        "None": 593, 
+        "male": 3218, 
+        "female": 2632
+    }, 
     "2006": {
-        "None": 616,
-        "male": 3140,
-        "female": 2627
-    },
+        "None": 538, 
+        "male": 3101, 
+        "female": 2631
+    }, 
     "2007": {
-        "None": 617,
-        "male": 3088,
-        "female": 2751
-    },
+        "None": 513, 
+        "male": 3028, 
+        "female": 2752
+    }, 
     "2008": {
-        "None": 758,
-        "male": 4080,
-        "female": 3719
-    },
+        "None": 479, 
+        "male": 3322, 
+        "female": 3151
+    }, 
     "2009": {
-        "None": 887,
-        "male": 4757,
-        "female": 4488
-    },
+        "None": 573, 
+        "male": 3727, 
+        "female": 3596
+    }, 
     "2010": {
-        "None": 790,
-        "male": 4224,
-        "female": 3801
-    },
+        "None": 610, 
+        "male": 3956, 
+        "female": 3675
+    }, 
     "2011": {
-        "None": 879,
-        "male": 4418,
-        "female": 4062
-    },
+        "None": 709, 
+        "male": 4076, 
+        "female": 3847
+    }, 
     "2012": {
-        "None": 920,
-        "male": 4561,
-        "female": 4441
-    },
+        "None": 775, 
+        "male": 4384, 
+        "female": 4393
+    }, 
     "2013": {
-        "None": 773,
-        "male": 3841,
-        "female": 3628
-    },
+        "None": 634, 
+        "male": 3539, 
+        "female": 3437
+    }, 
     "2014": {
-        "None": 38,
-        "male": 148,
-        "female": 131
-    },
-    "1213": {
-        "male": 1
-    },
-    "1012": {
-        "male": 1
-    },
+        "None": 31, 
+        "male": 110, 
+        "female": 112
+    }, 
     "1912": {
         "female": 1
     }
