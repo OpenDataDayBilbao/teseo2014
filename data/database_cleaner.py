@@ -279,7 +279,7 @@ def clean_unesco_codes():
     cursor = cnx.cursor()
     cnx2 = mysql.connector.connect(**config)
     cursor2 = cnx2.cursor()
-    cursor.execute("SELECT id, code FROM descriptors")
+    cursor.execute("SELECT id, code FROM descriptor")
     for descriptor in cursor:
         code = descriptor[1]
         desc_id = descriptor[0]
