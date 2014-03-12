@@ -83,11 +83,11 @@ def save_thesis_ids():
 
 def load_thesis_ids():
     result = ""
-    with open( base_dir + "/cache/thesis_ids.p", "rb" ) as infile:
-        try:
-            result = pickle.load(infile)
-        except:
-            print "No cache file created: /cache/thesis_ids.p"
+    try:
+        with open( base_dir + "/cache/thesis_ids.p", "rb" ) as infile:
+                result = pickle.load(infile)
+    except:
+        print "No cache file created: /cache/thesis_ids.p"  
     return result
 
 def save_descriptors():
@@ -106,11 +106,11 @@ def save_descriptors():
 
 def load_descriptors():
     result = ""
-    with open( base_dir + "/cache/descriptors.p", "rb" ) as infile:
-        try:
-            result = pickle.load(infile)
-        except:
-            print "No cache file created: /cache/descriptors.p"
+    try:
+        with open( base_dir + "/cache/descriptors.p", "rb" ) as infile:
+                result = pickle.load(infile)
+    except:
+        print "No cache file created: /cache/descriptors.p"
     return result
 
 def get_names():
@@ -167,11 +167,11 @@ def save_name_genders():
 
 def load_genders():
     result = ""
-    with open( base_dir + "/cache/genders.p", "rb" ) as infile:
-        try:
-            result = pickle.load(infile)
-        except:
-            print "No cache file created: /cache/genders.p"
+    try:
+        with open( base_dir + "/cache/genders.p", "rb" ) as infile:     
+                result = pickle.load(infile)
+    except:
+        print "No cache file created: /cache/genders.p"
     return result
 
 def get_complete_names():
@@ -213,20 +213,20 @@ def check_similar_names():
 
 def load_descriptor_codes():
     result = ""
-    with open( base_dir + "/cache/descriptor_codes.p", "rb" ) as infile:
-        try:
+    try:
+        with open( base_dir + "/cache/descriptor_codes.p", "rb" ) as infile:        
             result = pickle.load(infile)
-        except:
-            print "No cache file created: /cache/descriptor_codes.p"
+    except:
+        print "No cache file created: /cache/descriptor_codes.p"
     return result
 
 def load_codes_descriptor():
     result = ""
-    with open( base_dir + "/cache/codes_descriptor.p", "rb" ) as infile:
-        try:
+    try:
+        with open( base_dir + "/cache/codes_descriptor.p", "rb" ) as infile:        
             result = pickle.load(infile)
-        except:
-            print "No cache file created: /cache/codes_descriptor.p"
+    except:
+        print "No cache file created: /cache/codes_descriptor.p"
     return result
 
 def save_descriptor_codes():
