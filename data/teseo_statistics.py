@@ -185,7 +185,7 @@ def create_area_temporal_evolution_by_year():
 
             #get descriptors
             cursor_desc = cnx2.cursor()
-            query_desc = 'SELECT descriptor_id FROM association_thesis_description WHERE thesis_id=' + str(thesis_id)
+            query_desc = 'SELECT descriptor.code FROM association_thesis_description, descriptor WHERE association_thesis_description.thesis_id=' + str(thesis_id) + ' AND association_thesis_description.descriptor_id=descriptor.id'
             cursor_desc.execute(query_desc)
 
             used_descriptors = []
@@ -230,15 +230,13 @@ def create_meta_area_temporal_evolution_by_year():
             print 'First level Unesco code temporal evolution, processing', thesis_id, ', year', year
 
             cursor_desc = cnx2.cursor()
-            query_desc = 'SELECT descriptor_id FROM association_thesis_description WHERE thesis_id=' + str(thesis_id)
+            query_desc = 'SELECT descriptor.code FROM association_thesis_description, descriptor WHERE association_thesis_description.thesis_id=' + str(thesis_id) + ' AND association_thesis_description.descriptor_id=descriptor.id'
             cursor_desc.execute(query_desc)
 
             used_descriptors = set()
             for desc in cursor_desc:
                 try:
-                    print desc[0]
                     descriptor_text = descriptors[desc[0]]
-                    print descriptor_text
                     descriptor_code = descriptor_codes[descriptor_text]
                     first_level_code = descriptor_code[0:2] + '0000'
                     first_level_descriptor = codes_descriptor[first_level_code]
@@ -330,7 +328,7 @@ def create_gender_per_area_evolution():
             #get descriptors
             thesis_id = thesis[1]
             cursor_desc = cnx2.cursor()
-            query_desc = 'SELECT descriptor_id FROM association_thesis_description WHERE thesis_id=' + str(thesis_id)
+            query_desc = 'SELECT descriptor.code FROM association_thesis_description, descriptor WHERE association_thesis_description.thesis_id=' + str(thesis_id) + ' AND association_thesis_description.descriptor_id=descriptor.id'
             cursor_desc.execute(query_desc)
 
             used_descriptors = []
@@ -472,7 +470,7 @@ def create_gender_meta_area_evolution():
             #get descriptors
             thesis_id = thesis[1]
             cursor_desc = cnx2.cursor()
-            query_desc = 'SELECT descriptor_id FROM association_thesis_description WHERE thesis_id=' + str(thesis_id)
+            query_desc = 'SELECT descriptor.code FROM association_thesis_description, descriptor WHERE association_thesis_description.thesis_id=' + str(thesis_id) + ' AND association_thesis_description.descriptor_id=descriptor.id'
             cursor_desc.execute(query_desc)
 
             used_descriptors = set()
@@ -567,10 +565,10 @@ if __name__=='__main__':
 #    json.dump(regions, open('../website/static/data/regions_temporal.json', 'w'), indent = 4)
 #
 #    #Create the temporal evolution of the knowledge areas
-#    print 'Temporal evolution of the knowledge areas'
-#    areas = create_area_temporal_evolution_by_year()
-#    pp.pprint(areas)
-#    json.dump(areas, open('../website/static/data/areas_temporal.json', 'w'), indent = 4)
+    print 'Temporal evolution of the knowledge areas'
+    areas = create_area_temporal_evolution_by_year()
+    pp.pprint(areas)
+    json.dump(areas, open('../website/static/data/areas_temporal.json', 'w'), indent = 4)
 #
 #    #Create the temporal evolution of the author genders
 #    print 'Temporal evolution of the author genders'
@@ -585,10 +583,10 @@ if __name__=='__main__':
 #    json.dump(genders_percentage, open('../website/static/data/genders_percentage.json', 'w'), indent = 4)
 #
 #    #create the temporal evolution of gender per area
-#    print 'Temporal evolution of gender percentage per area'
-#    genders_area_total = create_gender_per_area_evolution()
-#    pp.pprint(genders_area_total)
-#    json.dump(genders_area_total, open('../website/static/data/genders_area_total.json', 'w'), indent = 4)
+    print 'Temporal evolution of gender percentage per area'
+    genders_area_total = create_gender_per_area_evolution()
+    pp.pprint(genders_area_total)
+    json.dump(genders_area_total, open('../website/static/data/genders_area_total.json', 'w'), indent = 4)
 #
 #    #Create the temporal evolution of the primary knowledge areas
     print 'Temporal evolution of the knowledge areas'
@@ -603,10 +601,10 @@ if __name__=='__main__':
 #    json.dump(panel_gender, open('../website/static/data/gender_panel_temporal.json', 'w'), indent = 4)
 #
 #    #Create the temporal evolution of the genders in first level areas
-#    print 'Temporal evolution of the student genders by first level area'
-#    meta_area_gender = create_gender_meta_area_evolution()
-#    pp.pprint(meta_area_gender)
-#    json.dump(meta_area_gender, open('../website/static/data/gender_first_level_areas_temporal.json', 'w'), indent = 4)
+    print 'Temporal evolution of the student genders by first level area'
+    meta_area_gender = create_gender_meta_area_evolution()
+    pp.pprint(meta_area_gender)
+    json.dump(meta_area_gender, open('../website/static/data/gender_first_level_areas_temporal.json', 'w'), indent = 4)
 #
 #     #Create the temporal evolution of the genders of the thesis advisors
 #    print 'Temporal evolution of the advisors genders'
