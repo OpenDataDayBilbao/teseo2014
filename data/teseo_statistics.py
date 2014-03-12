@@ -35,11 +35,8 @@ def get_number_phd_by_universities():
     cursor = cnx.cursor()
     result = {}
     for key in university_ids.keys():
-        print key
         uni_name = university_ids[key]
-        print uni_name
         query = 'SELECT COUNT(*) FROM thesis WHERE university_id=' + str(key)
-        print query
         cursor.execute(query)
         for count in cursor:
             result[uni_name] = count[0]
@@ -128,7 +125,8 @@ def create_university_temporal_evolution_by_year():
     cursor.execute(query)
     results = {2000:{u'DEUSTO':0}}
     for i, thesis in enumerate(cursor):
-        print 'Universities temporal evolution', i
+        if i%500 == 0:
+            print 'Universities temporal evolution', i
 
         try:
             university = university_ids[thesis[0]]
@@ -181,7 +179,8 @@ def create_area_temporal_evolution_by_year():
         try:
             thesis_id = thesis[0]
             year = thesis[1].year
-            print 'Unesco code temporal evolution, processing', thesis_id, ', year', year
+            if i%500 == 0:
+                print 'Unesco code temporal evolution, processing', thesis_id, ', year', year
 
             #get descriptors
             cursor_desc = cnx2.cursor()
@@ -227,7 +226,8 @@ def create_meta_area_temporal_evolution_by_year():
         try:
             thesis_id = thesis[0]
             year = thesis[1].year
-            print 'First level Unesco code temporal evolution, processing', thesis_id, ', year', year
+            if i%500 == 0:
+                print 'First level Unesco code temporal evolution, processing', thesis_id, ', year', year
 
             cursor_desc = cnx2.cursor()
             query_desc = 'SELECT descriptor.code FROM association_thesis_description, descriptor WHERE association_thesis_description.thesis_id=' + str(thesis_id) + ' AND association_thesis_description.descriptor_id=descriptor.id'
@@ -272,7 +272,8 @@ def create_gender_temporal_evolution_by_year():
     cursor.execute(query)
     results = {}
     for i, thesis in enumerate(cursor):
-        print 'Genders temporal evolution', i
+        if i%500 == 0:
+            print 'Genders temporal evolution', i
 
         try:
             name = thesis[0].split(' ')[0] #if it is a composed name we use only the first part to identify the gender
@@ -315,7 +316,8 @@ def create_gender_per_area_evolution():
     cursor.execute(query)
     results = {}
     for i, thesis in enumerate(cursor):
-        print 'Genders per Unesco code temporal evolution', i
+        if i%500 == 0:
+            print 'Genders per Unesco code temporal evolution', i
         try:
 
             #get gender
@@ -373,7 +375,8 @@ def create_gender_panel_evolution_by_year():
     cursor.execute(query)
     results = {}
     for i, thesis in enumerate(cursor):
-        print 'Thesis panel gender distribution temporal evolution', i
+        if i%500 == 0:
+            print 'Thesis panel gender distribution temporal evolution', i
         cursor_names = cnx2.cursor()
         query_names = 'SELECT person.first_name FROM panel_member, person WHERE person.id = panel_member.person_id AND panel_member.thesis_id=' + str(thesis[0])
         cursor_names.execute(query_names)
@@ -415,7 +418,8 @@ def create_gender_advisor_evolution_by_year():
     cursor.execute(query)
     results = {}
     for i, thesis in enumerate(cursor):
-        print 'Thesis advisor gender distribution temporal evolution', i
+        if i%500 == 0:
+            print 'Thesis advisor gender distribution temporal evolution', i
         cursor_names = cnx2.cursor()
         query_names = 'SELECT person.first_name FROM advisor, person WHERE person.id = advisor.person_id AND advisor.thesis_id=' + str(thesis[0])
         cursor_names.execute(query_names)
@@ -457,7 +461,8 @@ def create_gender_meta_area_evolution():
     cursor.execute(query)
     results = {}
     for i, thesis in enumerate(cursor):
-        print 'Genders per first level Unesco code temporal evolution', i
+        if i%500 == 0:
+            print 'Genders per first level Unesco code temporal evolution', i
         try:
 
             #get gender
@@ -520,7 +525,8 @@ def create_month_distribution():
     results = {}
 
     for i, date in enumerate(cursor):
-         print 'Month distribution', i
+         if i%500 == 0:
+             print 'Month distribution', i
          try:
              month = date[0].month
          except AttributeError:
@@ -540,83 +546,82 @@ if __name__=='__main__':
     print 'Calculating statistics and graphs'
     pp = pprint.PrettyPrinter(indent=4)
 
-#    #create the thesis panel social network
-#    G = build_panel_relations()
-#    filter_panel_relations(G)
-#    print 'Writing file'
-#    nx.write_gexf(G, '../website/static/data/panel_relations_filtered.gexf')
-#
-#    #create the social network for the thematic areas
-#    G = build_area_relations()
-#    print 'Writing file'
-#    nx.write_gexf(G, '../website/static/data/area_relations.gexf')
+    #create the thesis panel social network
+    G = build_panel_relations()
+    filter_panel_relations(G)
+    print 'Writing file'
+    nx.write_gexf(G, '../website/static/data/panel_relations_filtered.gexf')
 
-#    #Create the temporal evolution of the universities
-#    print 'Temporal evolution of the universities'
-#    unis = create_university_temporal_evolution_by_year()
-#    pp.pprint(unis)
-#    json.dump(unis, open('../website/static/data/universities_temporal.json', 'w'), indent = 4)
-#
-#    #Create the temporal evolution of the geoprahpical regions
-#    print 'Temporal evolution of the geoprahpical regions'
-#    regions = create_region_temporal_evolution_by_year()
-#    pp.pprint(regions)
-#    json.dump(regions, open('../website/static/data/regions_temporal.json', 'w'), indent = 4)
-#
-#    #Create the temporal evolution of the knowledge areas
+    #create the social network for the thematic areas
+    G = build_area_relations()
+    print 'Writing file'
+    nx.write_gexf(G, '../website/static/data/area_relations.gexf')
+
+    #Create the temporal evolution of the universities
+    print 'Temporal evolution of the universities'
+    unis = create_university_temporal_evolution_by_year()
+    pp.pprint(unis)
+    json.dump(unis, open('../website/static/data/universities_temporal.json', 'w'), indent = 4)
+
+    #Create the temporal evolution of the geoprahpical regions
+    print 'Temporal evolution of the geoprahpical regions'
+    regions = create_region_temporal_evolution_by_year()
+    pp.pprint(regions)
+    json.dump(regions, open('../website/static/data/regions_temporal.json', 'w'), indent = 4)
+
+    #Create the temporal evolution of the knowledge areas
     print 'Temporal evolution of the knowledge areas'
     areas = create_area_temporal_evolution_by_year()
     pp.pprint(areas)
     json.dump(areas, open('../website/static/data/areas_temporal.json', 'w'), indent = 4)
-#
-#    #Create the temporal evolution of the author genders
-#    print 'Temporal evolution of the author genders'
-#    genders_total = create_gender_temporal_evolution_by_year()
-#    pp.pprint(genders_total)
-#    json.dump(genders_total, open('../website/static/data/genders_total.json', 'w'), indent = 4)
-#
-#    #Create the temporal evolution of gender percentage
-#    print 'Temporal evolution of gender percentage'
-#    genders_percentage = create_gender_percentaje_evolution(genders_total)
-#    pp.pprint(genders_percentage)
-#    json.dump(genders_percentage, open('../website/static/data/genders_percentage.json', 'w'), indent = 4)
-#
-#    #create the temporal evolution of gender per area
+
+    #Create the temporal evolution of the author genders
+    print 'Temporal evolution of the author genders'
+    genders_total = create_gender_temporal_evolution_by_year()
+    pp.pprint(genders_total)
+    json.dump(genders_total, open('../website/static/data/genders_total.json', 'w'), indent = 4)
+
+    #Create the temporal evolution of gender percentage
+    print 'Temporal evolution of gender percentage'
+    genders_percentage = create_gender_percentaje_evolution(genders_total)
+    pp.pprint(genders_percentage)
+    json.dump(genders_percentage, open('../website/static/data/genders_percentage.json', 'w'), indent = 4)
+
+    #create the temporal evolution of gender per area
     print 'Temporal evolution of gender percentage per area'
     genders_area_total = create_gender_per_area_evolution()
     pp.pprint(genders_area_total)
     json.dump(genders_area_total, open('../website/static/data/genders_area_total.json', 'w'), indent = 4)
-#
-#    #Create the temporal evolution of the primary knowledge areas
+
+    #Create the temporal evolution of the primary knowledge areas
     print 'Temporal evolution of the knowledge areas'
     primary_areas = create_meta_area_temporal_evolution_by_year()
     pp.pprint(primary_areas)
     json.dump(primary_areas, open('../website/static/data/first_level_areas_temporal.json', 'w'), indent = 4)
-#
-#     #Create the temporal evolution of panel members' gender
-#    print 'Temporal evolution of the panel members\' gender areas'
-#    panel_gender = create_gender_panel_evolution_by_year()
-#    pp.pprint(panel_gender)
-#    json.dump(panel_gender, open('../website/static/data/gender_panel_temporal.json', 'w'), indent = 4)
-#
-#    #Create the temporal evolution of the genders in first level areas
+
+     #Create the temporal evolution of panel members' gender
+    print 'Temporal evolution of the panel members\' gender areas'
+    panel_gender = create_gender_panel_evolution_by_year()
+    pp.pprint(panel_gender)
+    json.dump(panel_gender, open('../website/static/data/gender_panel_temporal.json', 'w'), indent = 4)
+
+    #Create the temporal evolution of the genders in first level areas
     print 'Temporal evolution of the student genders by first level area'
     meta_area_gender = create_gender_meta_area_evolution()
     pp.pprint(meta_area_gender)
     json.dump(meta_area_gender, open('../website/static/data/gender_first_level_areas_temporal.json', 'w'), indent = 4)
-#
-#     #Create the temporal evolution of the genders of the thesis advisors
-#    print 'Temporal evolution of the advisors genders'
-#    advisor_gender = create_gender_advisor_evolution_by_year()
-#    pp.pprint(advisor_gender)
-#    json.dump(advisor_gender, open('../website/static/data/advisor_gender.json', 'w'), indent = 4)
-#
-#
-#    #create month distribution
-#    print 'Month distribution'
-#    month_distribution = create_month_distribution()
-#    pp.pprint(month_distribution)
-#    json.dump(month_distribution, open('../website/static/data/month_distribution.json', 'w'), indent = 4)
+
+     #Create the temporal evolution of the genders of the thesis advisors
+    print 'Temporal evolution of the advisors genders'
+    advisor_gender = create_gender_advisor_evolution_by_year()
+    pp.pprint(advisor_gender)
+    json.dump(advisor_gender, open('../website/static/data/advisor_gender.json', 'w'), indent = 4)
+
+    #create month distribution
+    print 'Month distribution'
+    month_distribution = create_month_distribution()
+    pp.pprint(month_distribution)
+    json.dump(month_distribution, open('../website/static/data/month_distribution.json', 'w'), indent = 4)
 
     print '********** DONE  *************'
 
