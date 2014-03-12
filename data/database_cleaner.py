@@ -273,6 +273,28 @@ def merge_names():
     cursor.close()
     print 'The great merge has ended, all hail the new clean database'
 
+#all unesco codes must have the following format: ######    
+def clean_unesco_codes():
+    cnx = mysql.connector.connect(**config)
+    cursor = cnx.cursor()
+    cnx2 = mysql.connector.connect(**config)
+    cursor2 = cnx2.cursor()
+    cursor.execute("SELECT id, code FROM descriptors")
+    for descriptor in cursor:
+        code = descriptor[1]
+        desc_id = descriptor[0]
+        if len(str(descriptor[1])) == 2:
+            code = code * 10000
+        elif len(str(descriptor[1])) == 4:
+            code = code * 100
+            
+        if code != descriptor[1]:
+            cursor2.execute("UPDATE descriptors SET code = " + str(code) + " WHERE id = " + str(desc_id))
+
+    cursor.close()
+    cursor2.close()
+    
+
     
 if __name__=='__main__':
     #check repeated thesis()
@@ -281,6 +303,7 @@ if __name__=='__main__':
     #nuke_unused_persons()
     #check_repeated_name_ids()
     #check_similar_names() 
-    merge_names()       
+    #merge_names()    
+    clean_unesco_codes()
     
     
