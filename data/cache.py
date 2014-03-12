@@ -58,11 +58,11 @@ def get_university_ids():
 
 def load_university_ids():
     result = ""
-    with open( base_dir + "/cache/university_ids.p", "rb" ) as infile:
-        try:
+    try:
+        with open( base_dir + "/cache/university_ids.p", "rb" ) as infile:        
             result = pickle.load(infile)
-        except:
-            print "No cache file created: /cache/university_ids.p"
+    except:
+        print "No cache file created: /cache/university_ids.p"
     return result
 
 
