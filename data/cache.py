@@ -7,18 +7,15 @@ Created on Tue Feb 18 11:29:20 2014
 
 # Own stuff imports
 import gender
-import thesaurus
 
 import os, sys
 lib_path = os.path.abspath('../')
 sys.path.append(lib_path)
-from model.teseo_model import Descriptor
+
 
 # Library imports
 import pickle
 import difflib
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
 
 base_dir = os.path.dirname(os.path.abspath(__file__))
 
@@ -194,7 +191,7 @@ def check_similar_names():
                 repeated.append((str_1, str_2))
 
     with open( base_dir + "/cache/repeated.p", "wb" ) as outfile:
-        result = pickle.dump(outfile)
+        pickle.dump(repeated, outfile)
 
     return repeated
 
@@ -209,43 +206,30 @@ def load_codes_descriptor():
     return result
 
 def save_descriptor_codes():
+    import mysql.connector
     config = load_config()
+    cnx = mysql.connector.connect(**config)
+    cursor = cnx.cursor()
+    cursor.execute("SELECT code, text FROM descriptor")
 
-    # Load from DB
-    engine = create_engine('mysql://%s:%s@%s/%s?charset=utf8' % (config['user'], config['password'], config['host'], config['database']))
-
-    Session = sessionmaker(bind=engine)
-    session = Session()
-
-    # # Load all descriptors in DB
-    # db_descriptors = []
-    # for descriptor in session.query(Descriptor).distinct(Descriptor.text):
-    #     db_descriptors.append(descriptor.text)
-
-    # # Search each descriptor in Unesco thesaurus making posts to Teseo
-    # db_descriptors_len = str(len(db_descriptors))
-    # descriptor_codes = {}
-    # codes_descriptor = {}
-    # for i, descriptor in enumerate(db_descriptors):
-    #     print '%s/%s - %s' % (str(i), db_descriptors_len, descriptor)
-    #     unesco_code = thesaurus.search_in_unesco_thesaurus(descriptor=descriptor.encode('utf-8'))
-    #     descriptor_codes[descriptor] = unesco_code
-    #     codes_descriptor[unesco_code] = descriptor
-
-    # # Harcoded ones (not found in Teseo for character limitation or other problems)
-    # descriptor_codes['LUZ'] = '220911'
-    # codes_descriptor['220911'] = 'LUZ'
-
-    descriptor_codes = {}
-    codes_descriptor = {}
-    for descriptor in session.query(Descriptor).all():
-        code = descriptor.code
-
-        descriptor_codes[descriptor.text] = str(code)
-        codes_descriptor[str(code)] = descriptor.text
-
-    pickle.dump( descriptor_codes, open( base_dir + '/cache/descriptor_codes.p', 'wb' ) )
-    pickle.dump( codes_descriptor, open( base_dir + '/cache/codes_descriptor.p', 'wb' ) )
+    descriptor = {}
+    codes = {}    
+    
+    for desc in cursor:
+        code = str(desc[0])
+        text = desc[1]
+        if len(code) < 6:
+            print code
+            print text
+            
+        descriptor[text] = code
+        codes[code] = text
+        
+    cursor.close()
+    with open( base_dir + "/cache/descriptor_codes.p", "wb" ) as outfile:
+        pickle.dump(descriptor, outfile)
+    with open( base_dir + "/cache/codes_descriptor.p", "wb" ) as outfile:
+        pickle.dump(codes, outfile)
 
 def regenerate_cache_files():
     print 'Creating universities id cache'
