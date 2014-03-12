@@ -108,9 +108,9 @@ def filter_panel_relations(G, MIN_DEGREE = 5):
     print 'Starting graph'
     print '-Nodes:',len(G.nodes())
     print '-Edges:',len(G.edges())
-    degrees = G.degree()
     continue_cleaning = True
     while(continue_cleaning):
+        degrees = G.degree()
         total_removed = 0
         for d in degrees:
             if degrees[d] < MIN_DEGREE:
