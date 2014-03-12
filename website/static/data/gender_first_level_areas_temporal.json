@@ -1,19 +1,9 @@
 {
-    "1960": {
-        "SOCIOLOGIA": {
-            "female": 1
-        }
-    }, 
-    "1197": {
-        "CIENCIAS AGRARIAS": {
-            "male": 2
-        }
-    }, 
     "1977": {
         "CIENCIAS MEDICAS": {
             "None": 25, 
-            "male": 184, 
-            "female": 17
+            "male": 185, 
+            "female": 15
         }, 
         "GEOGRAFIA": {
             "None": 3, 
@@ -49,10 +39,8 @@
             "male": 1, 
             "female": 1
         }, 
-        "CIENCIA POLITICA": {
-            "None": 2, 
-            "male": 30, 
-            "female": 1
+        "LOGICA": {
+            "male": 1
         }, 
         "CIENCIAS JURIDICAS Y DERECHO": {
             "None": 3, 
@@ -96,26 +84,28 @@
         }, 
         "QUIMICA": {
             "None": 31, 
-            "male": 82, 
-            "female": 30
+            "male": 83, 
+            "female": 29
         }, 
         "CIENCIAS AGRARIAS": {
             "None": 6, 
-            "male": 33, 
-            "female": 5
+            "male": 34, 
+            "female": 4
         }, 
         "CIENCIAS TECNOLOGICAS": {
-            "None": 8, 
-            "male": 54, 
+            "None": 7, 
+            "male": 55, 
             "female": 3
         }, 
         "CIENCIAS DE LA VIDA": {
-            "None": 15, 
-            "male": 85, 
+            "None": 14, 
+            "male": 86, 
             "female": 16
         }, 
-        "LOGICA": {
-            "male": 1
+        "CIENCIA POLITICA": {
+            "None": 2, 
+            "male": 30, 
+            "female": 1
         }, 
         "ANTROPOLOGIA": {
             "None": 3, 
@@ -134,9 +124,9 @@
             "female": 3
         }, 
         "HISTORIA": {
-            "None": 18, 
+            "None": 17, 
             "male": 65, 
-            "female": 15
+            "female": 16
         }, 
         "LINGUISTICA": {
             "None": 14, 
@@ -188,7 +178,7 @@
         }, 
         "PSICOLOGIA": {
             "None": 3, 
-            "male": 26, 
+            "male": 25, 
             "female": 5
         }, 
         "DEMOGRAFIA": {
@@ -197,8 +187,8 @@
         }, 
         "MATEMATICAS": {
             "None": 7, 
-            "male": 38, 
-            "female": 8
+            "male": 39, 
+            "female": 7
         }, 
         "FISICA": {
             "None": 4, 
@@ -206,13 +196,13 @@
             "female": 10
         }, 
         "QUIMICA": {
-            "None": 22, 
+            "None": 20, 
             "male": 61, 
-            "female": 30
+            "female": 31
         }, 
         "CIENCIAS AGRARIAS": {
-            "None": 5, 
-            "male": 28, 
+            "None": 4, 
+            "male": 29, 
             "female": 2
         }, 
         "CIENCIAS TECNOLOGICAS": {
@@ -236,8 +226,8 @@
     }, 
     "1979": {
         "CIENCIAS MEDICAS": {
-            "None": 31, 
-            "male": 162, 
+            "None": 30, 
+            "male": 163, 
             "female": 25
         }, 
         "GEOGRAFIA": {
@@ -246,8 +236,8 @@
             "female": 4
         }, 
         "HISTORIA": {
-            "None": 14, 
-            "male": 69, 
+            "None": 13, 
+            "male": 70, 
             "female": 25
         }, 
         "LINGUISTICA": {
@@ -257,7 +247,7 @@
         }, 
         "CIENCIAS ECONOMICAS": {
             "None": 7, 
-            "male": 42, 
+            "male": 41, 
             "female": 8
         }, 
         "FILOSOFIA": {
@@ -266,8 +256,8 @@
             "female": 1
         }, 
         "CIENCIAS DE LA TIERRA Y DEL ESPACIO": {
-            "None": 14, 
-            "male": 49, 
+            "None": 15, 
+            "male": 48, 
             "female": 11
         }, 
         "ETICA": {
@@ -319,8 +309,8 @@
             "female": 15
         }, 
         "QUIMICA": {
-            "None": 32, 
-            "male": 98, 
+            "None": 31, 
+            "male": 99, 
             "female": 25
         }, 
         "CIENCIAS AGRARIAS": {
@@ -330,13 +320,13 @@
         }, 
         "CIENCIAS TECNOLOGICAS": {
             "None": 5, 
-            "male": 65, 
-            "female": 2
+            "male": 64, 
+            "female": 3
         }, 
         "CIENCIAS DE LA VIDA": {
             "None": 25, 
-            "male": 98, 
-            "female": 32
+            "male": 99, 
+            "female": 31
         }, 
         "CIENCIA POLITICA": {
             "male": 13, 
@@ -378,9 +368,9 @@
             "female": 1
         }, 
         "CIENCIAS DE LA TIERRA Y DEL ESPACIO": {
-            "None": 11, 
+            "None": 12, 
             "male": 42, 
-            "female": 14
+            "female": 13
         }, 
         "ETICA": {
             "male": 5, 
@@ -415,9 +405,9 @@
             "female": 2
         }, 
         "PSICOLOGIA": {
-            "None": 2, 
+            "None": 3, 
             "male": 35, 
-            "female": 11
+            "female": 10
         }, 
         "DEMOGRAFIA": {
             "None": 1, 
@@ -439,9 +429,9 @@
             "female": 35
         }, 
         "CIENCIAS AGRARIAS": {
-            "None": 8, 
+            "None": 7, 
             "male": 20, 
-            "female": 4
+            "female": 5
         }, 
         "CIENCIAS TECNOLOGICAS": {
             "None": 13, 
@@ -450,8 +440,8 @@
         }, 
         "CIENCIAS DE LA VIDA": {
             "None": 30, 
-            "male": 95, 
-            "female": 33
+            "male": 94, 
+            "female": 34
         }, 
         "LOGICA": {
             "male": 5
@@ -473,19 +463,19 @@
             "female": 1
         }, 
         "HISTORIA": {
-            "None": 23, 
+            "None": 22, 
             "male": 82, 
-            "female": 28
+            "female": 29
         }, 
         "LINGUISTICA": {
             "None": 8, 
-            "male": 38, 
-            "female": 11
+            "male": 39, 
+            "female": 10
         }, 
         "CIENCIAS ECONOMICAS": {
             "None": 5, 
-            "male": 61, 
-            "female": 9
+            "male": 62, 
+            "female": 8
         }, 
         "FILOSOFIA": {
             "None": 1, 
@@ -506,7 +496,7 @@
         }, 
         "CIENCIAS JURIDICAS Y DERECHO": {
             "None": 4, 
-            "male": 62, 
+            "male": 61, 
             "female": 17
         }, 
         "PEDAGOGIA": {
@@ -536,29 +526,29 @@
             "male": 2
         }, 
         "MATEMATICAS": {
-            "None": 9, 
-            "male": 64, 
-            "female": 8
+            "None": 7, 
+            "male": 65, 
+            "female": 9
         }, 
         "FISICA": {
-            "None": 7, 
-            "male": 84, 
+            "None": 8, 
+            "male": 83, 
             "female": 14
         }, 
         "QUIMICA": {
             "None": 20, 
-            "male": 75, 
-            "female": 29
+            "male": 74, 
+            "female": 30
         }, 
         "CIENCIAS AGRARIAS": {
             "None": 5, 
-            "male": 43, 
+            "male": 42, 
             "female": 5
         }, 
         "CIENCIAS TECNOLOGICAS": {
-            "None": 13, 
+            "None": 14, 
             "male": 95, 
-            "female": 7
+            "female": 6
         }, 
         "CIENCIAS DE LA VIDA": {
             "None": 27, 
@@ -577,9 +567,9 @@
     }, 
     "1982": {
         "CIENCIAS MEDICAS": {
-            "None": 45, 
-            "male": 237, 
-            "female": 29
+            "None": 44, 
+            "male": 236, 
+            "female": 30
         }, 
         "GEOGRAFIA": {
             "None": 4, 
@@ -587,9 +577,9 @@
             "female": 8
         }, 
         "HISTORIA": {
-            "None": 27, 
+            "None": 28, 
             "male": 92, 
-            "female": 48
+            "female": 47
         }, 
         "LINGUISTICA": {
             "None": 9, 
@@ -597,18 +587,18 @@
             "female": 11
         }, 
         "CIENCIAS ECONOMICAS": {
-            "None": 5, 
-            "male": 69, 
+            "None": 6, 
+            "male": 68, 
             "female": 16
         }, 
         "FILOSOFIA": {
-            "None": 3, 
-            "male": 26, 
+            "None": 4, 
+            "male": 25, 
             "female": 3
         }, 
         "CIENCIAS DE LA TIERRA Y DEL ESPACIO": {
-            "None": 10, 
-            "male": 40, 
+            "None": 11, 
+            "male": 39, 
             "female": 7
         }, 
         "ETICA": {
@@ -630,8 +620,8 @@
             "female": 10
         }, 
         "CIENCIAS DE LAS ARTES Y LAS LETRAS": {
-            "None": 11, 
-            "male": 46, 
+            "None": 12, 
+            "male": 45, 
             "female": 25
         }, 
         "ASTRONOMIA Y ASTROFISICA": {
@@ -654,9 +644,9 @@
             "male": 4
         }, 
         "MATEMATICAS": {
-            "None": 17, 
+            "None": 16, 
             "male": 77, 
-            "female": 8
+            "female": 9
         }, 
         "FISICA": {
             "None": 14, 
@@ -664,7 +654,7 @@
             "female": 11
         }, 
         "QUIMICA": {
-            "None": 27, 
+            "None": 26, 
             "male": 101, 
             "female": 40
         }, 
@@ -679,9 +669,9 @@
             "female": 11
         }, 
         "CIENCIAS DE LA VIDA": {
-            "None": 36, 
+            "None": 38, 
             "male": 140, 
-            "female": 44
+            "female": 41
         }, 
         "LOGICA": {
             "None": 1, 
@@ -695,28 +685,28 @@
     }, 
     "1983": {
         "CIENCIAS MEDICAS": {
-            "None": 47, 
+            "None": 45, 
             "male": 238, 
-            "female": 38
+            "female": 39
         }, 
         "GEOGRAFIA": {
-            "None": 3, 
+            "None": 2, 
             "male": 12, 
-            "female": 3
+            "female": 4
         }, 
         "HISTORIA": {
             "None": 30, 
             "male": 141, 
-            "female": 45
+            "female": 44
         }, 
         "LINGUISTICA": {
-            "None": 11, 
+            "None": 10, 
             "male": 23, 
-            "female": 15
+            "female": 16
         }, 
         "CIENCIAS ECONOMICAS": {
-            "None": 7, 
-            "male": 69, 
+            "None": 6, 
+            "male": 70, 
             "female": 8
         }, 
         "FILOSOFIA": {
@@ -730,13 +720,13 @@
             "female": 19
         }, 
         "ETICA": {
-            "male": 3, 
+            "None": 1, 
+            "male": 2, 
             "female": 1
         }, 
-        "CIENCIA POLITICA": {
-            "None": 1, 
-            "male": 17, 
-            "female": 2
+        "LOGICA": {
+            "None": 3, 
+            "male": 4
         }, 
         "CIENCIAS JURIDICAS Y DERECHO": {
             "None": 8, 
@@ -759,14 +749,14 @@
             "female": 3
         }, 
         "SOCIOLOGIA": {
-            "None": 2, 
-            "male": 7, 
+            "None": 3, 
+            "male": 6, 
             "female": 5
         }, 
         "PSICOLOGIA": {
-            "None": 9, 
+            "None": 8, 
             "male": 50, 
-            "female": 19
+            "female": 20
         }, 
         "DEMOGRAFIA": {
             "None": 1, 
@@ -778,9 +768,9 @@
             "female": 11
         }, 
         "FISICA": {
-            "None": 12, 
+            "None": 11, 
             "male": 119, 
-            "female": 29
+            "female": 30
         }, 
         "QUIMICA": {
             "None": 36, 
@@ -788,8 +778,8 @@
             "female": 54
         }, 
         "CIENCIAS AGRARIAS": {
-            "None": 7, 
-            "male": 29, 
+            "None": 6, 
+            "male": 30, 
             "female": 8
         }, 
         "CIENCIAS TECNOLOGICAS": {
@@ -802,9 +792,10 @@
             "male": 136, 
             "female": 47
         }, 
-        "LOGICA": {
-            "None": 3, 
-            "male": 4
+        "CIENCIA POLITICA": {
+            "None": 1, 
+            "male": 17, 
+            "female": 2
         }, 
         "ANTROPOLOGIA": {
             "None": 1, 
@@ -824,14 +815,14 @@
             "female": 2
         }, 
         "HISTORIA": {
-            "None": 20, 
-            "male": 64, 
-            "female": 30
+            "None": 19, 
+            "male": 66, 
+            "female": 29
         }, 
         "LINGUISTICA": {
-            "None": 7, 
+            "None": 8, 
             "male": 16, 
-            "female": 7
+            "female": 6
         }, 
         "CIENCIAS ECONOMICAS": {
             "None": 11, 
@@ -843,9 +834,9 @@
             "female": 1
         }, 
         "CIENCIAS DE LA TIERRA Y DEL ESPACIO": {
-            "None": 5, 
+            "None": 4, 
             "male": 35, 
-            "female": 13
+            "female": 14
         }, 
         "LOGICA": {
             "male": 1
@@ -856,9 +847,9 @@
             "female": 6
         }, 
         "PEDAGOGIA": {
-            "None": 1, 
+            "None": 2, 
             "male": 4, 
-            "female": 3
+            "female": 2
         }, 
         "CIENCIAS DE LAS ARTES Y LAS LETRAS": {
             "None": 7, 
@@ -895,9 +886,9 @@
             "female": 13
         }, 
         "QUIMICA": {
-            "None": 28, 
-            "male": 78, 
-            "female": 44
+            "None": 26, 
+            "male": 79, 
+            "female": 45
         }, 
         "CIENCIAS AGRARIAS": {
             "None": 15, 
@@ -910,9 +901,9 @@
             "female": 10
         }, 
         "CIENCIAS DE LA VIDA": {
-            "None": 36, 
+            "None": 34, 
             "male": 123, 
-            "female": 51
+            "female": 53
         }, 
         "CIENCIA POLITICA": {
             "male": 11, 
@@ -926,9 +917,9 @@
     }, 
     "1985": {
         "CIENCIAS MEDICAS": {
-            "None": 33, 
+            "None": 32, 
             "male": 170, 
-            "female": 53
+            "female": 54
         }, 
         "GEOGRAFIA": {
             "None": 1, 
@@ -968,12 +959,12 @@
         }, 
         "CIENCIAS JURIDICAS Y DERECHO": {
             "None": 5, 
-            "male": 32, 
-            "female": 17
+            "male": 33, 
+            "female": 16
         }, 
         "PEDAGOGIA": {
             "None": 2, 
-            "male": 12, 
+            "male": 11, 
             "female": 8
         }, 
         "CIENCIAS DE LAS ARTES Y LAS LETRAS": {
@@ -1019,9 +1010,9 @@
             "female": 1
         }, 
         "CIENCIAS DE LA VIDA": {
-            "None": 22, 
+            "None": 21, 
             "male": 54, 
-            "female": 35
+            "female": 36
         }, 
         "CIENCIA POLITICA": {
             "None": 2, 
@@ -1036,9 +1027,9 @@
     }, 
     "1986": {
         "CIENCIAS MEDICAS": {
-            "None": 96, 
-            "male": 321, 
-            "female": 74
+            "None": 91, 
+            "male": 322, 
+            "female": 76
         }, 
         "GEOGRAFIA": {
             "None": 4, 
@@ -1046,8 +1037,8 @@
             "female": 7
         }, 
         "HISTORIA": {
-            "None": 52, 
-            "male": 182, 
+            "None": 51, 
+            "male": 183, 
             "female": 82
         }, 
         "LINGUISTICA": {
@@ -1078,8 +1069,8 @@
             "male": 1
         }, 
         "CIENCIAS JURIDICAS Y DERECHO": {
-            "None": 12, 
-            "male": 53, 
+            "None": 13, 
+            "male": 52, 
             "female": 16
         }, 
         "PEDAGOGIA": {
@@ -1116,14 +1107,14 @@
             "female": 19
         }, 
         "FISICA": {
-            "None": 21, 
+            "None": 19, 
             "male": 117, 
-            "female": 38
+            "female": 40
         }, 
         "QUIMICA": {
-            "None": 57, 
+            "None": 56, 
             "male": 133, 
-            "female": 72
+            "female": 73
         }, 
         "CIENCIAS AGRARIAS": {
             "None": 9, 
@@ -1131,14 +1122,14 @@
             "female": 20
         }, 
         "CIENCIAS TECNOLOGICAS": {
-            "None": 26, 
+            "None": 25, 
             "male": 161, 
-            "female": 23
+            "female": 24
         }, 
         "CIENCIAS DE LA VIDA": {
-            "None": 68, 
-            "male": 208, 
-            "female": 82
+            "None": 65, 
+            "male": 210, 
+            "female": 83
         }, 
         "CIENCIA POLITICA": {
             "None": 3, 
@@ -1153,9 +1144,9 @@
     }, 
     "1987": {
         "CIENCIAS MEDICAS": {
-            "None": 103, 
+            "None": 101, 
             "male": 438, 
-            "female": 116
+            "female": 118
         }, 
         "GEOGRAFIA": {
             "None": 11, 
@@ -1163,9 +1154,9 @@
             "female": 10
         }, 
         "HISTORIA": {
-            "None": 66, 
-            "male": 231, 
-            "female": 76
+            "None": 65, 
+            "male": 230, 
+            "female": 77
         }, 
         "LINGUISTICA": {
             "None": 13, 
@@ -1192,15 +1183,15 @@
             "male": 7, 
             "female": 2
         }, 
-        "CIENCIA POLITICA": {
-            "None": 6, 
-            "male": 31, 
-            "female": 5
+        "LOGICA": {
+            "None": 2, 
+            "male": 5, 
+            "female": 2
         }, 
         "CIENCIAS JURIDICAS Y DERECHO": {
             "None": 23, 
             "male": 101, 
-            "female": 39
+            "female": 38
         }, 
         "PEDAGOGIA": {
             "None": 10, 
@@ -1208,9 +1199,9 @@
             "female": 22
         }, 
         "CIENCIAS DE LAS ARTES Y LAS LETRAS": {
-            "None": 33, 
-            "male": 146, 
-            "female": 61
+            "None": 31, 
+            "male": 145, 
+            "female": 63
         }, 
         "ASTRONOMIA Y ASTROFISICA": {
             "None": 3, 
@@ -1242,29 +1233,29 @@
             "female": 38
         }, 
         "QUIMICA": {
-            "None": 64, 
+            "None": 60, 
             "male": 154, 
-            "female": 96
+            "female": 100
         }, 
         "CIENCIAS AGRARIAS": {
-            "None": 18, 
+            "None": 17, 
             "male": 51, 
-            "female": 19
+            "female": 20
         }, 
         "CIENCIAS TECNOLOGICAS": {
-            "None": 32, 
-            "male": 217, 
-            "female": 42
+            "None": 33, 
+            "male": 218, 
+            "female": 40
         }, 
         "CIENCIAS DE LA VIDA": {
-            "None": 81, 
+            "None": 79, 
             "male": 260, 
-            "female": 122
+            "female": 124
         }, 
-        "LOGICA": {
-            "None": 2, 
-            "male": 5, 
-            "female": 2
+        "CIENCIA POLITICA": {
+            "None": 6, 
+            "male": 31, 
+            "female": 5
         }, 
         "ANTROPOLOGIA": {
             "None": 3, 
@@ -1274,9 +1265,9 @@
     }, 
     "1988": {
         "CIENCIAS MEDICAS": {
-            "None": 136, 
-            "male": 519, 
-            "female": 158
+            "None": 132, 
+            "male": 518, 
+            "female": 160
         }, 
         "GEOGRAFIA": {
             "None": 9, 
@@ -1284,17 +1275,17 @@
             "female": 10
         }, 
         "HISTORIA": {
-            "None": 45, 
-            "male": 170, 
-            "female": 62
+            "None": 46, 
+            "male": 171, 
+            "female": 60
         }, 
         "LINGUISTICA": {
-            "None": 18, 
+            "None": 17, 
             "male": 48, 
-            "female": 23
+            "female": 24
         }, 
         "CIENCIAS ECONOMICAS": {
-            "None": 15, 
+            "None": 14, 
             "male": 73, 
             "female": 15
         }, 
@@ -1313,12 +1304,14 @@
             "male": 4, 
             "female": 4
         }, 
-        "LOGICA": {
-            "male": 2
+        "CIENCIA POLITICA": {
+            "None": 2, 
+            "male": 25, 
+            "female": 4
         }, 
         "CIENCIAS JURIDICAS Y DERECHO": {
             "None": 28, 
-            "male": 85, 
+            "male": 84, 
             "female": 20
         }, 
         "PEDAGOGIA": {
@@ -1327,17 +1320,17 @@
             "female": 24
         }, 
         "CIENCIAS DE LAS ARTES Y LAS LETRAS": {
-            "None": 34, 
+            "None": 35, 
             "male": 126, 
-            "female": 41
+            "female": 40
         }, 
         "ASTRONOMIA Y ASTROFISICA": {
             "male": 9, 
             "female": 1
         }, 
         "SOCIOLOGIA": {
-            "None": 8, 
-            "male": 35, 
+            "None": 7, 
+            "male": 36, 
             "female": 13
         }, 
         "PSICOLOGIA": {
@@ -1352,65 +1345,63 @@
         }, 
         "MATEMATICAS": {
             "None": 23, 
-            "male": 95, 
-            "female": 29
+            "male": 94, 
+            "female": 30
         }, 
         "FISICA": {
             "None": 25, 
-            "male": 103, 
-            "female": 29
-        }, 
-        "QUIMICA": {
-            "None": 58, 
-            "male": 126, 
-            "female": 82
-        }, 
-        "CIENCIAS AGRARIAS": {
-            "None": 15, 
-            "male": 55, 
+            "male": 104, 
             "female": 28
         }, 
+        "QUIMICA": {
+            "None": 55, 
+            "male": 126, 
+            "female": 85
+        }, 
+        "CIENCIAS AGRARIAS": {
+            "None": 14, 
+            "male": 55, 
+            "female": 29
+        }, 
         "CIENCIAS TECNOLOGICAS": {
-            "None": 25, 
-            "male": 158, 
-            "female": 38
+            "None": 24, 
+            "male": 160, 
+            "female": 37
         }, 
         "CIENCIAS DE LA VIDA": {
             "None": 77, 
-            "male": 231, 
+            "male": 230, 
             "female": 131
         }, 
-        "CIENCIA POLITICA": {
-            "None": 2, 
-            "male": 25, 
-            "female": 4
+        "LOGICA": {
+            "male": 2
         }, 
         "ANTROPOLOGIA": {
             "None": 1, 
-            "male": 6, 
-            "female": 3
+            "male": 7, 
+            "female": 2
         }
     }, 
     "1989": {
         "CIENCIAS MEDICAS": {
-            "None": 148, 
+            "None": 146, 
             "male": 555, 
-            "female": 176
+            "female": 177
         }, 
         "GEOGRAFIA": {
-            "None": 7, 
+            "None": 6, 
             "male": 18, 
-            "female": 9
+            "female": 10
         }, 
         "HISTORIA": {
-            "None": 51, 
+            "None": 49, 
             "male": 191, 
-            "female": 71
+            "female": 73
         }, 
         "LINGUISTICA": {
-            "None": 20, 
+            "None": 19, 
             "male": 40, 
-            "female": 38
+            "female": 39
         }, 
         "CIENCIAS ECONOMICAS": {
             "None": 12, 
@@ -1423,38 +1414,38 @@
             "female": 10
         }, 
         "CIENCIAS DE LA TIERRA Y DEL ESPACIO": {
-            "None": 21, 
-            "male": 65, 
+            "None": 20, 
+            "male": 66, 
             "female": 29
         }, 
         "ETICA": {
             "None": 1, 
             "male": 9
         }, 
-        "LOGICA": {
-            "None": 3, 
-            "male": 7, 
-            "female": 2
+        "CIENCIA POLITICA": {
+            "None": 4, 
+            "male": 18, 
+            "female": 5
         }, 
         "CIENCIAS JURIDICAS Y DERECHO": {
-            "None": 24, 
+            "None": 23, 
             "male": 95, 
-            "female": 35
+            "female": 36
         }, 
         "PEDAGOGIA": {
-            "None": 14, 
+            "None": 13, 
             "male": 48, 
-            "female": 21
+            "female": 22
         }, 
         "CIENCIAS DE LAS ARTES Y LAS LETRAS": {
-            "None": 42, 
-            "male": 106, 
-            "female": 54
+            "None": 40, 
+            "male": 105, 
+            "female": 57
         }, 
         "ASTRONOMIA Y ASTROFISICA": {
-            "None": 1, 
+            "None": 2, 
             "male": 12, 
-            "female": 3
+            "female": 2
         }, 
         "SOCIOLOGIA": {
             "None": 6, 
@@ -1462,9 +1453,9 @@
             "female": 13
         }, 
         "PSICOLOGIA": {
-            "None": 26, 
-            "male": 63, 
-            "female": 32
+            "None": 24, 
+            "male": 64, 
+            "female": 33
         }, 
         "DEMOGRAFIA": {
             "None": 2, 
@@ -1472,39 +1463,39 @@
             "female": 2
         }, 
         "MATEMATICAS": {
-            "None": 16, 
-            "male": 101, 
-            "female": 27
+            "None": 18, 
+            "male": 100, 
+            "female": 26
         }, 
         "FISICA": {
-            "None": 29, 
-            "male": 123, 
-            "female": 31
+            "None": 28, 
+            "male": 126, 
+            "female": 29
         }, 
         "QUIMICA": {
             "None": 63, 
-            "male": 169, 
+            "male": 168, 
             "female": 100
         }, 
         "CIENCIAS AGRARIAS": {
-            "None": 20, 
+            "None": 21, 
             "male": 70, 
-            "female": 43
+            "female": 42
         }, 
         "CIENCIAS TECNOLOGICAS": {
-            "None": 35, 
-            "male": 177, 
+            "None": 37, 
+            "male": 175, 
             "female": 46
         }, 
         "CIENCIAS DE LA VIDA": {
-            "None": 85, 
+            "None": 79, 
             "male": 225, 
-            "female": 146
+            "female": 152
         }, 
-        "CIENCIA POLITICA": {
-            "None": 4, 
-            "male": 18, 
-            "female": 5
+        "LOGICA": {
+            "None": 3, 
+            "male": 7, 
+            "female": 2
         }, 
         "ANTROPOLOGIA": {
             "None": 3, 
@@ -1514,33 +1505,33 @@
     }, 
     "1990": {
         "CIENCIAS MEDICAS": {
-            "None": 223, 
-            "male": 935, 
-            "female": 286
+            "None": 219, 
+            "male": 934, 
+            "female": 290
         }, 
         "GEOGRAFIA": {
-            "None": 6, 
+            "None": 7, 
             "male": 40, 
-            "female": 10
+            "female": 9
         }, 
         "HISTORIA": {
             "None": 104, 
-            "male": 298, 
-            "female": 138
+            "male": 299, 
+            "female": 137
         }, 
         "LINGUISTICA": {
-            "None": 37, 
-            "male": 81, 
+            "None": 38, 
+            "male": 80, 
             "female": 56
         }, 
         "CIENCIAS ECONOMICAS": {
-            "None": 11, 
+            "None": 10, 
             "male": 108, 
-            "female": 27
+            "female": 28
         }, 
         "FILOSOFIA": {
-            "None": 19, 
-            "male": 111, 
+            "None": 20, 
+            "male": 110, 
             "female": 20
         }, 
         "CIENCIAS DE LA TIERRA Y DEL ESPACIO": {
@@ -1570,13 +1561,13 @@
         }, 
         "CIENCIAS DE LAS ARTES Y LAS LETRAS": {
             "None": 62, 
-            "male": 157, 
-            "female": 87
+            "male": 158, 
+            "female": 86
         }, 
         "ASTRONOMIA Y ASTROFISICA": {
-            "None": 4, 
+            "None": 3, 
             "male": 10, 
-            "female": 1
+            "female": 2
         }, 
         "SOCIOLOGIA": {
             "None": 17, 
@@ -1594,39 +1585,39 @@
             "female": 8
         }, 
         "MATEMATICAS": {
-            "None": 20, 
+            "None": 19, 
             "male": 127, 
-            "female": 29
+            "female": 30
         }, 
         "FISICA": {
             "None": 25, 
-            "male": 148, 
-            "female": 33
+            "male": 149, 
+            "female": 32
         }, 
         "QUIMICA": {
-            "None": 78, 
-            "male": 186, 
-            "female": 138
+            "None": 77, 
+            "male": 185, 
+            "female": 140
         }, 
         "CIENCIAS AGRARIAS": {
-            "None": 22, 
-            "male": 89, 
+            "None": 23, 
+            "male": 88, 
             "female": 43
         }, 
         "CIENCIAS TECNOLOGICAS": {
-            "None": 44, 
-            "male": 219, 
+            "None": 43, 
+            "male": 220, 
             "female": 48
         }, 
         "CIENCIAS DE LA VIDA": {
-            "None": 108, 
-            "male": 352, 
-            "female": 179
+            "None": 111, 
+            "male": 349, 
+            "female": 178
         }, 
         "CIENCIA POLITICA": {
             "None": 12, 
-            "male": 37, 
-            "female": 7
+            "male": 36, 
+            "female": 8
         }, 
         "ANTROPOLOGIA": {
             "None": 4, 
@@ -1636,9 +1627,9 @@
     }, 
     "1991": {
         "CIENCIAS MEDICAS": {
-            "None": 251, 
-            "male": 911, 
-            "female": 311
+            "None": 249, 
+            "male": 913, 
+            "female": 309
         }, 
         "GEOGRAFIA": {
             "None": 4, 
@@ -1646,9 +1637,9 @@
             "female": 5
         }, 
         "HISTORIA": {
-            "None": 83, 
-            "male": 261, 
-            "female": 108
+            "None": 82, 
+            "male": 264, 
+            "female": 106
         }, 
         "LINGUISTICA": {
             "None": 23, 
@@ -1657,27 +1648,27 @@
         }, 
         "CIENCIAS ECONOMICAS": {
             "None": 20, 
-            "male": 97, 
-            "female": 36
+            "male": 98, 
+            "female": 35
         }, 
         "FILOSOFIA": {
-            "None": 16, 
+            "None": 14, 
             "male": 77, 
-            "female": 16
+            "female": 18
         }, 
         "CIENCIAS DE LA TIERRA Y DEL ESPACIO": {
-            "None": 24, 
+            "None": 23, 
             "male": 97, 
-            "female": 22
+            "female": 23
         }, 
         "ETICA": {
             "male": 13, 
             "female": 2
         }, 
-        "CIENCIA POLITICA": {
-            "None": 6, 
-            "male": 37, 
-            "female": 12
+        "LOGICA": {
+            "None": 1, 
+            "male": 7, 
+            "female": 2
         }, 
         "CIENCIAS JURIDICAS Y DERECHO": {
             "None": 18, 
@@ -1690,9 +1681,9 @@
             "female": 38
         }, 
         "CIENCIAS DE LAS ARTES Y LAS LETRAS": {
-            "None": 41, 
-            "male": 142, 
-            "female": 77
+            "None": 40, 
+            "male": 140, 
+            "female": 80
         }, 
         "ASTRONOMIA Y ASTROFISICA": {
             "None": 3, 
@@ -1705,9 +1696,9 @@
             "female": 25
         }, 
         "PSICOLOGIA": {
-            "None": 41, 
+            "None": 40, 
             "male": 114, 
-            "female": 59
+            "female": 60
         }, 
         "DEMOGRAFIA": {
             "None": 2, 
@@ -1720,8 +1711,8 @@
             "female": 40
         }, 
         "FISICA": {
-            "None": 34, 
-            "male": 160, 
+            "None": 35, 
+            "male": 159, 
             "female": 45
         }, 
         "QUIMICA": {
@@ -1740,26 +1731,26 @@
             "female": 48
         }, 
         "CIENCIAS DE LA VIDA": {
-            "None": 111, 
-            "male": 360, 
-            "female": 205
+            "None": 108, 
+            "male": 361, 
+            "female": 207
         }, 
-        "LOGICA": {
-            "None": 1, 
-            "male": 7, 
-            "female": 2
+        "CIENCIA POLITICA": {
+            "None": 6, 
+            "male": 37, 
+            "female": 12
         }, 
         "ANTROPOLOGIA": {
-            "None": 7, 
+            "None": 6, 
             "male": 21, 
-            "female": 6
+            "female": 7
         }
     }, 
     "1992": {
         "CIENCIAS MEDICAS": {
-            "None": 166, 
-            "male": 600, 
-            "female": 254
+            "None": 161, 
+            "male": 599, 
+            "female": 259
         }, 
         "GEOGRAFIA": {
             "None": 3, 
@@ -1783,8 +1774,8 @@
         }, 
         "FILOSOFIA": {
             "None": 13, 
-            "male": 78, 
-            "female": 11
+            "male": 77, 
+            "female": 12
         }, 
         "CIENCIAS DE LA TIERRA Y DEL ESPACIO": {
             "None": 18, 
@@ -1797,14 +1788,14 @@
             "female": 2
         }, 
         "CIENCIA POLITICA": {
-            "None": 6, 
-            "male": 26, 
+            "None": 7, 
+            "male": 25, 
             "female": 11
         }, 
         "CIENCIAS JURIDICAS Y DERECHO": {
             "None": 21, 
-            "male": 113, 
-            "female": 27
+            "male": 114, 
+            "female": 26
         }, 
         "PEDAGOGIA": {
             "None": 16, 
@@ -1822,9 +1813,9 @@
             "female": 2
         }, 
         "SOCIOLOGIA": {
-            "None": 7, 
+            "None": 6, 
             "male": 27, 
-            "female": 14
+            "female": 15
         }, 
         "PSICOLOGIA": {
             "None": 28, 
@@ -1837,14 +1828,14 @@
             "female": 1
         }, 
         "MATEMATICAS": {
-            "None": 22, 
+            "None": 21, 
             "male": 110, 
-            "female": 28
+            "female": 29
         }, 
         "FISICA": {
-            "None": 23, 
+            "None": 22, 
             "male": 154, 
-            "female": 38
+            "female": 39
         }, 
         "QUIMICA": {
             "None": 69, 
@@ -1857,13 +1848,13 @@
             "female": 35
         }, 
         "CIENCIAS TECNOLOGICAS": {
-            "None": 39, 
-            "male": 216, 
+            "None": 38, 
+            "male": 215, 
             "female": 66
         }, 
         "CIENCIAS DE LA VIDA": {
             "None": 101, 
-            "male": 304, 
+            "male": 303, 
             "female": 165
         }, 
         "LOGICA": {
@@ -1878,9 +1869,9 @@
     }, 
     "1993": {
         "CIENCIAS MEDICAS": {
-            "None": 242, 
+            "None": 240, 
             "male": 805, 
-            "female": 353
+            "female": 355
         }, 
         "GEOGRAFIA": {
             "None": 5, 
@@ -1888,14 +1879,14 @@
             "female": 8
         }, 
         "HISTORIA": {
-            "None": 99, 
+            "None": 97, 
             "male": 235, 
-            "female": 145
+            "female": 147
         }, 
         "LINGUISTICA": {
-            "None": 33, 
+            "None": 32, 
             "male": 73, 
-            "female": 72
+            "female": 73
         }, 
         "CIENCIAS ECONOMICAS": {
             "None": 21, 
@@ -1923,18 +1914,18 @@
             "female": 2
         }, 
         "CIENCIAS JURIDICAS Y DERECHO": {
-            "None": 35, 
+            "None": 34, 
             "male": 120, 
-            "female": 28
+            "female": 29
         }, 
         "PEDAGOGIA": {
-            "None": 15, 
+            "None": 14, 
             "male": 52, 
-            "female": 39
+            "female": 40
         }, 
         "CIENCIAS DE LAS ARTES Y LAS LETRAS": {
-            "None": 51, 
-            "male": 152, 
+            "None": 50, 
+            "male": 153, 
             "female": 78
         }, 
         "ASTRONOMIA Y ASTROFISICA": {
@@ -1942,19 +1933,19 @@
             "female": 5
         }, 
         "SOCIOLOGIA": {
-            "None": 12, 
+            "None": 11, 
             "male": 50, 
-            "female": 21
+            "female": 22
         }, 
         "PSICOLOGIA": {
-            "None": 39, 
+            "None": 36, 
             "male": 108, 
-            "female": 72
+            "female": 75
         }, 
         "DEMOGRAFIA": {
-            "None": 3, 
+            "None": 2, 
             "male": 5, 
-            "female": 3
+            "female": 4
         }, 
         "MATEMATICAS": {
             "None": 20, 
@@ -1962,14 +1953,14 @@
             "female": 35
         }, 
         "FISICA": {
-            "None": 36, 
-            "male": 157, 
-            "female": 40
+            "None": 34, 
+            "male": 158, 
+            "female": 41
         }, 
         "QUIMICA": {
-            "None": 90, 
+            "None": 89, 
             "male": 218, 
-            "female": 140
+            "female": 141
         }, 
         "CIENCIAS AGRARIAS": {
             "None": 40, 
@@ -1977,19 +1968,19 @@
             "female": 52
         }, 
         "CIENCIAS TECNOLOGICAS": {
-            "None": 50, 
-            "male": 275, 
-            "female": 77
+            "None": 49, 
+            "male": 277, 
+            "female": 76
         }, 
         "CIENCIAS DE LA VIDA": {
             "None": 127, 
-            "male": 345, 
-            "female": 210
+            "male": 346, 
+            "female": 209
         }, 
         "CIENCIA POLITICA": {
-            "None": 9, 
+            "None": 10, 
             "male": 43, 
-            "female": 23
+            "female": 22
         }, 
         "ANTROPOLOGIA": {
             "None": 11, 
@@ -1999,8 +1990,8 @@
     }, 
     "1994": {
         "CIENCIAS MEDICAS": {
-            "None": 217, 
-            "male": 615, 
+            "None": 218, 
+            "male": 614, 
             "female": 312
         }, 
         "GEOGRAFIA": {
@@ -2009,19 +2000,19 @@
             "female": 7
         }, 
         "HISTORIA": {
-            "None": 79, 
-            "male": 257, 
-            "female": 116
+            "None": 82, 
+            "male": 256, 
+            "female": 114
         }, 
         "LINGUISTICA": {
-            "None": 44, 
+            "None": 41, 
             "male": 72, 
-            "female": 54
+            "female": 57
         }, 
         "CIENCIAS ECONOMICAS": {
-            "None": 37, 
+            "None": 36, 
             "male": 143, 
-            "female": 56
+            "female": 57
         }, 
         "FILOSOFIA": {
             "None": 16, 
@@ -2029,38 +2020,39 @@
             "female": 13
         }, 
         "CIENCIAS DE LA TIERRA Y DEL ESPACIO": {
-            "None": 25, 
-            "male": 99, 
-            "female": 40
+            "None": 23, 
+            "male": 100, 
+            "female": 41
         }, 
         "ETICA": {
             "None": 3, 
             "male": 13, 
             "female": 3
         }, 
-        "LOGICA": {
-            "male": 9, 
-            "female": 2
+        "CIENCIA POLITICA": {
+            "None": 10, 
+            "male": 40, 
+            "female": 20
         }, 
         "CIENCIAS JURIDICAS Y DERECHO": {
-            "None": 37, 
+            "None": 34, 
             "male": 109, 
-            "female": 51
+            "female": 52
         }, 
         "PEDAGOGIA": {
-            "None": 28, 
+            "None": 26, 
             "male": 73, 
-            "female": 36
+            "female": 38
         }, 
         "CIENCIAS DE LAS ARTES Y LAS LETRAS": {
-            "None": 43, 
-            "male": 163, 
-            "female": 76
+            "None": 44, 
+            "male": 161, 
+            "female": 77
         }, 
         "ASTRONOMIA Y ASTROFISICA": {
-            "None": 7, 
+            "None": 6, 
             "male": 21, 
-            "female": 5
+            "female": 6
         }, 
         "SOCIOLOGIA": {
             "None": 9, 
@@ -2093,24 +2085,24 @@
             "female": 185
         }, 
         "CIENCIAS AGRARIAS": {
-            "None": 32, 
-            "male": 106, 
-            "female": 67
+            "None": 28, 
+            "male": 107, 
+            "female": 70
         }, 
         "CIENCIAS TECNOLOGICAS": {
-            "None": 68, 
+            "None": 65, 
             "male": 314, 
-            "female": 97
+            "female": 100
         }, 
         "CIENCIAS DE LA VIDA": {
-            "None": 134, 
+            "None": 133, 
             "male": 349, 
-            "female": 217
+            "female": 218
         }, 
-        "CIENCIA POLITICA": {
-            "None": 11, 
-            "male": 40, 
-            "female": 20
+        "LOGICA": {
+            "None": 1, 
+            "male": 8, 
+            "female": 2
         }, 
         "ANTROPOLOGIA": {
             "None": 3, 
@@ -2120,9 +2112,9 @@
     }, 
     "1995": {
         "CIENCIAS MEDICAS": {
-            "None": 246, 
-            "male": 749, 
-            "female": 325
+            "None": 244, 
+            "male": 747, 
+            "female": 326
         }, 
         "GEOGRAFIA": {
             "None": 5, 
@@ -2135,24 +2127,24 @@
             "female": 137
         }, 
         "LINGUISTICA": {
-            "None": 39, 
+            "None": 38, 
             "male": 88, 
-            "female": 68
+            "female": 69
         }, 
         "CIENCIAS ECONOMICAS": {
             "None": 48, 
-            "male": 170, 
-            "female": 63
+            "male": 169, 
+            "female": 64
         }, 
         "FILOSOFIA": {
             "None": 19, 
-            "male": 82, 
-            "female": 26
+            "male": 81, 
+            "female": 27
         }, 
         "CIENCIAS DE LA TIERRA Y DEL ESPACIO": {
-            "None": 34, 
+            "None": 33, 
             "male": 124, 
-            "female": 46
+            "female": 47
         }, 
         "ETICA": {
             "None": 4, 
@@ -2165,19 +2157,19 @@
             "female": 1
         }, 
         "CIENCIAS JURIDICAS Y DERECHO": {
-            "None": 33, 
+            "None": 34, 
             "male": 128, 
-            "female": 64
+            "female": 63
         }, 
         "PEDAGOGIA": {
-            "None": 22, 
+            "None": 21, 
             "male": 83, 
-            "female": 47
+            "female": 48
         }, 
         "CIENCIAS DE LAS ARTES Y LAS LETRAS": {
-            "None": 63, 
-            "male": 158, 
-            "female": 82
+            "None": 61, 
+            "male": 154, 
+            "female": 88
         }, 
         "ASTRONOMIA Y ASTROFISICA": {
             "None": 2, 
@@ -2186,13 +2178,13 @@
         }, 
         "SOCIOLOGIA": {
             "None": 8, 
-            "male": 47, 
-            "female": 32
+            "male": 46, 
+            "female": 33
         }, 
         "PSICOLOGIA": {
-            "None": 65, 
+            "None": 62, 
             "male": 128, 
-            "female": 85
+            "female": 88
         }, 
         "DEMOGRAFIA": {
             "None": 4, 
@@ -2205,29 +2197,29 @@
             "female": 64
         }, 
         "FISICA": {
-            "None": 44, 
+            "None": 43, 
             "male": 213, 
-            "female": 59
+            "female": 60
         }, 
         "QUIMICA": {
-            "None": 103, 
-            "male": 244, 
-            "female": 206
+            "None": 104, 
+            "male": 243, 
+            "female": 205
         }, 
         "CIENCIAS AGRARIAS": {
             "None": 39, 
-            "male": 131, 
-            "female": 79
+            "male": 130, 
+            "female": 80
         }, 
         "CIENCIAS TECNOLOGICAS": {
-            "None": 72, 
-            "male": 362, 
-            "female": 112
+            "None": 71, 
+            "male": 361, 
+            "female": 113
         }, 
         "CIENCIAS DE LA VIDA": {
             "None": 139, 
-            "male": 373, 
-            "female": 252
+            "male": 372, 
+            "female": 253
         }, 
         "CIENCIA POLITICA": {
             "None": 10, 
@@ -2242,9 +2234,9 @@
     }, 
     "1996": {
         "CIENCIAS MEDICAS": {
-            "None": 262, 
-            "male": 749, 
-            "female": 403
+            "None": 263, 
+            "male": 748, 
+            "female": 401
         }, 
         "GEOGRAFIA": {
             "None": 5, 
@@ -2253,16 +2245,16 @@
         }, 
         "HISTORIA": {
             "None": 101, 
-            "male": 292, 
-            "female": 138
+            "male": 295, 
+            "female": 135
         }, 
         "LINGUISTICA": {
-            "None": 43, 
-            "male": 106, 
-            "female": 79
+            "None": 44, 
+            "male": 104, 
+            "female": 80
         }, 
         "CIENCIAS ECONOMICAS": {
-            "None": 54, 
+            "None": 53, 
             "male": 217, 
             "female": 84
         }, 
@@ -2272,34 +2264,34 @@
             "female": 24
         }, 
         "CIENCIAS DE LA TIERRA Y DEL ESPACIO": {
-            "None": 35, 
-            "male": 142, 
+            "None": 37, 
+            "male": 140, 
             "female": 45
         }, 
         "ETICA": {
-            "None": 5, 
-            "male": 25, 
+            "None": 4, 
+            "male": 26, 
             "female": 4
         }, 
-        "LOGICA": {
-            "None": 1, 
-            "male": 8, 
-            "female": 2
+        "CIENCIA POLITICA": {
+            "None": 22, 
+            "male": 81, 
+            "female": 35
         }, 
         "CIENCIAS JURIDICAS Y DERECHO": {
             "None": 54, 
-            "male": 166, 
-            "female": 94
+            "male": 167, 
+            "female": 93
         }, 
         "PEDAGOGIA": {
-            "None": 29, 
-            "male": 81, 
-            "female": 53
+            "None": 28, 
+            "male": 80, 
+            "female": 54
         }, 
         "CIENCIAS DE LAS ARTES Y LAS LETRAS": {
             "None": 62, 
-            "male": 149, 
-            "female": 113
+            "male": 148, 
+            "female": 114
         }, 
         "ASTRONOMIA Y ASTROFISICA": {
             "None": 3, 
@@ -2308,13 +2300,13 @@
         }, 
         "SOCIOLOGIA": {
             "None": 13, 
-            "male": 50, 
-            "female": 44
+            "male": 49, 
+            "female": 45
         }, 
         "PSICOLOGIA": {
-            "None": 53, 
+            "None": 52, 
             "male": 124, 
-            "female": 100
+            "female": 101
         }, 
         "DEMOGRAFIA": {
             "None": 3, 
@@ -2322,39 +2314,39 @@
             "female": 4
         }, 
         "MATEMATICAS": {
-            "None": 40, 
+            "None": 41, 
             "male": 239, 
-            "female": 41
+            "female": 40
         }, 
         "FISICA": {
-            "None": 50, 
+            "None": 51, 
             "male": 227, 
-            "female": 73
+            "female": 72
         }, 
         "QUIMICA": {
             "None": 135, 
-            "male": 262, 
-            "female": 228
+            "male": 261, 
+            "female": 229
         }, 
         "CIENCIAS AGRARIAS": {
             "None": 53, 
-            "male": 118, 
-            "female": 64
+            "male": 117, 
+            "female": 65
         }, 
         "CIENCIAS TECNOLOGICAS": {
-            "None": 87, 
-            "male": 446, 
-            "female": 131
+            "None": 85, 
+            "male": 447, 
+            "female": 132
         }, 
         "CIENCIAS DE LA VIDA": {
-            "None": 165, 
+            "None": 161, 
             "male": 358, 
-            "female": 259
+            "female": 263
         }, 
-        "CIENCIA POLITICA": {
-            "None": 20, 
-            "male": 81, 
-            "female": 37
+        "LOGICA": {
+            "None": 1, 
+            "male": 8, 
+            "female": 2
         }, 
         "ANTROPOLOGIA": {
             "None": 5, 
@@ -2364,9 +2356,9 @@
     }, 
     "1997": {
         "CIENCIAS MEDICAS": {
-            "None": 259, 
-            "male": 783, 
-            "female": 421
+            "None": 258, 
+            "male": 779, 
+            "female": 422
         }, 
         "GEOGRAFIA": {
             "None": 6, 
@@ -2375,17 +2367,17 @@
         }, 
         "HISTORIA": {
             "None": 91, 
-            "male": 304, 
-            "female": 152
+            "male": 306, 
+            "female": 150
         }, 
         "LINGUISTICA": {
-            "None": 48, 
-            "male": 93, 
-            "female": 94
+            "None": 47, 
+            "male": 92, 
+            "female": 96
         }, 
         "CIENCIAS ECONOMICAS": {
-            "None": 64, 
-            "male": 252, 
+            "None": 63, 
+            "male": 253, 
             "female": 95
         }, 
         "FILOSOFIA": {
@@ -2394,32 +2386,33 @@
             "female": 28
         }, 
         "CIENCIAS DE LA TIERRA Y DEL ESPACIO": {
-            "None": 39, 
+            "None": 40, 
             "male": 117, 
-            "female": 61
+            "female": 60
         }, 
         "ETICA": {
             "None": 3, 
             "male": 27, 
             "female": 6
         }, 
-        "LOGICA": {
-            "male": 7, 
-            "female": 1
+        "CIENCIA POLITICA": {
+            "None": 22, 
+            "male": 72, 
+            "female": 36
         }, 
         "CIENCIAS JURIDICAS Y DERECHO": {
-            "None": 81, 
+            "None": 80, 
             "male": 215, 
             "female": 111
         }, 
         "PEDAGOGIA": {
-            "None": 36, 
-            "male": 100, 
-            "female": 50
+            "None": 35, 
+            "male": 99, 
+            "female": 51
         }, 
         "CIENCIAS DE LAS ARTES Y LAS LETRAS": {
-            "None": 59, 
-            "male": 177, 
+            "None": 57, 
+            "male": 179, 
             "female": 133
         }, 
         "ASTRONOMIA Y ASTROFISICA": {
@@ -2428,13 +2421,13 @@
             "female": 7
         }, 
         "SOCIOLOGIA": {
-            "None": 30, 
+            "None": 27, 
             "male": 75, 
-            "female": 33
+            "female": 36
         }, 
         "PSICOLOGIA": {
             "None": 46, 
-            "male": 133, 
+            "male": 132, 
             "female": 89
         }, 
         "DEMOGRAFIA": {
@@ -2444,70 +2437,69 @@
         }, 
         "MATEMATICAS": {
             "None": 42, 
-            "male": 234, 
+            "male": 232, 
             "female": 77
         }, 
         "FISICA": {
             "None": 49, 
-            "male": 275, 
+            "male": 274, 
             "female": 76
         }, 
         "QUIMICA": {
-            "None": 152, 
-            "male": 307, 
-            "female": 286
+            "None": 148, 
+            "male": 306, 
+            "female": 289
         }, 
         "CIENCIAS AGRARIAS": {
-            "None": 62, 
-            "male": 133, 
-            "female": 92
+            "None": 60, 
+            "male": 132, 
+            "female": 94
         }, 
         "CIENCIAS TECNOLOGICAS": {
-            "None": 107, 
-            "male": 466, 
-            "female": 146
+            "None": 103, 
+            "male": 465, 
+            "female": 149
         }, 
         "CIENCIAS DE LA VIDA": {
             "None": 146, 
-            "male": 420, 
-            "female": 274
+            "male": 418, 
+            "female": 273
         }, 
-        "CIENCIA POLITICA": {
-            "None": 22, 
-            "male": 72, 
-            "female": 36
+        "LOGICA": {
+            "male": 7, 
+            "female": 1
         }, 
         "ANTROPOLOGIA": {
-            "None": 9, 
+            "None": 8, 
             "male": 30, 
-            "female": 11
+            "female": 12
         }
     }, 
     "1998": {
         "CIENCIAS MEDICAS": {
-            "None": 223, 
+            "None": 217, 
             "male": 646, 
             "female": 323
         }, 
         "GEOGRAFIA": {
-            "None": 4, 
+            "None": 3, 
             "male": 28, 
-            "female": 18
+            "female": 19
         }, 
         "HISTORIA": {
-            "None": 70, 
-            "male": 262, 
-            "female": 131
+            "None": 69, 
+            "male": 261, 
+            "female": 132
         }, 
         "LINGUISTICA": {
             "None": 37, 
             "male": 118, 
-            "female": 69
+            "female": 68
         }, 
         "CIENCIAS ECONOMICAS": {
-            "None": 63, 
-            "male": 235, 
-            "female": 98
+            "None": 60, 
+            "male": 234, 
+            "female": 102
         }, 
         "FILOSOFIA": {
             "None": 10, 
@@ -2517,7 +2509,7 @@
         "CIENCIAS DE LA TIERRA Y DEL ESPACIO": {
             "None": 29, 
             "male": 118, 
-            "female": 47
+            "female": 46
         }, 
         "ETICA": {
             "None": 2, 
@@ -2529,13 +2521,13 @@
             "female": 3
         }, 
         "CIENCIAS JURIDICAS Y DERECHO": {
-            "None": 74, 
-            "male": 170, 
+            "None": 70, 
+            "male": 173, 
             "female": 97
         }, 
         "PEDAGOGIA": {
             "None": 39, 
-            "male": 93, 
+            "male": 92, 
             "female": 61
         }, 
         "CIENCIAS DE LAS ARTES Y LAS LETRAS": {
@@ -2549,12 +2541,12 @@
         }, 
         "SOCIOLOGIA": {
             "None": 23, 
-            "male": 69, 
-            "female": 17
+            "male": 68, 
+            "female": 16
         }, 
         "PSICOLOGIA": {
             "None": 49, 
-            "male": 131, 
+            "male": 130, 
             "female": 86
         }, 
         "DEMOGRAFIA": {
@@ -2565,35 +2557,35 @@
         "MATEMATICAS": {
             "None": 26, 
             "male": 249, 
-            "female": 88
+            "female": 87
         }, 
         "FISICA": {
-            "None": 46, 
-            "male": 268, 
-            "female": 83
+            "None": 45, 
+            "male": 266, 
+            "female": 84
         }, 
         "QUIMICA": {
-            "None": 115, 
-            "male": 268, 
-            "female": 234
+            "None": 113, 
+            "male": 269, 
+            "female": 235
         }, 
         "CIENCIAS AGRARIAS": {
-            "None": 29, 
+            "None": 28, 
             "male": 119, 
-            "female": 68
+            "female": 67
         }, 
         "CIENCIAS TECNOLOGICAS": {
             "None": 87, 
-            "male": 449, 
-            "female": 154
+            "male": 447, 
+            "female": 151
         }, 
         "CIENCIAS DE LA VIDA": {
             "None": 108, 
-            "male": 345, 
-            "female": 240
+            "male": 344, 
+            "female": 238
         }, 
         "CIENCIA POLITICA": {
-            "None": 26, 
+            "None": 25, 
             "male": 78, 
             "female": 48
         }, 
@@ -2605,29 +2597,29 @@
     }, 
     "1999": {
         "CIENCIAS MEDICAS": {
-            "None": 214, 
-            "male": 611, 
-            "female": 400
+            "None": 213, 
+            "male": 609, 
+            "female": 402
         }, 
         "GEOGRAFIA": {
-            "None": 11, 
+            "None": 9, 
             "male": 27, 
-            "female": 5
+            "female": 7
         }, 
         "HISTORIA": {
-            "None": 80, 
-            "male": 260, 
+            "None": 81, 
+            "male": 259, 
             "female": 147
         }, 
         "LINGUISTICA": {
-            "None": 45, 
+            "None": 42, 
             "male": 105, 
-            "female": 91
+            "female": 94
         }, 
         "CIENCIAS ECONOMICAS": {
-            "None": 73, 
-            "male": 282, 
-            "female": 149
+            "None": 69, 
+            "male": 281, 
+            "female": 154
         }, 
         "FILOSOFIA": {
             "None": 15, 
@@ -2644,25 +2636,23 @@
             "male": 15, 
             "female": 6
         }, 
-        "CIENCIA POLITICA": {
-            "None": 15, 
-            "male": 91, 
-            "female": 55
+        "LOGICA": {
+            "male": 14
         }, 
         "CIENCIAS JURIDICAS Y DERECHO": {
-            "None": 60, 
-            "male": 214, 
-            "female": 132
+            "None": 59, 
+            "male": 213, 
+            "female": 133
         }, 
         "PEDAGOGIA": {
-            "None": 41, 
+            "None": 40, 
             "male": 101, 
-            "female": 73
+            "female": 74
         }, 
         "CIENCIAS DE LAS ARTES Y LAS LETRAS": {
-            "None": 51, 
+            "None": 47, 
             "male": 148, 
-            "female": 114
+            "female": 118
         }, 
         "ASTRONOMIA Y ASTROFISICA": {
             "None": 2, 
@@ -2675,9 +2665,9 @@
             "female": 49
         }, 
         "PSICOLOGIA": {
-            "None": 62, 
-            "male": 125, 
-            "female": 161
+            "None": 59, 
+            "male": 124, 
+            "female": 164
         }, 
         "DEMOGRAFIA": {
             "None": 9, 
@@ -2685,19 +2675,19 @@
             "female": 5
         }, 
         "MATEMATICAS": {
-            "None": 45, 
+            "None": 44, 
             "male": 262, 
-            "female": 73
+            "female": 74
         }, 
         "FISICA": {
-            "None": 52, 
+            "None": 51, 
             "male": 287, 
-            "female": 89
+            "female": 90
         }, 
         "QUIMICA": {
-            "None": 124, 
-            "male": 296, 
-            "female": 242
+            "None": 120, 
+            "male": 297, 
+            "female": 244
         }, 
         "CIENCIAS AGRARIAS": {
             "None": 42, 
@@ -2711,43 +2701,45 @@
         }, 
         "CIENCIAS DE LA VIDA": {
             "None": 138, 
-            "male": 408, 
+            "male": 407, 
             "female": 326
         }, 
-        "LOGICA": {
-            "male": 14
+        "CIENCIA POLITICA": {
+            "None": 16, 
+            "male": 91, 
+            "female": 54
         }, 
         "ANTROPOLOGIA": {
-            "None": 5, 
+            "None": 4, 
             "male": 32, 
-            "female": 20
+            "female": 21
         }
     }, 
     "2000": {
         "CIENCIAS MEDICAS": {
-            "None": 234, 
-            "male": 614, 
-            "female": 396
+            "None": 228, 
+            "male": 613, 
+            "female": 403
         }, 
         "GEOGRAFIA": {
-            "None": 7, 
+            "None": 6, 
             "male": 39, 
-            "female": 14
+            "female": 15
         }, 
         "HISTORIA": {
             "None": 91, 
-            "male": 310, 
-            "female": 147
+            "male": 308, 
+            "female": 149
         }, 
         "LINGUISTICA": {
-            "None": 56, 
-            "male": 98, 
-            "female": 107
+            "None": 54, 
+            "male": 99, 
+            "female": 108
         }, 
         "CIENCIAS ECONOMICAS": {
-            "None": 84, 
-            "male": 278, 
-            "female": 163
+            "None": 78, 
+            "male": 279, 
+            "female": 168
         }, 
         "FILOSOFIA": {
             "None": 15, 
@@ -2755,24 +2747,24 @@
             "female": 21
         }, 
         "CIENCIAS DE LA TIERRA Y DEL ESPACIO": {
-            "None": 44, 
-            "male": 145, 
-            "female": 75
+            "None": 45, 
+            "male": 144, 
+            "female": 74
         }, 
         "ETICA": {
             "None": 8, 
             "male": 17, 
             "female": 9
         }, 
-        "CIENCIA POLITICA": {
-            "None": 31, 
-            "male": 90, 
-            "female": 58
+        "LOGICA": {
+            "None": 3, 
+            "male": 16, 
+            "female": 2
         }, 
         "CIENCIAS JURIDICAS Y DERECHO": {
-            "None": 51, 
+            "None": 47, 
             "male": 209, 
-            "female": 131
+            "female": 135
         }, 
         "PEDAGOGIA": {
             "None": 55, 
@@ -2780,9 +2772,9 @@
             "female": 94
         }, 
         "CIENCIAS DE LAS ARTES Y LAS LETRAS": {
-            "None": 49, 
+            "None": 48, 
             "male": 157, 
-            "female": 132
+            "female": 133
         }, 
         "ASTRONOMIA Y ASTROFISICA": {
             "None": 1, 
@@ -2790,14 +2782,14 @@
             "female": 7
         }, 
         "SOCIOLOGIA": {
-            "None": 33, 
+            "None": 32, 
             "male": 102, 
-            "female": 52
+            "female": 53
         }, 
         "PSICOLOGIA": {
-            "None": 67, 
-            "male": 140, 
-            "female": 125
+            "None": 66, 
+            "male": 139, 
+            "female": 127
         }, 
         "DEMOGRAFIA": {
             "None": 4, 
@@ -2805,9 +2797,9 @@
             "female": 13
         }, 
         "MATEMATICAS": {
-            "None": 53, 
+            "None": 50, 
             "male": 329, 
-            "female": 105
+            "female": 107
         }, 
         "FISICA": {
             "None": 39, 
@@ -2815,41 +2807,41 @@
             "female": 97
         }, 
         "QUIMICA": {
-            "None": 125, 
-            "male": 275, 
-            "female": 270
+            "None": 122, 
+            "male": 274, 
+            "female": 274
         }, 
         "CIENCIAS AGRARIAS": {
-            "None": 52, 
-            "male": 141, 
-            "female": 91
+            "None": 50, 
+            "male": 140, 
+            "female": 93
         }, 
         "CIENCIAS TECNOLOGICAS": {
-            "None": 99, 
-            "male": 612, 
-            "female": 207
+            "None": 95, 
+            "male": 613, 
+            "female": 209
         }, 
         "CIENCIAS DE LA VIDA": {
-            "None": 164, 
-            "male": 437, 
-            "female": 353
+            "None": 162, 
+            "male": 434, 
+            "female": 356
         }, 
-        "LOGICA": {
-            "None": 3, 
-            "male": 16, 
-            "female": 2
+        "CIENCIA POLITICA": {
+            "None": 29, 
+            "male": 90, 
+            "female": 60
         }, 
         "ANTROPOLOGIA": {
-            "None": 18, 
+            "None": 16, 
             "male": 37, 
-            "female": 23
+            "female": 24
         }
     }, 
     "2001": {
         "CIENCIAS MEDICAS": {
-            "None": 189, 
-            "male": 501, 
-            "female": 360
+            "None": 186, 
+            "male": 500, 
+            "female": 364
         }, 
         "GEOGRAFIA": {
             "None": 10, 
@@ -2857,24 +2849,24 @@
             "female": 12
         }, 
         "HISTORIA": {
-            "None": 81, 
-            "male": 283, 
-            "female": 139
+            "None": 76, 
+            "male": 282, 
+            "female": 143
         }, 
         "LINGUISTICA": {
-            "None": 53, 
+            "None": 48, 
             "male": 97, 
-            "female": 102
+            "female": 107
         }, 
         "CIENCIAS ECONOMICAS": {
-            "None": 101, 
-            "male": 277, 
-            "female": 175
+            "None": 98, 
+            "male": 276, 
+            "female": 178
         }, 
         "FILOSOFIA": {
-            "None": 14, 
-            "male": 92, 
-            "female": 31
+            "None": 11, 
+            "male": 93, 
+            "female": 33
         }, 
         "CIENCIAS DE LA TIERRA Y DEL ESPACIO": {
             "None": 36, 
@@ -2886,25 +2878,24 @@
             "male": 16, 
             "female": 8
         }, 
-        "CIENCIA POLITICA": {
-            "None": 21, 
-            "male": 91, 
-            "female": 63
+        "LOGICA": {
+            "male": 13, 
+            "female": 5
         }, 
         "CIENCIAS JURIDICAS Y DERECHO": {
-            "None": 46, 
-            "male": 164, 
-            "female": 140
+            "None": 48, 
+            "male": 161, 
+            "female": 139
         }, 
         "PEDAGOGIA": {
-            "None": 52, 
+            "None": 47, 
             "male": 124, 
-            "female": 110
+            "female": 115
         }, 
         "CIENCIAS DE LAS ARTES Y LAS LETRAS": {
-            "None": 67, 
-            "male": 181, 
-            "female": 125
+            "None": 66, 
+            "male": 180, 
+            "female": 127
         }, 
         "ASTRONOMIA Y ASTROFISICA": {
             "None": 1, 
@@ -2912,14 +2903,14 @@
             "female": 3
         }, 
         "SOCIOLOGIA": {
-            "None": 31, 
-            "male": 103, 
-            "female": 57
+            "None": 27, 
+            "male": 105, 
+            "female": 59
         }, 
         "PSICOLOGIA": {
-            "None": 57, 
+            "None": 54, 
             "male": 157, 
-            "female": 159
+            "female": 162
         }, 
         "DEMOGRAFIA": {
             "None": 4, 
@@ -2927,9 +2918,9 @@
             "female": 6
         }, 
         "MATEMATICAS": {
-            "None": 53, 
-            "male": 341, 
-            "female": 113
+            "None": 50, 
+            "male": 340, 
+            "female": 116
         }, 
         "FISICA": {
             "None": 41, 
@@ -2937,40 +2928,41 @@
             "female": 98
         }, 
         "QUIMICA": {
-            "None": 123, 
-            "male": 291, 
-            "female": 288
+            "None": 124, 
+            "male": 289, 
+            "female": 289
         }, 
         "CIENCIAS AGRARIAS": {
-            "None": 54, 
+            "None": 52, 
             "male": 170, 
-            "female": 105
+            "female": 107
         }, 
         "CIENCIAS TECNOLOGICAS": {
-            "None": 105, 
-            "male": 601, 
-            "female": 212
+            "None": 103, 
+            "male": 600, 
+            "female": 214
         }, 
         "CIENCIAS DE LA VIDA": {
-            "None": 181, 
-            "male": 389, 
-            "female": 332
+            "None": 177, 
+            "male": 388, 
+            "female": 336
         }, 
-        "LOGICA": {
-            "male": 13, 
-            "female": 5
+        "CIENCIA POLITICA": {
+            "None": 21, 
+            "male": 92, 
+            "female": 62
         }, 
         "ANTROPOLOGIA": {
             "None": 8, 
             "male": 29, 
-            "female": 17
+            "female": 16
         }
     }, 
     "2002": {
         "CIENCIAS MEDICAS": {
-            "None": 151, 
-            "male": 387, 
-            "female": 304
+            "None": 150, 
+            "male": 388, 
+            "female": 303
         }, 
         "GEOGRAFIA": {
             "None": 4, 
@@ -2978,19 +2970,19 @@
             "female": 10
         }, 
         "HISTORIA": {
-            "None": 70, 
+            "None": 68, 
             "male": 214, 
-            "female": 111
+            "female": 112
         }, 
         "LINGUISTICA": {
             "None": 43, 
-            "male": 74, 
-            "female": 98
+            "male": 75, 
+            "female": 96
         }, 
         "CIENCIAS ECONOMICAS": {
-            "None": 52, 
-            "male": 222, 
-            "female": 132
+            "None": 51, 
+            "male": 220, 
+            "female": 131
         }, 
         "FILOSOFIA": {
             "None": 15, 
@@ -2999,8 +2991,8 @@
         }, 
         "CIENCIAS DE LA TIERRA Y DEL ESPACIO": {
             "None": 18, 
-            "male": 118, 
-            "female": 64
+            "male": 119, 
+            "female": 63
         }, 
         "ETICA": {
             "None": 6, 
@@ -3013,18 +3005,18 @@
             "female": 51
         }, 
         "CIENCIAS JURIDICAS Y DERECHO": {
-            "None": 46, 
+            "None": 45, 
             "male": 144, 
             "female": 90
         }, 
         "PEDAGOGIA": {
-            "None": 49, 
-            "male": 84, 
-            "female": 86
+            "None": 47, 
+            "male": 82, 
+            "female": 87
         }, 
         "CIENCIAS DE LAS ARTES Y LAS LETRAS": {
-            "None": 67, 
-            "male": 125, 
+            "None": 66, 
+            "male": 126, 
             "female": 100
         }, 
         "ASTRONOMIA Y ASTROFISICA": {
@@ -3033,14 +3025,14 @@
             "female": 5
         }, 
         "SOCIOLOGIA": {
-            "None": 25, 
+            "None": 24, 
             "male": 78, 
-            "female": 62
+            "female": 63
         }, 
         "PSICOLOGIA": {
-            "None": 38, 
-            "male": 114, 
-            "female": 104
+            "None": 34, 
+            "male": 112, 
+            "female": 107
         }, 
         "DEMOGRAFIA": {
             "None": 4, 
@@ -3049,33 +3041,33 @@
         }, 
         "MATEMATICAS": {
             "None": 33, 
-            "male": 256, 
-            "female": 81
-        }, 
-        "FISICA": {
-            "None": 39, 
-            "male": 217, 
-            "female": 87
-        }, 
-        "QUIMICA": {
-            "None": 92, 
-            "male": 222, 
-            "female": 250
-        }, 
-        "CIENCIAS AGRARIAS": {
-            "None": 29, 
-            "male": 124, 
+            "male": 253, 
             "female": 78
         }, 
+        "FISICA": {
+            "None": 38, 
+            "male": 216, 
+            "female": 88
+        }, 
+        "QUIMICA": {
+            "None": 91, 
+            "male": 222, 
+            "female": 249
+        }, 
+        "CIENCIAS AGRARIAS": {
+            "None": 28, 
+            "male": 123, 
+            "female": 80
+        }, 
         "CIENCIAS TECNOLOGICAS": {
-            "None": 95, 
-            "male": 424, 
-            "female": 192
+            "None": 93, 
+            "male": 422, 
+            "female": 191
         }, 
         "CIENCIAS DE LA VIDA": {
-            "None": 123, 
+            "None": 122, 
             "male": 262, 
-            "female": 282
+            "female": 281
         }, 
         "LOGICA": {
             "None": 2, 
@@ -3091,8 +3083,8 @@
     "2003": {
         "CIENCIAS MEDICAS": {
             "None": 19, 
-            "male": 89, 
-            "female": 45
+            "male": 84, 
+            "female": 44
         }, 
         "GEOGRAFIA": {
             "male": 5, 
@@ -3100,38 +3092,37 @@
         }, 
         "HISTORIA": {
             "None": 17, 
-            "male": 45, 
-            "female": 31
+            "male": 44, 
+            "female": 30
         }, 
         "LINGUISTICA": {
             "None": 12, 
-            "male": 21, 
-            "female": 30
+            "male": 22, 
+            "female": 28
         }, 
         "CIENCIAS ECONOMICAS": {
             "None": 8, 
-            "male": 42, 
+            "male": 41, 
             "female": 12
         }, 
         "FILOSOFIA": {
             "None": 1, 
-            "male": 8, 
-            "female": 3
+            "male": 9, 
+            "female": 2
         }, 
         "CIENCIAS DE LA TIERRA Y DEL ESPACIO": {
-            "None": 8, 
-            "male": 24, 
-            "female": 12
+            "None": 7, 
+            "male": 23, 
+            "female": 13
         }, 
         "ETICA": {
             "None": 2, 
             "male": 2, 
             "female": 2
         }, 
-        "CIENCIA POLITICA": {
-            "None": 3, 
-            "male": 11, 
-            "female": 2
+        "LOGICA": {
+            "male": 3, 
+            "female": 1
         }, 
         "CIENCIAS JURIDICAS Y DERECHO": {
             "None": 3, 
@@ -3139,26 +3130,26 @@
             "female": 13
         }, 
         "PEDAGOGIA": {
-            "None": 9, 
+            "None": 8, 
             "male": 24, 
-            "female": 24
+            "female": 22
         }, 
         "CIENCIAS DE LAS ARTES Y LAS LETRAS": {
-            "None": 13, 
-            "male": 36, 
+            "None": 14, 
+            "male": 35, 
             "female": 24
         }, 
         "ASTRONOMIA Y ASTROFISICA": {
             "male": 1
         }, 
         "SOCIOLOGIA": {
-            "None": 3, 
-            "male": 12, 
+            "None": 4, 
+            "male": 10, 
             "female": 10
         }, 
         "PSICOLOGIA": {
-            "None": 12, 
-            "male": 22, 
+            "None": 11, 
+            "male": 21, 
             "female": 28
         }, 
         "DEMOGRAFIA": {
@@ -3168,12 +3159,12 @@
         "MATEMATICAS": {
             "None": 5, 
             "male": 39, 
-            "female": 16
+            "female": 14
         }, 
         "FISICA": {
             "None": 5, 
             "male": 30, 
-            "female": 14
+            "female": 13
         }, 
         "QUIMICA": {
             "None": 16, 
@@ -3181,22 +3172,23 @@
             "female": 42
         }, 
         "CIENCIAS AGRARIAS": {
-            "None": 13, 
-            "male": 49, 
-            "female": 18
+            "None": 11, 
+            "male": 48, 
+            "female": 20
         }, 
         "CIENCIAS TECNOLOGICAS": {
             "None": 12, 
-            "male": 58, 
+            "male": 56, 
             "female": 23
         }, 
         "CIENCIAS DE LA VIDA": {
             "None": 27, 
-            "male": 78, 
-            "female": 56
+            "male": 77, 
+            "female": 55
         }, 
-        "LOGICA": {
-            "male": 2, 
+        "CIENCIA POLITICA": {
+            "None": 3, 
+            "male": 11, 
             "female": 2
         }, 
         "ANTROPOLOGIA": {
@@ -3207,19 +3199,19 @@
     }, 
     "2004": {
         "CIENCIAS MEDICAS": {
-            "None": 37, 
-            "male": 176, 
-            "female": 182
+            "None": 34, 
+            "male": 174, 
+            "female": 181
         }, 
         "GEOGRAFIA": {
             "None": 5, 
-            "male": 14, 
+            "male": 13, 
             "female": 6
         }, 
         "HISTORIA": {
-            "None": 11, 
-            "male": 76, 
-            "female": 53
+            "None": 10, 
+            "male": 77, 
+            "female": 51
         }, 
         "LINGUISTICA": {
             "None": 13, 
@@ -3227,43 +3219,43 @@
             "female": 47
         }, 
         "CIENCIAS ECONOMICAS": {
-            "None": 16, 
-            "male": 82, 
+            "None": 14, 
+            "male": 78, 
             "female": 49
         }, 
         "FILOSOFIA": {
             "None": 4, 
-            "male": 35, 
+            "male": 34, 
             "female": 14
         }, 
         "CIENCIAS DE LA TIERRA Y DEL ESPACIO": {
             "None": 12, 
-            "male": 55, 
+            "male": 54, 
             "female": 27
         }, 
         "ETICA": {
             "male": 6, 
             "female": 1
         }, 
-        "CIENCIA POLITICA": {
-            "None": 11, 
-            "male": 33, 
-            "female": 18
+        "LOGICA": {
+            "None": 1, 
+            "male": 5, 
+            "female": 2
         }, 
         "CIENCIAS JURIDICAS Y DERECHO": {
             "None": 22, 
-            "male": 48, 
-            "female": 41
+            "male": 47, 
+            "female": 40
         }, 
         "PEDAGOGIA": {
-            "None": 9, 
-            "male": 47, 
-            "female": 47
+            "None": 8, 
+            "male": 44, 
+            "female": 45
         }, 
         "CIENCIAS DE LAS ARTES Y LAS LETRAS": {
-            "None": 14, 
-            "male": 73, 
-            "female": 54
+            "None": 13, 
+            "male": 72, 
+            "female": 55
         }, 
         "ASTRONOMIA Y ASTROFISICA": {
             "None": 1, 
@@ -3271,14 +3263,14 @@
             "female": 3
         }, 
         "SOCIOLOGIA": {
-            "None": 11, 
+            "None": 8, 
             "male": 37, 
-            "female": 46
+            "female": 47
         }, 
         "PSICOLOGIA": {
             "None": 11, 
-            "male": 46, 
-            "female": 67
+            "male": 45, 
+            "female": 64
         }, 
         "DEMOGRAFIA": {
             "male": 5, 
@@ -3286,18 +3278,18 @@
         }, 
         "MATEMATICAS": {
             "None": 6, 
-            "male": 80, 
+            "male": 79, 
             "female": 37
         }, 
         "FISICA": {
-            "None": 10, 
-            "male": 75, 
+            "None": 11, 
+            "male": 74, 
             "female": 37
         }, 
         "QUIMICA": {
-            "None": 18, 
-            "male": 91, 
-            "female": 121
+            "None": 17, 
+            "male": 89, 
+            "female": 120
         }, 
         "CIENCIAS AGRARIAS": {
             "None": 10, 
@@ -3305,65 +3297,65 @@
             "female": 44
         }, 
         "CIENCIAS TECNOLOGICAS": {
-            "None": 24, 
-            "male": 147, 
-            "female": 80
+            "None": 21, 
+            "male": 146, 
+            "female": 83
         }, 
         "CIENCIAS DE LA VIDA": {
-            "None": 37, 
+            "None": 32, 
             "male": 116, 
-            "female": 145
+            "female": 149
         }, 
-        "LOGICA": {
-            "None": 1, 
-            "male": 5, 
-            "female": 2
+        "CIENCIA POLITICA": {
+            "None": 9, 
+            "male": 32, 
+            "female": 19
         }, 
         "ANTROPOLOGIA": {
-            "None": 3, 
-            "male": 19, 
+            "None": 2, 
+            "male": 20, 
             "female": 11
         }
     }, 
     "2005": {
         "CIENCIAS MEDICAS": {
-            "None": 116, 
-            "male": 457, 
-            "female": 464
+            "None": 98, 
+            "male": 454, 
+            "female": 474
         }, 
         "GEOGRAFIA": {
             "None": 8, 
-            "male": 40, 
-            "female": 26
+            "male": 39, 
+            "female": 25
         }, 
         "HISTORIA": {
-            "None": 55, 
-            "male": 234, 
-            "female": 154
+            "None": 49, 
+            "male": 232, 
+            "female": 157
         }, 
         "LINGUISTICA": {
-            "None": 33, 
-            "male": 79, 
-            "female": 118
+            "None": 31, 
+            "male": 78, 
+            "female": 119
         }, 
         "CIENCIAS ECONOMICAS": {
-            "None": 54, 
-            "male": 296, 
-            "female": 177
+            "None": 44, 
+            "male": 294, 
+            "female": 182
         }, 
         "FILOSOFIA": {
-            "None": 12, 
-            "male": 96, 
-            "female": 33
+            "None": 10, 
+            "male": 95, 
+            "female": 34
         }, 
         "CIENCIAS DE LA TIERRA Y DEL ESPACIO": {
-            "None": 17, 
-            "male": 124, 
+            "None": 16, 
+            "male": 121, 
             "female": 96
         }, 
         "ETICA": {
             "None": 2, 
-            "male": 23, 
+            "male": 22, 
             "female": 14
         }, 
         "LOGICA": {
@@ -3371,19 +3363,19 @@
             "female": 3
         }, 
         "CIENCIAS JURIDICAS Y DERECHO": {
-            "None": 40, 
-            "male": 177, 
-            "female": 116
+            "None": 39, 
+            "male": 176, 
+            "female": 118
         }, 
         "PEDAGOGIA": {
-            "None": 35, 
-            "male": 148, 
-            "female": 163
+            "None": 33, 
+            "male": 145, 
+            "female": 164
         }, 
         "CIENCIAS DE LAS ARTES Y LAS LETRAS": {
-            "None": 61, 
-            "male": 183, 
-            "female": 180
+            "None": 57, 
+            "male": 180, 
+            "female": 184
         }, 
         "ASTRONOMIA Y ASTROFISICA": {
             "None": 1, 
@@ -3391,49 +3383,49 @@
             "female": 9
         }, 
         "SOCIOLOGIA": {
-            "None": 32, 
+            "None": 29, 
             "male": 127, 
-            "female": 101
+            "female": 102
         }, 
         "PSICOLOGIA": {
-            "None": 41, 
-            "male": 151, 
-            "female": 186
+            "None": 35, 
+            "male": 150, 
+            "female": 191
         }, 
         "DEMOGRAFIA": {
             "None": 1, 
-            "male": 13, 
+            "male": 12, 
             "female": 8
         }, 
         "MATEMATICAS": {
-            "None": 29, 
-            "male": 253, 
-            "female": 111
-        }, 
-        "FISICA": {
-            "None": 30, 
-            "male": 258, 
-            "female": 103
-        }, 
-        "QUIMICA": {
-            "None": 47, 
-            "male": 265, 
-            "female": 320
-        }, 
-        "CIENCIAS AGRARIAS": {
-            "None": 28, 
-            "male": 162, 
+            "None": 23, 
+            "male": 249, 
             "female": 116
         }, 
+        "FISICA": {
+            "None": 26, 
+            "male": 256, 
+            "female": 105
+        }, 
+        "QUIMICA": {
+            "None": 44, 
+            "male": 263, 
+            "female": 322
+        }, 
+        "CIENCIAS AGRARIAS": {
+            "None": 25, 
+            "male": 162, 
+            "female": 118
+        }, 
         "CIENCIAS TECNOLOGICAS": {
-            "None": 68, 
-            "male": 554, 
-            "female": 290
+            "None": 64, 
+            "male": 547, 
+            "female": 295
         }, 
         "CIENCIAS DE LA VIDA": {
-            "None": 86, 
-            "male": 341, 
-            "female": 403
+            "None": 78, 
+            "male": 337, 
+            "female": 408
         }, 
         "CIENCIA POLITICA": {
             "None": 10, 
@@ -3448,200 +3440,199 @@
     }, 
     "2006": {
         "CIENCIAS MEDICAS": {
-            "None": 87, 
-            "male": 474, 
-            "female": 508
+            "None": 78, 
+            "male": 465, 
+            "female": 504
         }, 
         "GEOGRAFIA": {
             "None": 3, 
             "male": 39, 
-            "female": 10
+            "female": 9
         }, 
         "HISTORIA": {
-            "None": 41, 
+            "None": 37, 
             "male": 230, 
-            "female": 122
+            "female": 124
         }, 
         "LINGUISTICA": {
-            "None": 28, 
-            "male": 71, 
-            "female": 126
+            "None": 25, 
+            "male": 70, 
+            "female": 124
         }, 
         "CIENCIAS ECONOMICAS": {
-            "None": 39, 
-            "male": 259, 
-            "female": 163
+            "None": 31, 
+            "male": 253, 
+            "female": 167
         }, 
         "FILOSOFIA": {
-            "None": 12, 
+            "None": 10, 
             "male": 72, 
-            "female": 39
+            "female": 41
         }, 
         "CIENCIAS DE LA TIERRA Y DEL ESPACIO": {
             "None": 23, 
-            "male": 146, 
-            "female": 101
+            "male": 147, 
+            "female": 99
         }, 
         "ETICA": {
             "None": 1, 
             "male": 7, 
             "female": 8
         }, 
-        "LOGICA": {
-            "None": 3, 
-            "male": 14, 
-            "female": 7
+        "CIENCIA POLITICA": {
+            "None": 12, 
+            "male": 76, 
+            "female": 37
         }, 
         "CIENCIAS JURIDICAS Y DERECHO": {
-            "None": 23, 
-            "male": 160, 
+            "None": 18, 
+            "male": 163, 
             "female": 114
         }, 
         "PEDAGOGIA": {
-            "None": 53, 
-            "male": 134, 
-            "female": 120
+            "None": 47, 
+            "male": 129, 
+            "female": 124
         }, 
         "CIENCIAS DE LAS ARTES Y LAS LETRAS": {
-            "None": 47, 
-            "male": 170, 
-            "female": 177
+            "None": 42, 
+            "male": 169, 
+            "female": 178
         }, 
         "ASTRONOMIA Y ASTROFISICA": {
-            "None": 4, 
-            "male": 28, 
-            "female": 12
+            "None": 3, 
+            "male": 27, 
+            "female": 14
         }, 
         "SOCIOLOGIA": {
-            "None": 26, 
-            "male": 109, 
+            "None": 22, 
+            "male": 108, 
             "female": 84
         }, 
         "PSICOLOGIA": {
-            "None": 49, 
-            "male": 114, 
-            "female": 153
+            "None": 42, 
+            "male": 111, 
+            "female": 157
         }, 
         "DEMOGRAFIA": {
             "male": 13, 
             "female": 7
         }, 
         "MATEMATICAS": {
-            "None": 36, 
-            "male": 253, 
-            "female": 98
+            "None": 31, 
+            "male": 249, 
+            "female": 99
         }, 
         "FISICA": {
-            "None": 33, 
-            "male": 261, 
-            "female": 135
+            "None": 32, 
+            "male": 257, 
+            "female": 136
         }, 
         "QUIMICA": {
-            "None": 68, 
-            "male": 274, 
-            "female": 368
+            "None": 62, 
+            "male": 276, 
+            "female": 362
         }, 
         "CIENCIAS AGRARIAS": {
-            "None": 20, 
-            "male": 152, 
+            "None": 17, 
+            "male": 148, 
             "female": 139
         }, 
         "CIENCIAS TECNOLOGICAS": {
-            "None": 87, 
-            "male": 578, 
-            "female": 291
+            "None": 76, 
+            "male": 568, 
+            "female": 292
         }, 
         "CIENCIAS DE LA VIDA": {
-            "None": 90, 
-            "male": 379, 
-            "female": 469
+            "None": 77, 
+            "male": 371, 
+            "female": 473
         }, 
-        "CIENCIA POLITICA": {
-            "None": 14, 
-            "male": 76, 
-            "female": 37
+        "LOGICA": {
+            "None": 3, 
+            "male": 14, 
+            "female": 7
         }, 
         "ANTROPOLOGIA": {
-            "None": 10, 
-            "male": 42, 
-            "female": 24
+            "None": 8, 
+            "male": 41, 
+            "female": 26
         }
     }, 
     "2007": {
         "CIENCIAS MEDICAS": {
-            "None": 102, 
-            "male": 416, 
-            "female": 542
+            "None": 85, 
+            "male": 412, 
+            "female": 548
         }, 
         "GEOGRAFIA": {
-            "None": 9, 
-            "male": 40, 
+            "None": 8, 
+            "male": 36, 
             "female": 26
         }, 
         "HISTORIA": {
-            "None": 44, 
-            "male": 207, 
-            "female": 135
+            "None": 38, 
+            "male": 205, 
+            "female": 134
         }, 
         "LINGUISTICA": {
-            "None": 27, 
+            "None": 22, 
             "male": 67, 
-            "female": 108
+            "female": 111
         }, 
         "CIENCIAS ECONOMICAS": {
-            "None": 40, 
-            "male": 251, 
-            "female": 181
+            "None": 32, 
+            "male": 250, 
+            "female": 185
         }, 
         "FILOSOFIA": {
-            "None": 15, 
+            "None": 12, 
             "male": 89, 
-            "female": 27
+            "female": 28
         }, 
         "CIENCIAS DE LA TIERRA Y DEL ESPACIO": {
-            "None": 19, 
-            "male": 149, 
-            "female": 96
+            "None": 17, 
+            "male": 146, 
+            "female": 97
         }, 
         "ETICA": {
-            "None": 5, 
-            "male": 20, 
-            "female": 3
+            "None": 4, 
+            "male": 19, 
+            "female": 4
         }, 
-        "LOGICA": {
-            "None": 2, 
-            "male": 11, 
-            "female": 5
+        "CIENCIA POLITICA": {
+            "None": 13, 
+            "male": 97, 
+            "female": 47
         }, 
         "CIENCIAS JURIDICAS Y DERECHO": {
-            "None": 24, 
-            "male": 131, 
-            "female": 88
+            "None": 20, 
+            "male": 128, 
+            "female": 90
         }, 
         "PEDAGOGIA": {
-            "None": 38, 
-            "male": 141, 
-            "female": 127
+            "None": 27, 
+            "male": 135, 
+            "female": 131
         }, 
         "CIENCIAS DE LAS ARTES Y LAS LETRAS": {
-            "None": 46, 
-            "male": 159, 
-            "female": 160
+            "None": 41, 
+            "male": 161, 
+            "female": 157
         }, 
         "ASTRONOMIA Y ASTROFISICA": {
-            "None": 1, 
             "male": 19, 
-            "female": 18
+            "female": 19
         }, 
         "SOCIOLOGIA": {
-            "None": 20, 
-            "male": 122, 
-            "female": 94
+            "None": 16, 
+            "male": 120, 
+            "female": 95
         }, 
         "PSICOLOGIA": {
-            "None": 42, 
+            "None": 34, 
             "male": 119, 
-            "female": 188
+            "female": 190
         }, 
         "DEMOGRAFIA": {
             "None": 6, 
@@ -3649,566 +3640,566 @@
             "female": 10
         }, 
         "MATEMATICAS": {
-            "None": 35, 
-            "male": 272, 
-            "female": 116
+            "None": 36, 
+            "male": 267, 
+            "female": 114
         }, 
         "FISICA": {
-            "None": 29, 
-            "male": 262, 
-            "female": 118
+            "None": 28, 
+            "male": 263, 
+            "female": 117
         }, 
         "QUIMICA": {
-            "None": 62, 
-            "male": 285, 
-            "female": 371
+            "None": 55, 
+            "male": 283, 
+            "female": 373
         }, 
         "CIENCIAS AGRARIAS": {
-            "None": 30, 
-            "male": 166, 
-            "female": 152
+            "None": 25, 
+            "male": 164, 
+            "female": 155
         }, 
         "CIENCIAS TECNOLOGICAS": {
-            "None": 69, 
-            "male": 563, 
+            "None": 59, 
+            "male": 560, 
             "female": 333
         }, 
         "CIENCIAS DE LA VIDA": {
-            "None": 91, 
-            "male": 349, 
-            "female": 476
+            "None": 80, 
+            "male": 345, 
+            "female": 478
         }, 
-        "CIENCIA POLITICA": {
-            "None": 15, 
-            "male": 100, 
-            "female": 45
+        "LOGICA": {
+            "None": 1, 
+            "male": 11, 
+            "female": 6
         }, 
         "ANTROPOLOGIA": {
-            "None": 9, 
+            "None": 8, 
             "male": 38, 
-            "female": 41
+            "female": 40
         }
     }, 
     "2008": {
         "CIENCIAS MEDICAS": {
-            "None": 131, 
-            "male": 534, 
-            "female": 677
+            "None": 81, 
+            "male": 473, 
+            "female": 637
         }, 
         "GEOGRAFIA": {
-            "None": 14, 
+            "None": 9, 
             "male": 32, 
-            "female": 27
+            "female": 23
         }, 
         "HISTORIA": {
-            "None": 44, 
-            "male": 288, 
-            "female": 206
+            "None": 32, 
+            "male": 237, 
+            "female": 170
         }, 
         "LINGUISTICA": {
-            "None": 29, 
-            "male": 105, 
-            "female": 160
+            "None": 19, 
+            "male": 85, 
+            "female": 154
         }, 
         "CIENCIAS ECONOMICAS": {
-            "None": 47, 
-            "male": 284, 
-            "female": 225
+            "None": 40, 
+            "male": 253, 
+            "female": 199
         }, 
         "FILOSOFIA": {
-            "None": 10, 
-            "male": 83, 
-            "female": 50
+            "None": 8, 
+            "male": 78, 
+            "female": 42
         }, 
         "CIENCIAS DE LA TIERRA Y DEL ESPACIO": {
-            "None": 23, 
-            "male": 185, 
-            "female": 135
+            "None": 21, 
+            "male": 171, 
+            "female": 120
         }, 
         "ETICA": {
-            "None": 8, 
+            "None": 5, 
             "male": 16, 
-            "female": 12
+            "female": 13
         }, 
-        "LOGICA": {
-            "male": 20, 
-            "female": 8
+        "CIENCIA POLITICA": {
+            "None": 26, 
+            "male": 96, 
+            "female": 95
         }, 
         "CIENCIAS JURIDICAS Y DERECHO": {
-            "None": 39, 
-            "male": 176, 
-            "female": 115
+            "None": 27, 
+            "male": 162, 
+            "female": 97
         }, 
         "PEDAGOGIA": {
-            "None": 43, 
-            "male": 167, 
-            "female": 187
+            "None": 24, 
+            "male": 144, 
+            "female": 184
         }, 
         "CIENCIAS DE LAS ARTES Y LAS LETRAS": {
-            "None": 52, 
-            "male": 204, 
-            "female": 180
+            "None": 30, 
+            "male": 181, 
+            "female": 181
         }, 
         "ASTRONOMIA Y ASTROFISICA": {
             "None": 6, 
-            "male": 30, 
+            "male": 27, 
             "female": 13
         }, 
         "SOCIOLOGIA": {
-            "None": 40, 
-            "male": 153, 
-            "female": 163
+            "None": 23, 
+            "male": 128, 
+            "female": 148
         }, 
         "PSICOLOGIA": {
-            "None": 47, 
-            "male": 187, 
-            "female": 256
+            "None": 28, 
+            "male": 166, 
+            "female": 254
         }, 
         "DEMOGRAFIA": {
-            "None": 8, 
-            "male": 20, 
-            "female": 25
+            "None": 7, 
+            "male": 19, 
+            "female": 26
         }, 
         "MATEMATICAS": {
-            "None": 24, 
-            "male": 388, 
-            "female": 155
+            "None": 20, 
+            "male": 360, 
+            "female": 149
         }, 
         "FISICA": {
-            "None": 41, 
-            "male": 355, 
-            "female": 187
+            "None": 27, 
+            "male": 322, 
+            "female": 174
         }, 
         "QUIMICA": {
-            "None": 76, 
-            "male": 330, 
-            "female": 451
+            "None": 53, 
+            "male": 284, 
+            "female": 389
         }, 
         "CIENCIAS AGRARIAS": {
-            "None": 33, 
-            "male": 183, 
-            "female": 177
+            "None": 26, 
+            "male": 164, 
+            "female": 179
         }, 
         "CIENCIAS TECNOLOGICAS": {
-            "None": 77, 
-            "male": 797, 
-            "female": 395
+            "None": 56, 
+            "male": 726, 
+            "female": 392
         }, 
         "CIENCIAS DE LA VIDA": {
-            "None": 105, 
-            "male": 483, 
-            "female": 703
+            "None": 77, 
+            "male": 411, 
+            "female": 624
         }, 
-        "CIENCIA POLITICA": {
-            "None": 30, 
-            "male": 107, 
-            "female": 108
+        "LOGICA": {
+            "male": 20, 
+            "female": 7
         }, 
         "ANTROPOLOGIA": {
-            "None": 17, 
-            "male": 57, 
-            "female": 57
+            "None": 5, 
+            "male": 53, 
+            "female": 56
         }
     }, 
     "2009": {
         "CIENCIAS MEDICAS": {
-            "None": 121, 
-            "male": 616, 
-            "female": 814
+            "None": 78, 
+            "male": 524, 
+            "female": 730
         }, 
         "GEOGRAFIA": {
-            "None": 7, 
-            "male": 47, 
-            "female": 24
+            "None": 5, 
+            "male": 44, 
+            "female": 19
         }, 
         "HISTORIA": {
-            "None": 67, 
-            "male": 370, 
-            "female": 273
+            "None": 42, 
+            "male": 301, 
+            "female": 227
         }, 
         "LINGUISTICA": {
-            "None": 36, 
-            "male": 122, 
-            "female": 202
+            "None": 29, 
+            "male": 97, 
+            "female": 173
         }, 
         "CIENCIAS ECONOMICAS": {
-            "None": 50, 
-            "male": 337, 
-            "female": 284
+            "None": 39, 
+            "male": 282, 
+            "female": 255
         }, 
         "FILOSOFIA": {
-            "None": 16, 
-            "male": 153, 
-            "female": 68
+            "None": 15, 
+            "male": 120, 
+            "female": 60
         }, 
         "CIENCIAS DE LA TIERRA Y DEL ESPACIO": {
-            "None": 33, 
-            "male": 224, 
-            "female": 169
+            "None": 29, 
+            "male": 196, 
+            "female": 150
         }, 
         "ETICA": {
-            "male": 30, 
-            "female": 16
+            "male": 22, 
+            "female": 15
         }, 
         "LOGICA": {
-            "None": 4, 
+            "None": 3, 
             "male": 25, 
             "female": 8
         }, 
         "CIENCIAS JURIDICAS Y DERECHO": {
-            "None": 43, 
-            "male": 211, 
-            "female": 147
+            "None": 27, 
+            "male": 134, 
+            "female": 113
         }, 
         "PEDAGOGIA": {
-            "None": 58, 
-            "male": 190, 
-            "female": 204
+            "None": 41, 
+            "male": 163, 
+            "female": 181
         }, 
         "CIENCIAS DE LAS ARTES Y LAS LETRAS": {
-            "None": 88, 
-            "male": 288, 
-            "female": 274
+            "None": 42, 
+            "male": 221, 
+            "female": 206
         }, 
         "ASTRONOMIA Y ASTROFISICA": {
-            "None": 5, 
-            "male": 54, 
-            "female": 27
+            "None": 4, 
+            "male": 52, 
+            "female": 21
         }, 
         "SOCIOLOGIA": {
-            "None": 58, 
-            "male": 266, 
-            "female": 295
+            "None": 32, 
+            "male": 198, 
+            "female": 243
         }, 
         "PSICOLOGIA": {
-            "None": 79, 
-            "male": 267, 
-            "female": 348
+            "None": 48, 
+            "male": 227, 
+            "female": 317
         }, 
         "DEMOGRAFIA": {
             "None": 16, 
-            "male": 34, 
-            "female": 44
+            "male": 33, 
+            "female": 42
         }, 
         "MATEMATICAS": {
-            "None": 52, 
-            "male": 512, 
-            "female": 225
+            "None": 47, 
+            "male": 471, 
+            "female": 183
         }, 
         "FISICA": {
-            "None": 52, 
-            "male": 507, 
-            "female": 256
+            "None": 45, 
+            "male": 430, 
+            "female": 223
         }, 
         "QUIMICA": {
-            "None": 95, 
-            "male": 395, 
-            "female": 526
+            "None": 66, 
+            "male": 334, 
+            "female": 464
         }, 
         "CIENCIAS AGRARIAS": {
-            "None": 36, 
-            "male": 192, 
-            "female": 196
+            "None": 29, 
+            "male": 174, 
+            "female": 178
         }, 
         "CIENCIAS TECNOLOGICAS": {
-            "None": 105, 
-            "male": 810, 
-            "female": 479
+            "None": 86, 
+            "male": 771, 
+            "female": 442
         }, 
         "CIENCIAS DE LA VIDA": {
-            "None": 155, 
-            "male": 680, 
-            "female": 919
+            "None": 97, 
+            "male": 582, 
+            "female": 794
         }, 
         "CIENCIA POLITICA": {
-            "None": 40, 
-            "male": 150, 
-            "female": 162
+            "None": 23, 
+            "male": 119, 
+            "female": 130
         }, 
         "ANTROPOLOGIA": {
-            "None": 14, 
-            "male": 59, 
-            "female": 73
+            "None": 7, 
+            "male": 58, 
+            "female": 67
         }
     }, 
     "2010": {
         "CIENCIAS MEDICAS": {
-            "None": 140, 
-            "male": 581, 
-            "female": 728
+            "None": 99, 
+            "male": 564, 
+            "female": 731
         }, 
         "GEOGRAFIA": {
-            "None": 7, 
+            "None": 6, 
             "male": 42, 
             "female": 19
         }, 
         "HISTORIA": {
-            "None": 55, 
-            "male": 310, 
-            "female": 216
+            "None": 48, 
+            "male": 307, 
+            "female": 219
         }, 
         "LINGUISTICA": {
-            "None": 53, 
-            "male": 128, 
-            "female": 158
+            "None": 42, 
+            "male": 117, 
+            "female": 161
         }, 
         "CIENCIAS ECONOMICAS": {
-            "None": 71, 
-            "male": 358, 
-            "female": 260
+            "None": 63, 
+            "male": 343, 
+            "female": 264
         }, 
         "FILOSOFIA": {
-            "None": 16, 
-            "male": 119, 
-            "female": 58
+            "None": 14, 
+            "male": 111, 
+            "female": 54
         }, 
         "CIENCIAS DE LA TIERRA Y DEL ESPACIO": {
-            "None": 31, 
-            "male": 182, 
-            "female": 144
+            "None": 27, 
+            "male": 179, 
+            "female": 139
         }, 
         "ETICA": {
-            "None": 7, 
-            "male": 33, 
-            "female": 14
-        }, 
-        "CIENCIA POLITICA": {
-            "None": 30, 
-            "male": 164, 
-            "female": 128
-        }, 
-        "CIENCIAS JURIDICAS Y DERECHO": {
-            "None": 37, 
-            "male": 166, 
-            "female": 127
-        }, 
-        "PEDAGOGIA": {
-            "None": 56, 
-            "male": 147, 
-            "female": 201
-        }, 
-        "CIENCIAS DE LAS ARTES Y LAS LETRAS": {
-            "None": 42, 
-            "male": 216, 
-            "female": 203
-        }, 
-        "ASTRONOMIA Y ASTROFISICA": {
-            "None": 7, 
-            "male": 47, 
-            "female": 23
-        }, 
-        "SOCIOLOGIA": {
-            "None": 48, 
-            "male": 227, 
-            "female": 221
-        }, 
-        "PSICOLOGIA": {
-            "None": 59, 
-            "male": 248, 
-            "female": 341
-        }, 
-        "DEMOGRAFIA": {
-            "None": 9, 
-            "male": 38, 
-            "female": 45
-        }, 
-        "MATEMATICAS": {
-            "None": 56, 
-            "male": 494, 
-            "female": 210
-        }, 
-        "FISICA": {
-            "None": 52, 
-            "male": 471, 
-            "female": 249
-        }, 
-        "QUIMICA": {
-            "None": 69, 
-            "male": 339, 
-            "female": 476
-        }, 
-        "CIENCIAS AGRARIAS": {
-            "None": 36, 
-            "male": 169, 
-            "female": 171
-        }, 
-        "CIENCIAS TECNOLOGICAS": {
-            "None": 124, 
-            "male": 832, 
-            "female": 452
-        }, 
-        "CIENCIAS DE LA VIDA": {
-            "None": 112, 
-            "male": 571, 
-            "female": 798
+            "None": 5, 
+            "male": 31, 
+            "female": 16
         }, 
         "LOGICA": {
-            "None": 10, 
+            "None": 7, 
             "male": 22, 
             "female": 19
         }, 
-        "ANTROPOLOGIA": {
-            "None": 8, 
-            "male": 72, 
-            "female": 74
-        }
-    }, 
-    "2011": {
-        "CIENCIAS MEDICAS": {
-            "None": 150, 
-            "male": 608, 
-            "female": 793
-        }, 
-        "GEOGRAFIA": {
-            "None": 10, 
-            "male": 49, 
-            "female": 25
-        }, 
-        "HISTORIA": {
-            "None": 41, 
-            "male": 322, 
-            "female": 269
-        }, 
-        "LINGUISTICA": {
-            "None": 52, 
-            "male": 109, 
-            "female": 186
-        }, 
-        "CIENCIAS ECONOMICAS": {
-            "None": 73, 
-            "male": 404, 
-            "female": 260
-        }, 
-        "FILOSOFIA": {
-            "None": 20, 
-            "male": 116, 
-            "female": 77
-        }, 
-        "CIENCIAS DE LA TIERRA Y DEL ESPACIO": {
-            "None": 30, 
-            "male": 212, 
-            "female": 176
-        }, 
-        "ETICA": {
-            "None": 2, 
-            "male": 21, 
-            "female": 30
-        }, 
-        "CIENCIA POLITICA": {
-            "None": 35, 
-            "male": 165, 
-            "female": 141
-        }, 
         "CIENCIAS JURIDICAS Y DERECHO": {
-            "None": 41, 
-            "male": 191, 
-            "female": 99
+            "None": 30, 
+            "male": 155, 
+            "female": 130
         }, 
         "PEDAGOGIA": {
-            "None": 53, 
-            "male": 181, 
-            "female": 226
+            "None": 42, 
+            "male": 143, 
+            "female": 205
         }, 
         "CIENCIAS DE LAS ARTES Y LAS LETRAS": {
-            "None": 60, 
-            "male": 224, 
-            "female": 223
+            "None": 34, 
+            "male": 212, 
+            "female": 202
         }, 
         "ASTRONOMIA Y ASTROFISICA": {
             "None": 6, 
             "male": 46, 
-            "female": 22
+            "female": 23
         }, 
         "SOCIOLOGIA": {
-            "None": 57, 
-            "male": 225, 
-            "female": 244
+            "None": 42, 
+            "male": 219, 
+            "female": 220
         }, 
         "PSICOLOGIA": {
-            "None": 78, 
-            "male": 257, 
+            "None": 48, 
+            "male": 235, 
+            "female": 341
+        }, 
+        "DEMOGRAFIA": {
+            "None": 6, 
+            "male": 37, 
+            "female": 48
+        }, 
+        "MATEMATICAS": {
+            "None": 52, 
+            "male": 473, 
+            "female": 210
+        }, 
+        "FISICA": {
+            "None": 40, 
+            "male": 457, 
+            "female": 245
+        }, 
+        "QUIMICA": {
+            "None": 50, 
+            "male": 331, 
+            "female": 475
+        }, 
+        "CIENCIAS AGRARIAS": {
+            "None": 27, 
+            "male": 167, 
+            "female": 173
+        }, 
+        "CIENCIAS TECNOLOGICAS": {
+            "None": 90, 
+            "male": 804, 
+            "female": 472
+        }, 
+        "CIENCIAS DE LA VIDA": {
+            "None": 92, 
+            "male": 554, 
+            "female": 785
+        }, 
+        "CIENCIA POLITICA": {
+            "None": 27, 
+            "male": 156, 
+            "female": 123
+        }, 
+        "ANTROPOLOGIA": {
+            "None": 4, 
+            "male": 71, 
+            "female": 75
+        }
+    }, 
+    "2011": {
+        "CIENCIAS MEDICAS": {
+            "None": 118, 
+            "male": 589, 
+            "female": 791
+        }, 
+        "GEOGRAFIA": {
+            "None": 10, 
+            "male": 46, 
+            "female": 24
+        }, 
+        "HISTORIA": {
+            "None": 37, 
+            "male": 314, 
+            "female": 261
+        }, 
+        "LINGUISTICA": {
+            "None": 42, 
+            "male": 100, 
+            "female": 184
+        }, 
+        "CIENCIAS ECONOMICAS": {
+            "None": 62, 
+            "male": 380, 
+            "female": 257
+        }, 
+        "FILOSOFIA": {
+            "None": 17, 
+            "male": 112, 
+            "female": 74
+        }, 
+        "CIENCIAS DE LA TIERRA Y DEL ESPACIO": {
+            "None": 25, 
+            "male": 207, 
+            "female": 175
+        }, 
+        "ETICA": {
+            "None": 1, 
+            "male": 19, 
+            "female": 28
+        }, 
+        "CIENCIA POLITICA": {
+            "None": 28, 
+            "male": 154, 
+            "female": 132
+        }, 
+        "CIENCIAS JURIDICAS Y DERECHO": {
+            "None": 38, 
+            "male": 179, 
+            "female": 98
+        }, 
+        "PEDAGOGIA": {
+            "None": 46, 
+            "male": 171, 
+            "female": 222
+        }, 
+        "CIENCIAS DE LAS ARTES Y LAS LETRAS": {
+            "None": 48, 
+            "male": 216, 
+            "female": 220
+        }, 
+        "ASTRONOMIA Y ASTROFISICA": {
+            "None": 3, 
+            "male": 45, 
+            "female": 25
+        }, 
+        "SOCIOLOGIA": {
+            "None": 47, 
+            "male": 210, 
+            "female": 242
+        }, 
+        "PSICOLOGIA": {
+            "None": 66, 
+            "male": 245, 
             "female": 371
         }, 
         "DEMOGRAFIA": {
-            "None": 10, 
-            "male": 44, 
-            "female": 50
+            "None": 4, 
+            "male": 41, 
+            "female": 55
         }, 
         "MATEMATICAS": {
-            "None": 74, 
-            "male": 565, 
-            "female": 238
+            "None": 58, 
+            "male": 540, 
+            "female": 244
         }, 
         "FISICA": {
-            "None": 64, 
-            "male": 488, 
-            "female": 263
+            "None": 58, 
+            "male": 475, 
+            "female": 253
         }, 
         "QUIMICA": {
-            "None": 57, 
-            "male": 317, 
-            "female": 453
+            "None": 47, 
+            "male": 309, 
+            "female": 443
         }, 
         "CIENCIAS AGRARIAS": {
-            "None": 37, 
-            "male": 181, 
-            "female": 195
+            "None": 33, 
+            "male": 171, 
+            "female": 190
         }, 
         "CIENCIAS TECNOLOGICAS": {
-            "None": 149, 
-            "male": 902, 
-            "female": 462
+            "None": 130, 
+            "male": 866, 
+            "female": 463
         }, 
         "CIENCIAS DE LA VIDA": {
-            "None": 138, 
-            "male": 603, 
-            "female": 800
+            "None": 117, 
+            "male": 589, 
+            "female": 793
         }, 
         "LOGICA": {
-            "None": 8, 
-            "male": 23, 
-            "female": 12
+            "None": 7, 
+            "male": 20, 
+            "female": 13
         }, 
         "ANTROPOLOGIA": {
-            "None": 15, 
-            "male": 89, 
-            "female": 92
+            "None": 14, 
+            "male": 88, 
+            "female": 85
         }
     }, 
     "2012": {
         "CIENCIAS MEDICAS": {
-            "None": 141, 
-            "male": 624, 
-            "female": 883
+            "None": 114, 
+            "male": 608, 
+            "female": 890
         }, 
         "GEOGRAFIA": {
             "None": 9, 
-            "male": 37, 
-            "female": 22
+            "male": 36, 
+            "female": 20
         }, 
         "HISTORIA": {
-            "None": 77, 
-            "male": 377, 
-            "female": 296
+            "None": 68, 
+            "male": 368, 
+            "female": 298
         }, 
         "LINGUISTICA": {
-            "None": 50, 
+            "None": 42, 
             "male": 128, 
-            "female": 224
+            "female": 226
         }, 
         "CIENCIAS ECONOMICAS": {
-            "None": 77, 
-            "male": 410, 
-            "female": 313
+            "None": 70, 
+            "male": 401, 
+            "female": 311
         }, 
         "FILOSOFIA": {
-            "None": 28, 
-            "male": 107, 
-            "female": 46
+            "None": 26, 
+            "male": 105, 
+            "female": 48
         }, 
         "CIENCIAS DE LA TIERRA Y DEL ESPACIO": {
-            "None": 40, 
-            "male": 235, 
+            "None": 37, 
+            "male": 229, 
             "female": 174
         }, 
         "ETICA": {
@@ -4216,122 +4207,122 @@
             "male": 30, 
             "female": 21
         }, 
-        "CIENCIA POLITICA": {
-            "None": 38, 
-            "male": 174, 
-            "female": 140
-        }, 
-        "CIENCIAS JURIDICAS Y DERECHO": {
-            "None": 36, 
-            "male": 195, 
-            "female": 125
-        }, 
-        "PEDAGOGIA": {
-            "None": 58, 
-            "male": 181, 
-            "female": 265
-        }, 
-        "CIENCIAS DE LAS ARTES Y LAS LETRAS": {
-            "None": 73, 
-            "male": 291, 
-            "female": 258
-        }, 
-        "ASTRONOMIA Y ASTROFISICA": {
-            "None": 5, 
-            "male": 47, 
-            "female": 24
-        }, 
-        "SOCIOLOGIA": {
-            "None": 67, 
-            "male": 252, 
-            "female": 260
-        }, 
-        "PSICOLOGIA": {
-            "None": 79, 
-            "male": 269, 
-            "female": 428
-        }, 
-        "DEMOGRAFIA": {
-            "None": 10, 
-            "male": 50, 
-            "female": 63
-        }, 
-        "MATEMATICAS": {
-            "None": 77, 
-            "male": 588, 
-            "female": 250
-        }, 
-        "FISICA": {
-            "None": 71, 
-            "male": 519, 
-            "female": 327
-        }, 
-        "QUIMICA": {
-            "None": 79, 
-            "male": 356, 
-            "female": 553
-        }, 
-        "CIENCIAS AGRARIAS": {
-            "None": 29, 
-            "male": 172, 
-            "female": 193
-        }, 
-        "CIENCIAS TECNOLOGICAS": {
-            "None": 150, 
-            "male": 958, 
-            "female": 591
-        }, 
-        "CIENCIAS DE LA VIDA": {
-            "None": 129, 
-            "male": 623, 
-            "female": 876
-        }, 
         "LOGICA": {
             "None": 3, 
             "male": 28, 
             "female": 16
         }, 
+        "CIENCIAS JURIDICAS Y DERECHO": {
+            "None": 30, 
+            "male": 189, 
+            "female": 124
+        }, 
+        "PEDAGOGIA": {
+            "None": 49, 
+            "male": 179, 
+            "female": 264
+        }, 
+        "CIENCIAS DE LAS ARTES Y LAS LETRAS": {
+            "None": 65, 
+            "male": 286, 
+            "female": 256
+        }, 
+        "ASTRONOMIA Y ASTROFISICA": {
+            "None": 4, 
+            "male": 45, 
+            "female": 25
+        }, 
+        "SOCIOLOGIA": {
+            "None": 58, 
+            "male": 243, 
+            "female": 263
+        }, 
+        "PSICOLOGIA": {
+            "None": 63, 
+            "male": 265, 
+            "female": 434
+        }, 
+        "DEMOGRAFIA": {
+            "None": 9, 
+            "male": 50, 
+            "female": 64
+        }, 
+        "MATEMATICAS": {
+            "None": 73, 
+            "male": 580, 
+            "female": 251
+        }, 
+        "FISICA": {
+            "None": 65, 
+            "male": 508, 
+            "female": 326
+        }, 
+        "QUIMICA": {
+            "None": 66, 
+            "male": 349, 
+            "female": 556
+        }, 
+        "CIENCIAS AGRARIAS": {
+            "None": 22, 
+            "male": 172, 
+            "female": 197
+        }, 
+        "CIENCIAS TECNOLOGICAS": {
+            "None": 131, 
+            "male": 943, 
+            "female": 594
+        }, 
+        "CIENCIAS DE LA VIDA": {
+            "None": 101, 
+            "male": 611, 
+            "female": 882
+        }, 
+        "CIENCIA POLITICA": {
+            "None": 37, 
+            "male": 170, 
+            "female": 135
+        }, 
         "ANTROPOLOGIA": {
-            "None": 17, 
-            "male": 81, 
+            "None": 13, 
+            "male": 78, 
             "female": 81
         }
     }, 
     "2013": {
         "CIENCIAS MEDICAS": {
-            "None": 120, 
-            "male": 543, 
-            "female": 807
+            "None": 93, 
+            "male": 521, 
+            "female": 799
         }, 
         "GEOGRAFIA": {
-            "None": 15, 
-            "male": 42, 
-            "female": 25
+            "None": 14, 
+            "male": 41, 
+            "female": 23
         }, 
         "HISTORIA": {
-            "None": 43, 
-            "male": 332, 
-            "female": 268
+            "None": 37, 
+            "male": 313, 
+            "female": 257
         }, 
         "LINGUISTICA": {
-            "None": 41, 
-            "male": 103, 
-            "female": 175
+            "None": 35, 
+            "male": 98, 
+            "female": 172
         }, 
         "CIENCIAS ECONOMICAS": {
-            "None": 72, 
-            "male": 365, 
-            "female": 262
+            "None": 65, 
+            "male": 350, 
+            "female": 245
         }, 
         "FILOSOFIA": {
-            "None": 12, 
-            "male": 101, 
-            "female": 48
+            "None": 10, 
+            "male": 100, 
+            "female": 45
         }, 
         "CIENCIAS DE LA TIERRA Y DEL ESPACIO": {
-            "None": 30, 
-            "male": 174, 
-            "female": 146
+            "None": 25, 
+            "male": 160, 
+            "female": 144
         }, 
         "ETICA": {
             "None": 2, 
@@ -4339,91 +4330,91 @@
             "female": 9
         }, 
         "LOGICA": {
-            "None": 7, 
-            "male": 16, 
-            "female": 13
+            "None": 6, 
+            "male": 15, 
+            "female": 14
         }, 
         "CIENCIAS JURIDICAS Y DERECHO": {
-            "None": 21, 
-            "male": 154, 
-            "female": 117
+            "None": 19, 
+            "male": 143, 
+            "female": 109
         }, 
         "PEDAGOGIA": {
-            "None": 56, 
-            "male": 151, 
-            "female": 184
+            "None": 43, 
+            "male": 145, 
+            "female": 182
         }, 
         "CIENCIAS DE LAS ARTES Y LAS LETRAS": {
-            "None": 50, 
-            "male": 231, 
-            "female": 186
+            "None": 42, 
+            "male": 221, 
+            "female": 172
         }, 
         "ASTRONOMIA Y ASTROFISICA": {
             "None": 3, 
-            "male": 41, 
+            "male": 40, 
             "female": 18
         }, 
         "SOCIOLOGIA": {
-            "None": 50, 
-            "male": 204, 
-            "female": 220
+            "None": 38, 
+            "male": 195, 
+            "female": 218
         }, 
         "PSICOLOGIA": {
-            "None": 67, 
-            "male": 220, 
-            "female": 337
+            "None": 55, 
+            "male": 210, 
+            "female": 335
         }, 
         "DEMOGRAFIA": {
-            "None": 18, 
-            "male": 42, 
-            "female": 50
+            "None": 16, 
+            "male": 41, 
+            "female": 49
         }, 
         "MATEMATICAS": {
-            "None": 67, 
-            "male": 540, 
-            "female": 198
+            "None": 57, 
+            "male": 502, 
+            "female": 195
         }, 
         "FISICA": {
-            "None": 50, 
-            "male": 432, 
-            "female": 252
+            "None": 52, 
+            "male": 405, 
+            "female": 240
         }, 
         "QUIMICA": {
-            "None": 70, 
-            "male": 323, 
-            "female": 443
+            "None": 65, 
+            "male": 309, 
+            "female": 434
         }, 
         "CIENCIAS AGRARIAS": {
-            "None": 30, 
-            "male": 179, 
-            "female": 164
+            "None": 26, 
+            "male": 165, 
+            "female": 157
         }, 
         "CIENCIAS TECNOLOGICAS": {
-            "None": 113, 
-            "male": 806, 
-            "female": 516
+            "None": 101, 
+            "male": 747, 
+            "female": 497
         }, 
         "CIENCIAS DE LA VIDA": {
-            "None": 113, 
-            "male": 528, 
-            "female": 685
+            "None": 91, 
+            "male": 505, 
+            "female": 679
         }, 
         "CIENCIA POLITICA": {
-            "None": 36, 
-            "male": 182, 
-            "female": 125
+            "None": 30, 
+            "male": 176, 
+            "female": 120
         }, 
         "ANTROPOLOGIA": {
-            "None": 15, 
-            "male": 79, 
-            "female": 69
+            "None": 12, 
+            "male": 77, 
+            "female": 64
         }
     }, 
     "2014": {
         "CIENCIAS MEDICAS": {
-            "None": 9, 
-            "male": 25, 
-            "female": 27
+            "None": 7, 
+            "male": 21, 
+            "female": 24
         }, 
         "GEOGRAFIA": {
             "None": 2, 
@@ -4431,23 +4422,23 @@
             "female": 1
         }, 
         "HISTORIA": {
-            "None": 4, 
-            "male": 12, 
+            "None": 2, 
+            "male": 7, 
             "female": 5
         }, 
         "LINGUISTICA": {
-            "None": 3, 
-            "male": 4, 
+            "None": 2, 
+            "male": 3, 
             "female": 7
         }, 
         "CIENCIAS ECONOMICAS": {
             "None": 1, 
-            "male": 9, 
-            "female": 12
+            "male": 8, 
+            "female": 8
         }, 
         "FILOSOFIA": {
             "None": 1, 
-            "male": 6, 
+            "male": 4, 
             "female": 5
         }, 
         "CIENCIAS DE LA TIERRA Y DEL ESPACIO": {
@@ -4455,40 +4446,41 @@
             "male": 4
         }, 
         "ETICA": {
-            "male": 2, 
             "female": 3
         }, 
-        "LOGICA": {
-            "female": 1
+        "CIENCIA POLITICA": {
+            "None": 2, 
+            "male": 5, 
+            "female": 6
         }, 
         "CIENCIAS JURIDICAS Y DERECHO": {
             "None": 3, 
             "male": 7, 
-            "female": 4
+            "female": 3
         }, 
         "PEDAGOGIA": {
             "None": 2, 
             "male": 7, 
-            "female": 11
+            "female": 9
         }, 
         "CIENCIAS DE LAS ARTES Y LAS LETRAS": {
-            "None": 6, 
-            "male": 13, 
+            "None": 2, 
+            "male": 7, 
             "female": 8
         }, 
         "ASTRONOMIA Y ASTROFISICA": {
-            "male": 5, 
-            "female": 2
+            "male": 2, 
+            "female": 1
         }, 
         "SOCIOLOGIA": {
-            "None": 3, 
+            "None": 2, 
             "male": 8, 
-            "female": 11
+            "female": 9
         }, 
         "PSICOLOGIA": {
-            "None": 3, 
+            "None": 2, 
             "male": 12, 
-            "female": 15
+            "female": 13
         }, 
         "DEMOGRAFIA": {
             "None": 1, 
@@ -4496,57 +4488,39 @@
         }, 
         "MATEMATICAS": {
             "None": 1, 
-            "male": 25, 
+            "male": 20, 
             "female": 9
         }, 
         "FISICA": {
-            "None": 5, 
-            "male": 15, 
-            "female": 8
+            "None": 4, 
+            "male": 10, 
+            "female": 7
         }, 
         "QUIMICA": {
             "None": 3, 
-            "male": 10, 
-            "female": 20
+            "male": 8, 
+            "female": 19
         }, 
         "CIENCIAS AGRARIAS": {
             "male": 6, 
-            "female": 5
+            "female": 4
         }, 
         "CIENCIAS TECNOLOGICAS": {
-            "None": 7, 
-            "male": 23, 
-            "female": 17
+            "None": 6, 
+            "male": 19, 
+            "female": 14
         }, 
         "CIENCIAS DE LA VIDA": {
             "None": 7, 
-            "male": 15, 
-            "female": 17
+            "male": 11, 
+            "female": 15
         }, 
-        "CIENCIA POLITICA": {
-            "None": 2, 
-            "male": 5, 
-            "female": 8
+        "LOGICA": {
+            "female": 1
         }, 
         "ANTROPOLOGIA": {
-            "male": 2, 
+            "male": 1, 
             "female": 3
-        }
-    }, 
-    "1213": {
-        "CIENCIAS DE LA TIERRA Y DEL ESPACIO": {
-            "male": 1
-        }
-    }, 
-    "1012": {
-        "CIENCIAS TECNOLOGICAS": {
-            "male": 1
-        }, 
-        "MATEMATICAS": {
-            "male": 1
-        }, 
-        "FISICA": {
-            "male": 1
         }
     }, 
     "1912": {
