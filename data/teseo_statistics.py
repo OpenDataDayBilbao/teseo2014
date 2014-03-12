@@ -197,7 +197,7 @@ def create_area_temporal_evolution_by_year():
             if year in results.keys():
                 descs = results[year]
                 for descriptor_id in used_descriptors:
-                    decriptor_text = codes_descriptor[descriptor_id]
+                    decriptor_text = codes_descriptor[str(descriptor_id)]
                     if decriptor_text in descs.keys():
                         descs[decriptor_text] += 1
                     else:
@@ -205,7 +205,7 @@ def create_area_temporal_evolution_by_year():
             else:
                 descs = {}
                 for descriptor_id in used_descriptors:
-                    decriptor_text = codes_descriptor[descriptor_id]
+                    decriptor_text = codes_descriptor[str(descriptor_id)]
                     descs[decriptor_text] = 1
                 results[year] = descs
         except AttributeError:
@@ -236,7 +236,7 @@ def create_meta_area_temporal_evolution_by_year():
             used_descriptors = set()
             for desc in cursor_desc:
                 try:
-                    descriptor_text = codes_descriptor[desc[0]]
+                    descriptor_text = codes_descriptor[str(desc[0])]
                     descriptor_code = descriptor_codes[descriptor_text]
                     first_level_code = descriptor_code[0:2] + '0000'
                     first_level_descriptor = codes_descriptor[first_level_code]
@@ -341,7 +341,7 @@ def create_gender_per_area_evolution():
             if year in results.keys():
                 descs = results[year]
                 for descriptor_id in used_descriptors:
-                    decriptor_text = codes_descriptor[descriptor_id]
+                    decriptor_text = codes_descriptor[str(descriptor_id)]
                     if decriptor_text in descs.keys():
                         gender_area = descs[decriptor_text]
                         if gender in gender_area.keys():
@@ -353,7 +353,7 @@ def create_gender_per_area_evolution():
             else:
                 descs = {}
                 for descriptor_id in used_descriptors:
-                    decriptor_text = codes_descriptor[descriptor_id]
+                    decriptor_text = codes_descriptor[str(descriptor_id)]
                     descs[decriptor_text] = {gender:1}
                 results[year] = descs
 
@@ -476,7 +476,7 @@ def create_gender_meta_area_evolution():
             used_descriptors = set()
             for desc in cursor_desc:
                 try:
-                    descriptor_text = codes_descriptor[desc[0]]
+                    descriptor_text = codes_descriptor[str(desc[0])]
                     descriptor_code = descriptor_codes[descriptor_text]
                     first_level_code = descriptor_code[0:2] + '0000'
                     first_level_descriptor = codes_descriptor[first_level_code]
