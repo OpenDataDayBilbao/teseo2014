@@ -289,7 +289,7 @@ def clean_unesco_codes():
             code = code * 100
             
         if code != descriptor[1]:
-            cursor2.execute("UPDATE descriptors SET code = " + str(code) + " WHERE id = " + str(desc_id))
+            cursor2.execute("UPDATE descriptor SET code = " + str(code) + " WHERE id = " + str(desc_id))
 
     cursor.close()
     cursor2.close()
