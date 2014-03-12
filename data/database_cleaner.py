@@ -297,13 +297,13 @@ def clean_unesco_codes():
 
     
 if __name__=='__main__':
-    #check repeated thesis()
-    #delete_repeated_thesis()
-    #check_unused_person_ids()
-    #nuke_unused_persons()
-    #check_repeated_name_ids()
-    #check_similar_names() 
-    #merge_names()    
+    check_repeated_thesis()
+    delete_repeated_thesis()
+    check_unused_person_ids()
+    nuke_unused_persons()
+    check_repeated_name_ids()
+    check_similar_names() 
+    merge_names()    
     clean_unesco_codes()
     
     
