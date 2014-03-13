@@ -93,8 +93,8 @@ def build_area_relations():
             source_1 = codes_descriptor[descriptor[:2] + '0000']
             for j in range(i+1, len(descriptors)):
                 target_3 = codes_descriptor[descriptors[j]]
-                target_2 = codes_descriptor[descriptors[j][:2] + '00']
-                target_1 = codes_descriptor[descriptors[j][:4] + '0000']
+                target_2 = codes_descriptor[descriptors[j][:4] + '00']
+                target_1 = codes_descriptor[descriptors[j][:2] + '0000']
                 
                 if g_3.has_edge(source_3, target_3):
                     g_3.edge[source_3][target_3]['weight'] += 1
