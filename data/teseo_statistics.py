@@ -6,7 +6,7 @@ Created on Tue Feb 18 11:20:55 2014
 """
 
 import mysql.connector
-from cache import university_locations, university_ids, thesis_ids, descriptors, name_genders, descriptor_codes, codes_descriptor
+from cache import university_locations, university_ids, thesis_ids, name_genders, codes_descriptor, descriptor_codes
 import networkx as nx
 import sys
 import pprint
@@ -19,21 +19,6 @@ from model.dbconnection import dbconfig
 
 config = dbconfig
 
-config = {
-      'user': 'foo',
-      'password': 'bar',
-      'host': '127.0.0.1',
-      'database': 'teseo',
-    }
-    
-with open('pass.config', 'r') as inputfile:
-    for i, line in enumerate(inputfile):
-        if i == 0:
-            config['user'] = line
-        elif i == 1:
-            config['password'] = line
-        elif i > 1:
-            break
 
 def get_university_ids():
     cnx = mysql.connector.connect(**config)
@@ -50,11 +35,8 @@ def get_number_phd_by_universities():
     cursor = cnx.cursor()
     result = {}
     for key in university_ids.keys():
-        print key
         uni_name = university_ids[key]
-        print uni_name
         query = 'SELECT COUNT(*) FROM thesis WHERE university_id=' + str(key)
-        print query
         cursor.execute(query)
         for count in cursor:
             result[uni_name] = count[0]
@@ -92,32 +74,59 @@ def build_panel_relations():
 def build_area_relations():
     cnx = mysql.connector.connect(**config)
     cursor = cnx.cursor()
-    G = nx.Graph()
+    g_3 = nx.Graph()
+    g_2 = nx.Graph()
+    g_1 = nx.Graph()
     for cont, thesis in enumerate(thesis_ids):
         if cont%500 == 0:
             print 'Creating area relations network: ' + str(float(cont)/len(thesis_ids) * 100)
 
-        query = 'SELECT descriptor.text FROM descriptor, association_thesis_description WHERE association_thesis_description.descriptor_id = descriptor.id AND association_thesis_description.thesis_id =' + str(thesis)
+        query = 'SELECT descriptor.code FROM descriptor, association_thesis_description WHERE association_thesis_description.descriptor_id = descriptor.id AND association_thesis_description.thesis_id =' + str(thesis)
         cursor.execute(query)
         descriptors = []
         for descriptor in cursor:
-            descriptors.append(descriptor[0])
+            descriptors.append(str(descriptor[0]))
 
         for i, descriptor in enumerate(descriptors):
-            source = descriptor
+            source_3 = codes_descriptor[descriptor]
+            source_2 = codes_descriptor[descriptor[:4] +'00']
+            source_1 = codes_descriptor[descriptor[:2] + '0000']
             for j in range(i+1, len(descriptors)):
-                target = descriptors[j]
-                if G.has_edge(source, target):
-                    G.edge[source][target]['weight'] += 1
+                target_3 = codes_descriptor[descriptors[j]]
+                target_2 = codes_descriptor[descriptors[j][:4] + '00']
+                target_1 = codes_descriptor[descriptors[j][:2] + '0000']
+                
+                if g_3.has_edge(source_3, target_3):
+                    g_3.edge[source_3][target_3]['weight'] += 1
                 else:
-                    G.add_edge(source, target, weight = 1)
+                    g_3.add_edge(source_3, target_3, weight = 1)
+                
+                if g_2.has_edge(source_2, target_2):
+                    g_2.edge[source_2][target_2]['weight'] += 1
+                else:
+                    g_2.add_edge(source_2, target_2, weight = 1)
+
+                if g_1.has_edge(source_1, target_1):
+                    g_1.edge[source_1][target_1]['weight'] += 1
+                else:
+                    g_1.add_edge(source_1, target_1, weight = 1)                    
 
     cursor.close()
-    print 'Graph created'
-    print '-Nodes:',len(G.nodes())
-    print '-Edges:',len(G.edges())
+    print 'Third level'
+    print '-Nodes:',len(g_3.nodes())
+    print '-Edges:',len(g_3.edges())
+    
+    print 'Second level'
+    print '-Nodes:',len(g_2.nodes())
+    print '-Edges:',len(g_2.edges())
 
-    return G
+    print 'First level'
+    print '-Nodes:',len(g_1.nodes())
+    print '-Edges:',len(g_1.edges())
+
+
+    return g_3, g_2, g_1
+
 
 
 #the graph is too big. Nodes with not enough degree are deleted
@@ -126,10 +135,18 @@ def filter_panel_relations(G, MIN_DEGREE = 5):
     print 'Starting graph'
     print '-Nodes:',len(G.nodes())
     print '-Edges:',len(G.edges())
-    degrees = G.degree()
-    for d in degrees:
-        if degrees[d] < MIN_DEGREE:
-            G.remove_node(d)
+    continue_cleaning = True
+    while(continue_cleaning):
+        degrees = G.degree()
+        total_removed = 0
+        for d in degrees:
+            if degrees[d] < MIN_DEGREE:
+                G.remove_node(d)
+                total_removed += 1
+        if total_removed == 0:
+            continue_cleaning = False
+        else:
+            print 'Deleted:', total_removed
     print 'Filtered graph'
     print '-Nodes:',len(G.nodes())
     print '-Edges:',len(G.edges())
@@ -143,7 +160,8 @@ def create_university_temporal_evolution_by_year():
     cursor.execute(query)
     results = {2000:{u'DEUSTO':0}}
     for i, thesis in enumerate(cursor):
-        print 'Universities temporal evolution', i
+        if i%500 == 0:
+            print 'Universities temporal evolution', i
 
         try:
             university = university_ids[thesis[0]]
@@ -160,6 +178,9 @@ def create_university_temporal_evolution_by_year():
             print 'The thesis has no year in the database'
         except KeyError:
             print 'Unkown university:', thesis[0]
+        except TypeError:
+            print 'The thesis has no related university'
+            
     cursor.close()
     return results
 
@@ -193,11 +214,12 @@ def create_area_temporal_evolution_by_year():
         try:
             thesis_id = thesis[0]
             year = thesis[1].year
-            print 'Unesco code temporal evolution, processing', thesis_id, ', year', year
+            if i%500 == 0:
+                print 'Unesco code temporal evolution, processing', thesis_id, ', year', year
 
             #get descriptors
             cursor_desc = cnx2.cursor()
-            query_desc = 'SELECT descriptor_id FROM association_thesis_description WHERE thesis_id=' + str(thesis_id)
+            query_desc = 'SELECT descriptor.code FROM association_thesis_description, descriptor WHERE association_thesis_description.thesis_id=' + str(thesis_id) + ' AND association_thesis_description.descriptor_id=descriptor.id'
             cursor_desc.execute(query_desc)
 
             used_descriptors = []
@@ -209,7 +231,7 @@ def create_area_temporal_evolution_by_year():
             if year in results.keys():
                 descs = results[year]
                 for descriptor_id in used_descriptors:
-                    decriptor_text = descriptors[descriptor_id]
+                    decriptor_text = codes_descriptor[str(descriptor_id)]
                     if decriptor_text in descs.keys():
                         descs[decriptor_text] += 1
                     else:
@@ -217,7 +239,7 @@ def create_area_temporal_evolution_by_year():
             else:
                 descs = {}
                 for descriptor_id in used_descriptors:
-                    decriptor_text = descriptors[descriptor_id]
+                    decriptor_text = codes_descriptor[str(descriptor_id)]
                     descs[decriptor_text] = 1
                 results[year] = descs
         except AttributeError:
@@ -239,16 +261,17 @@ def create_meta_area_temporal_evolution_by_year():
         try:
             thesis_id = thesis[0]
             year = thesis[1].year
-            print 'First level Unesco code temporal evolution, processing', thesis_id, ', year', year
+            if i%500 == 0:
+                print 'First level Unesco code temporal evolution, processing', thesis_id, ', year', year
 
             cursor_desc = cnx2.cursor()
-            query_desc = 'SELECT descriptor_id FROM association_thesis_description WHERE thesis_id=' + str(thesis_id)
+            query_desc = 'SELECT descriptor.code FROM association_thesis_description, descriptor WHERE association_thesis_description.thesis_id=' + str(thesis_id) + ' AND association_thesis_description.descriptor_id=descriptor.id'
             cursor_desc.execute(query_desc)
 
             used_descriptors = set()
             for desc in cursor_desc:
                 try:
-                    descriptor_text = descriptors[desc[0]]
+                    descriptor_text = codes_descriptor[str(desc[0])]
                     descriptor_code = descriptor_codes[descriptor_text]
                     first_level_code = descriptor_code[0:2] + '0000'
                     first_level_descriptor = codes_descriptor[first_level_code]
@@ -284,10 +307,11 @@ def create_gender_temporal_evolution_by_year():
     cursor.execute(query)
     results = {}
     for i, thesis in enumerate(cursor):
-        print 'Genders temporal evolution', i
+        if i%500 == 0:
+            print 'Genders temporal evolution', i
 
         try:
-            name = str(thesis[0]).split(' ')[0] #if it is a composed name we use only the first part to identify the gender
+            name = thesis[0].split(' ')[0] #if it is a composed name we use only the first part to identify the gender
 
             try:
                 gender = name_genders[name]
@@ -327,11 +351,12 @@ def create_gender_per_area_evolution():
     cursor.execute(query)
     results = {}
     for i, thesis in enumerate(cursor):
-        print 'Genders per Unesco code temporal evolution', i
+        if i%500 == 0:
+            print 'Genders per Unesco code temporal evolution', i
         try:
 
             #get gender
-            name = str(thesis[0]).split(' ')[0] #if it is a composed name we use only the first part to identify the gender
+            name = thesis[0].split(' ')[0] #if it is a composed name we use only the first part to identify the gender
             try:
                 gender = name_genders[name]
             except KeyError:
@@ -340,7 +365,7 @@ def create_gender_per_area_evolution():
             #get descriptors
             thesis_id = thesis[1]
             cursor_desc = cnx2.cursor()
-            query_desc = 'SELECT descriptor_id FROM association_thesis_description WHERE thesis_id=' + str(thesis_id)
+            query_desc = 'SELECT descriptor.code FROM association_thesis_description, descriptor WHERE association_thesis_description.thesis_id=' + str(thesis_id) + ' AND association_thesis_description.descriptor_id=descriptor.id'
             cursor_desc.execute(query_desc)
 
             used_descriptors = []
@@ -353,7 +378,7 @@ def create_gender_per_area_evolution():
             if year in results.keys():
                 descs = results[year]
                 for descriptor_id in used_descriptors:
-                    decriptor_text = descriptors[descriptor_id]
+                    decriptor_text = codes_descriptor[str(descriptor_id)]
                     if decriptor_text in descs.keys():
                         gender_area = descs[decriptor_text]
                         if gender in gender_area.keys():
@@ -365,7 +390,7 @@ def create_gender_per_area_evolution():
             else:
                 descs = {}
                 for descriptor_id in used_descriptors:
-                    decriptor_text = descriptors[descriptor_id]
+                    decriptor_text = codes_descriptor[str(descriptor_id)]
                     descs[decriptor_text] = {gender:1}
                 results[year] = descs
 
@@ -385,7 +410,8 @@ def create_gender_panel_evolution_by_year():
     cursor.execute(query)
     results = {}
     for i, thesis in enumerate(cursor):
-        print 'Thesis panel gender distribution temporal evolution', i
+        if i%500 == 0:
+            print 'Thesis panel gender distribution temporal evolution', i
         cursor_names = cnx2.cursor()
         query_names = 'SELECT person.first_name FROM panel_member, person WHERE person.id = panel_member.person_id AND panel_member.thesis_id=' + str(thesis[0])
         cursor_names.execute(query_names)
@@ -427,7 +453,8 @@ def create_gender_advisor_evolution_by_year():
     cursor.execute(query)
     results = {}
     for i, thesis in enumerate(cursor):
-        print 'Thesis advisor gender distribution temporal evolution', i
+        if i%500 == 0:
+            print 'Thesis advisor gender distribution temporal evolution', i
         cursor_names = cnx2.cursor()
         query_names = 'SELECT person.first_name FROM advisor, person WHERE person.id = advisor.person_id AND advisor.thesis_id=' + str(thesis[0])
         cursor_names.execute(query_names)
@@ -469,11 +496,12 @@ def create_gender_meta_area_evolution():
     cursor.execute(query)
     results = {}
     for i, thesis in enumerate(cursor):
-        print 'Genders per first level Unesco code temporal evolution', i
+        if i%500 == 0:
+            print 'Genders per first level Unesco code temporal evolution', i
         try:
 
             #get gender
-            name = str(thesis[0]).split(' ')[0] #if it is a composed name we use only the first part to identify the gender
+            name = thesis[0].split(' ')[0] #if it is a composed name we use only the first part to identify the gender
             try:
                 gender = name_genders[name]
             except KeyError:
@@ -482,13 +510,13 @@ def create_gender_meta_area_evolution():
             #get descriptors
             thesis_id = thesis[1]
             cursor_desc = cnx2.cursor()
-            query_desc = 'SELECT descriptor_id FROM association_thesis_description WHERE thesis_id=' + str(thesis_id)
+            query_desc = 'SELECT descriptor.code FROM association_thesis_description, descriptor WHERE association_thesis_description.thesis_id=' + str(thesis_id) + ' AND association_thesis_description.descriptor_id=descriptor.id'
             cursor_desc.execute(query_desc)
 
             used_descriptors = set()
             for desc in cursor_desc:
                 try:
-                    descriptor_text = descriptors[desc[0]]
+                    descriptor_text = codes_descriptor[str(desc[0])]
                     descriptor_code = descriptor_codes[descriptor_text]
                     first_level_code = descriptor_code[0:2] + '0000'
                     first_level_descriptor = codes_descriptor[first_level_code]
@@ -532,7 +560,8 @@ def create_month_distribution():
     results = {}
 
     for i, date in enumerate(cursor):
-         print 'Month distribution', i
+         if i%500 == 0:
+             print 'Month distribution', i
          try:
              month = date[0].month
          except AttributeError:
@@ -544,26 +573,27 @@ def create_month_distribution():
 
     cursor.close()
     return results
-
-
+    
 
 
 if __name__=='__main__':
 
     print 'Calculating statistics and graphs'
     pp = pprint.PrettyPrinter(indent=4)
-#
+
 #    #create the thesis panel social network
 #    G = build_panel_relations()
 #    filter_panel_relations(G)
 #    print 'Writing file'
 #    nx.write_gexf(G, '../website/static/data/panel_relations_filtered.gexf')
-#
-#    #create the social network for the thematic areas
-#    G = build_area_relations()
-#    print 'Writing file'
-#    nx.write_gexf(G, '../website/static/data/area_relations.gexf')
-#
+
+    #create the social network for the thematic areas
+    g_3, g_2, g_1 = build_area_relations()
+    print 'Writing files'
+    nx.write_gexf(g_3, '../website/static/data/3_level_unesco_relations.gexf')
+    nx.write_gexf(g_2, '../website/static/data/2_level_unesco_relations.gexf')
+    nx.write_gexf(g_1, '../website/static/data/1_level_unesco_relations.gexf')
+
 #    #Create the temporal evolution of the universities
 #    print 'Temporal evolution of the universities'
 #    unis = create_university_temporal_evolution_by_year()
@@ -600,7 +630,7 @@ if __name__=='__main__':
 #    pp.pprint(genders_area_total)
 #    json.dump(genders_area_total, open('../website/static/data/genders_area_total.json', 'w'), indent = 4)
 #
-#    Create the temporal evolution of the primary knowledge areas
+#    #Create the temporal evolution of the primary knowledge areas
 #    print 'Temporal evolution of the knowledge areas'
 #    primary_areas = create_meta_area_temporal_evolution_by_year()
 #    pp.pprint(primary_areas)
@@ -617,19 +647,18 @@ if __name__=='__main__':
 #    meta_area_gender = create_gender_meta_area_evolution()
 #    pp.pprint(meta_area_gender)
 #    json.dump(meta_area_gender, open('../website/static/data/gender_first_level_areas_temporal.json', 'w'), indent = 4)
-
-     #Create the temporal evolution of the genders of the thesis advisors
-    print 'Temporal evolution of the advisors genders'
-    advisor_gender = create_gender_advisor_evolution_by_year()
-    pp.pprint(advisor_gender)
-    json.dump(advisor_gender, open('../website/static/data/advisor_gender.json', 'w'), indent = 4)
-
-
-    #create month distribution
-    print 'Month distribution'
-    month_distribution = create_month_distribution()
-    pp.pprint(month_distribution)
-    json.dump(month_distribution, open('../website/static/data/month_distribution.json', 'w'), indent = 4)
+#
+#     #Create the temporal evolution of the genders of the thesis advisors
+#    print 'Temporal evolution of the advisors genders'
+#    advisor_gender = create_gender_advisor_evolution_by_year()
+#    pp.pprint(advisor_gender)
+#    json.dump(advisor_gender, open('../website/static/data/advisor_gender.json', 'w'), indent = 4)
+#
+#    #create month distribution
+#    print 'Month distribution'
+#    month_distribution = create_month_distribution()
+#    pp.pprint(month_distribution)
+#    json.dump(month_distribution, open('../website/static/data/month_distribution.json', 'w'), indent = 4)
 
     print '********** DONE  *************'
 
