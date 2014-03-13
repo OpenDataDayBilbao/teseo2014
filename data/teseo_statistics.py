@@ -112,9 +112,18 @@ def build_area_relations():
                     g_1.add_edge(source_1, target_1, weight = 1)                    
 
     cursor.close()
-    print 'Graph created'
-    print '-Nodes:',len(G.nodes())
-    print '-Edges:',len(G.edges())
+    print 'Third level'
+    print '-Nodes:',len(g_3.nodes())
+    print '-Edges:',len(g_3.edges())
+    
+    print 'Second level'
+    print '-Nodes:',len(g_2.nodes())
+    print '-Edges:',len(g_2.edges())
+
+    print 'First level'
+    print '-Nodes:',len(g_1.nodes())
+    print '-Edges:',len(g_1.edges())
+
 
     return g_3, g_2, g_1
 
