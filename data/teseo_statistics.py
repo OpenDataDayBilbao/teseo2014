@@ -19,30 +19,9 @@ from model.dbconnection import dbconfig
 
 config = dbconfig
 
-
-def get_university_ids():
-    cnx = mysql.connector.connect(**config)
-    cursor_unis = cnx.cursor()
-    cursor_unis.execute("SELECT id, name FROM university")
-    result = {}
-    for university in cursor_unis:
-        result[university[0]] = university[1]
-    cursor_unis.close()
-    return result
-
-def get_number_phd_by_universities():
-    cnx = mysql.connector.connect(**config)
-    cursor = cnx.cursor()
-    result = {}
-    for key in university_ids.keys():
-        uni_name = university_ids[key]
-        query = 'SELECT COUNT(*) FROM thesis WHERE university_id=' + str(key)
-        cursor.execute(query)
-        for count in cursor:
-            result[uni_name] = count[0]
-    cursor.close()
-
-    return result
+#*******************
+#  SNA
+#*******************
 
 def build_panel_relations():
     cnx = mysql.connector.connect(**config)
@@ -150,6 +129,36 @@ def filter_panel_relations(G, MIN_DEGREE = 5):
     print 'Filtered graph'
     print '-Nodes:',len(G.nodes())
     print '-Edges:',len(G.edges())
+
+
+#***********************
+#  Simple statistics
+#***********************
+
+
+def get_university_ids():
+    cnx = mysql.connector.connect(**config)
+    cursor_unis = cnx.cursor()
+    cursor_unis.execute("SELECT id, name FROM university")
+    result = {}
+    for university in cursor_unis:
+        result[university[0]] = university[1]
+    cursor_unis.close()
+    return result
+
+def get_number_phd_by_universities():
+    cnx = mysql.connector.connect(**config)
+    cursor = cnx.cursor()
+    result = {}
+    for key in university_ids.keys():
+        uni_name = university_ids[key]
+        query = 'SELECT COUNT(*) FROM thesis WHERE university_id=' + str(key)
+        cursor.execute(query)
+        for count in cursor:
+            result[uni_name] = count[0]
+    cursor.close()
+
+    return result
 
 
 
@@ -574,6 +583,47 @@ def create_month_distribution():
     cursor.close()
     return results
     
+def create_university_areas():
+    cnx = mysql.connector.connect(**config)
+    cursor = cnx.cursor()
+    query = '''SELECT thesis.defense_date, university.name, descriptor.code  
+               FROM thesis, university, descriptor, association_thesis_description 
+               WHERE thesis.id = association_thesis_description.thesis_id 
+               AND association_thesis_description.descriptor_id = descriptor.id
+               AND thesis.university_id = university.name'''
+    cursor.execute(query)
+    results = {}   #{2000:{'DEUSTO':{'XXXX':1}}}
+
+    for i, info in enumerate(cursor):
+         if i%500 == 0:
+             print 'University areas', i
+         try:
+             year = info[0].year
+             university = info[1]
+             code = str(info[2])[:4] + '00'
+             code = codes_descriptor[code]
+         except AttributeError:
+             print 'Thesis has no date'
+             
+         if year in results.keys():
+             universities = results[year]
+             if university in universities.keys():
+                 codes = universities[university]
+                 if code in codes.keys():
+                     codes[code] += 1
+                 else:
+                     codes[code] = 1  
+             else:
+                 universities[university] = {code:1}          
+         else:
+             results[year] = {university:{code:1}}
+        
+        
+         
+
+    cursor.close()
+    return results
+    
 
 
 if __name__=='__main__':
@@ -586,13 +636,13 @@ if __name__=='__main__':
 #    filter_panel_relations(G)
 #    print 'Writing file'
 #    nx.write_gexf(G, '../website/static/data/panel_relations_filtered.gexf')
-
-    #create the social network for the thematic areas
-    g_3, g_2, g_1 = build_area_relations()
-    print 'Writing files'
-    nx.write_gexf(g_3, '../website/static/data/3_level_unesco_relations.gexf')
-    nx.write_gexf(g_2, '../website/static/data/2_level_unesco_relations.gexf')
-    nx.write_gexf(g_1, '../website/static/data/1_level_unesco_relations.gexf')
+#
+#    #create the social network for the thematic areas
+#    g_3, g_2, g_1 = build_area_relations()
+#    print 'Writing files'
+#    nx.write_gexf(g_3, '../website/static/data/3_level_unesco_relations.gexf')
+#    nx.write_gexf(g_2, '../website/static/data/2_level_unesco_relations.gexf')
+#    nx.write_gexf(g_1, '../website/static/data/1_level_unesco_relations.gexf')
 
 #    #Create the temporal evolution of the universities
 #    print 'Temporal evolution of the universities'
@@ -659,6 +709,12 @@ if __name__=='__main__':
 #    month_distribution = create_month_distribution()
 #    pp.pprint(month_distribution)
 #    json.dump(month_distribution, open('../website/static/data/month_distribution.json', 'w'), indent = 4)
+#
+    #create second level area temporal evolution per university and year
+    print 'Area temporal evolution per university and year'
+    university_area_year = create_university_areas()
+    pp.pprint(university_area_year)
+    json.dump(university_area_year, open('../website/static/data/university_area_year.json', 'w'), indent = 4)
 
     print '********** DONE  *************'
 
