@@ -590,7 +590,7 @@ def create_university_areas():
                FROM thesis, university, descriptor, association_thesis_description 
                WHERE thesis.id = association_thesis_description.thesis_id 
                AND association_thesis_description.descriptor_id = descriptor.id
-               AND thesis.university_id = university.name'''
+               AND thesis.university_id = university.id'''
     cursor.execute(query)
     results = {}   #{2000:{'DEUSTO':{'XXXX':1}}}
 
