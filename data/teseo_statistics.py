@@ -592,7 +592,8 @@ def create_university_areas():
                AND association_thesis_description.descriptor_id = descriptor.id
                AND thesis.university_id = university.id'''
     cursor.execute(query)
-    results = {}   #{2000:{'DEUSTO':{'XXXX':1}}}
+    results_by_uni = {}   #{DEUSTO:{'2000':{'INFORMATICA':1}}}
+    results_by_code = {}   #{INFORMATICA:{'2000':{'DEUSTO':1}}}
 
     for i, info in enumerate(cursor):
          if i%500 == 0:
@@ -605,24 +606,37 @@ def create_university_areas():
          except AttributeError:
              print 'Thesis has no date'
              
-         if year in results.keys():
-             universities = results[year]
-             if university in universities.keys():
-                 codes = universities[university]
+         if university in results_by_uni.keys():
+             years = results_by_uni[university]
+             if year in years.keys():
+                 codes = years[year]
                  if code in codes.keys():
                      codes[code] += 1
                  else:
                      codes[code] = 1  
              else:
-                 universities[university] = {code:1}          
+                 years[year] = {code:1}          
          else:
-             results[year] = {university:{code:1}}
+             results_by_uni[university] = {year:{code:1}}
+        
+         if code in results_by_code.keys():
+             years = results_by_code[code]
+             if year in years.keys():
+                 universities = years[year]
+                 if university in universities.keys():
+                     universities[university] += 1
+                 else:
+                     universities[university] = 1  
+             else:
+                 years[year] = {code:1}          
+         else:
+             results_by_code[code] = {year:{university:1}}
         
         
          
 
     cursor.close()
-    return results
+    return results_by_uni, results_by_code
     
 
 
@@ -712,9 +726,14 @@ if __name__=='__main__':
 #
     #create second level area temporal evolution per university and year
     print 'Area temporal evolution per university and year'
-    university_area_year = create_university_areas()
-    pp.pprint(university_area_year)
-    json.dump(university_area_year, open('../website/static/data/university_area_year.json', 'w'), indent = 4)
+    results_by_uni, results_by_code = create_university_areas()
+    pp.pprint(results_by_uni)
+    json.dump(results_by_uni, open('../website/static/data/university_area_year_by_uni.json', 'w'), indent = 4)
+    
+    pp.pprint(results_by_code)
+    json.dump(results_by_code, open('../website/static/data/university_area_year_by_code.json', 'w'), indent = 4)
+    
+    
 
     print '********** DONE  *************'
 
