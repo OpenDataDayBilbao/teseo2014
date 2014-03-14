@@ -128,6 +128,12 @@ def theses_geographical_distribution():
     return render_template("totals_analysis/theses_geographical_distribution.html")
 
 
+
+@app.route('/testing')
+def testing():
+    return render_template("network/index.html")
+
+
 ###########################################################################
 #####   Main
 ###########################################################################
