@@ -619,19 +619,19 @@ def create_university_areas():
          else:
              results_by_uni[university] = {year:{code:1}}
         
-#         if code in results_by_code.keys():
-#             years = results_by_code[code]
-#             if year in years.keys():
-#                 universities = years[year]
-#                 if university in universities.keys():
-#                     universities[university] += 1
-#                 else:
-#                     universities[university] = 1  
-#             else:
-#                 years[year] = {code:1}          
-#         else:
-#             results_by_code[code] = {year:{university:1}}
-#        
+         if code in results_by_code.keys():
+             years = results_by_code[code]
+             if year in years.keys():
+                 universities = years[year]
+                 if university in universities.keys():
+                     universities[university] += 1
+                 else:
+                     universities[university] = 1  
+             else:
+                 years[year] = {university:1}          
+         else:
+             results_by_code[code] = {year:{university:1}}
+        
         
          
 
