@@ -25,20 +25,20 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title" id="myModalLabel">Top topics distribution by university</h4>
+                        <h4 class="modal-title" id="myModalLabel">Top univerties distribution by topic</h4>
                     </div>
 
                     <div class="modal-body">
                         <p>
-                            This chart shows the 15 most prominent topics in the selected university, according to the topic tagging of the doctoral dissertations defended in Spain since 1977.
+                            This chart shows the 15 most prominent universities in the selected topic field, according to the topic tagging of the doctoral dissertations defended in Spain since 1977.
                         </p>
 
                         <p>
-                            The user can select the desired university from a list of all the universities in Spain. The time range for the analysis is also available through the sliders.
+                            The user can select the desired topic from the list of second-level UNESCO topics. The time range for the analysis is also available through the sliders.
                         </p>
 
                         <p>
-                            If the name of the topics is not correctly shown due to space availability, the whole name will be rendered when hovering over it.
+                            If the name of the universities is not correctly shown due to space availability, the whole name will be rendered when hovering over it.
                         </p>
                     </div>
 
@@ -50,9 +50,9 @@
         </div>
 
         <div class="col-md-4 col-md-offset-1">
-            <select id="university-selector" class="form-control">
-                {% for university in universities %}
-                    <option value="{{ university|slugify }}">{{ university }}</option>
+            <select id="topic-selector" class="form-control">
+                {% for topic in topics %}
+                    <option value="{{ topic|slugify }}">{{ topic }}</option>
                 {% endfor %}
             </select>
         </div>
@@ -85,7 +85,7 @@
 
     {% raw %}
     <script id="theses-tooltip-template" type="text/x-handlebars-template">
-        <h2>{{ topic }}</h2>
+        <h2>{{ university }}</h2>
 
         <p>
             {{ count }} theses
@@ -95,20 +95,20 @@
 
     <script>
         $('#year-selector').slider();
-        $('#university-selector').val('{{ university_slug }}');
+        $('#topic-selector').val('{{ topic_slug }}');
 
         var page_width = $(".container").width();
 
         var min_year = {{ min_year }};
         var max_year = {{ max_year }};
-        var university_slug = '{{ university_slug }}';
+        var topic_slug = '{{ topic_slug }}';
 
         var margin = {top: 40, right: 50, bottom: 50, left: 50},
             width = page_width - margin.left - margin.right,
             height = 500 - margin.top - margin.bottom;
 
 
-        var data = {{ top_topics|safe }};
+        var data = {{ top_universities|safe }};
         var barLabel = function(d) { return d[0]; };
         var barValue = function(d) { return parseInt(d[1]); };
 
@@ -155,7 +155,7 @@
                 var template_source = $('#theses-tooltip-template').html();
                 var template = Handlebars.compile(template_source);
                 var tooltip_data = {
-                    topic: d[0],
+                    university: d[0],
                     count: d[1]
                 }
                 return template(tooltip_data);
@@ -244,19 +244,19 @@
 
         ys.setValue([{{ min_year }}, {{ max_year }}]);
 
-        $('#university-selector').change(function() {
-            university_slug = $( "#university-selector option:selected" ).val();
+        $('#topic-selector').change(function() {
+            topic_slug = $( "#topic-selector option:selected" ).val();
 
             redirectTemplate();
         });
 
         function redirectTemplate() {
-            var url = "{{ url_for('top_topics', min_year='min_year', max_year='max_year', university_slug='university_slug') }}";
+            var url = "{{ url_for('top_universities', min_year='min_year', max_year='max_year', topic_slug='topic_slug') }}";
 
             url = url
                 .replace("min_year", min_year)
                 .replace("max_year", max_year)
-                .replace("university_slug", university_slug);
+                .replace("topic_slug", topic_slug);
 
             window.location.href = url;
         };

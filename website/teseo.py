@@ -17,7 +17,7 @@ app = Flask(__name__)
 app.config.from_object(__name__)
 
 
-NUMBER_OF_TOP_TOPICS = 15
+NUMBER_OF_TOP_ITEMS = 15
 
 
 ###########################################################################
@@ -26,7 +26,7 @@ NUMBER_OF_TOP_TOPICS = 15
 
 @app.template_filter('slugify')
 def _jinja2_filter_slugify(string):
-    return slugify(string)
+    return slugify(unicode(string))
 
 
 @app.template_filter('divisibleby')
@@ -132,7 +132,45 @@ def top_topics(min_year, max_year, university_slug):
     for topic in sorted(topic_count_dict, key=topic_count_dict.get, reverse=True):
         ordered_topics.append([topic, topic_count_dict[topic]])
 
-    return render_template("topic_analysis/top_topics.html", min_year=min_year, max_year=max_year, university_slug=university_slug, top_topics=ordered_topics[:NUMBER_OF_TOP_TOPICS], universities=sorted(universities))
+    return render_template("topic_analysis/top_topics.html", min_year=min_year, max_year=max_year, university_slug=university_slug, top_topics=ordered_topics[:NUMBER_OF_TOP_ITEMS], universities=sorted(universities))
+
+
+@app.route('/top_universities/<min_year>/<max_year>/<topic_slug>')
+def top_universities(min_year, max_year, topic_slug):
+    json_file = open('static/data/university_area_year_by_code.json')
+    data = json.load(json_file)
+
+    topics = []
+    topic_data = {}
+
+    for topic in data.keys():
+        key_slug = slugify(unicode(topic))
+        topics.append(topic)
+        if (topic_slug == key_slug):
+            topic_data = data[topic]
+
+    university_count_dict = {}
+
+    for year in range(int(min_year), int(max_year) + 1):
+        year_str = str(year)
+        if year_str in topic_data.keys():
+            for university in topic_data[year_str].keys():
+                if university in university_count_dict.keys():
+                    university_count_dict[university] = university_count_dict[university] + topic_data[year_str][university]
+                else:
+                    university_count_dict[university] = topic_data[year_str][university]
+
+    ordered_universities = []
+
+    print university_count_dict
+
+    for university in sorted(university_count_dict, key=university_count_dict.get, reverse=True):
+        print university
+        ordered_universities.append([university, university_count_dict[university]])
+
+    top_universities = json.dumps(ordered_universities[:NUMBER_OF_TOP_ITEMS])
+
+    return render_template("topic_analysis/top_universities.html", min_year=min_year, max_year=max_year, topic_slug=topic_slug, top_universities=top_universities, topics=sorted(topics))
 
 
 @app.route('/all_topics_by_range/<min_year>/<max_year>')

@@ -84,7 +84,11 @@
                                     </li>
 
                                     <li role="presentation" class="tab-menu">
-                                        <a href="{{ url_for('top_topics', min_year=1977, max_year=2014, university_slug='a-coruna') }}">Top by university</a>
+                                        <a href="{{ url_for('top_topics', min_year=1977, max_year=2014, university_slug='a-coruna') }}">By university</a>
+                                    </li>
+
+                                    <li role="presentation" class="tab-menu">
+                                        <a href="{{ url_for('top_universities', min_year=1977, max_year=2014, topic_slug='actividad-economica') }}">Top universities</a>
                                     </li>
                             </ul>
                         </div>
