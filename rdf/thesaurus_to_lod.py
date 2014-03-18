@@ -6,7 +6,8 @@ from sqlalchemy.orm import sessionmaker
 import os, sys
 lib_path = os.path.abspath('../')
 sys.path.append(lib_path)
-from model.thesaurus_model import Descriptor
+from model.teseo_model import Descriptor
+from model.dbconnection import dbconfig
 
 from rdflib import Graph, URIRef
 
@@ -14,9 +15,9 @@ RESOURCE_PREFIX = 'http://apps.morelab.deusto.es/unesco/resource'
 
 def get_unesco_lod_uri(descriptor):
     if not desc.parent:
-        code = str(descriptor.id)[:2]
+        code = str(descriptor.code)[:2]
     else:
-        code = str(descriptor.id)[:4] if str(descriptor.id)[4:] == '00' else str(descriptor.id)
+        code = str(descriptor.code)[:4] if str(descriptor.code)[4:] == '00' else str(descriptor.code)
 
     uri = 'http://skos.um.es/unesco6/%s' % code
     g = Graph()
@@ -35,7 +36,7 @@ def get_unesco_lod_uri(descriptor):
         return None, None
 
 if __name__ == '__main__':
-    engine = create_engine('sqlite:///thesaurus.db')
+    engine = create_engine('mysql://%s:%s@%s/%s?charset=utf8' % (dbconfig['user'], dbconfig['password'], dbconfig['host'], dbconfig['database']))
 
     Session = sessionmaker(bind=engine)
     session = Session()
@@ -53,9 +54,9 @@ if __name__ == '__main__':
         if not desc.parent:
             rdf += 'skos:topConceptOf <%(prefix)s/scheme> ;\n'
         else:
-            rdf += 'skos:broader <%(prefix)s/%(parent_code)s> ;\n' % {'prefix': RESOURCE_PREFIX, 'parent_code': desc.parent.id}
+            rdf += 'skos:broader <%(prefix)s/%(parent_code)s> ;\n' % {'prefix': RESOURCE_PREFIX, 'parent_code': desc.parent.code}
         for child in desc.children:
-            rdf += 'skos:narrower <%(prefix)s/%(child_code)s> ;\n' % {'prefix': RESOURCE_PREFIX, 'child_code': child.id}
+            rdf += 'skos:narrower <%(prefix)s/%(child_code)s> ;\n' % {'prefix': RESOURCE_PREFIX, 'child_code': child.code}
 
         unesco_uri, unesco_related = get_unesco_lod_uri(desc)
 
@@ -66,6 +67,6 @@ if __name__ == '__main__':
                 rdf += 'skos:related <%(prefix)s/%(rel_code)s> ;\n' % {'prefix': RESOURCE_PREFIX, 'rel_code': rel_code}
 
         rdf += 'skos:notation "%(code)s" .'
-        rdf = rdf % { 'prefix': RESOURCE_PREFIX, 'code': str(desc.id), 'label': desc.text.encode('utf-8') }
+        rdf = rdf % { 'prefix': RESOURCE_PREFIX, 'code': str(desc.code), 'label': desc.text.encode('utf-8') }
 
         print rdf

@@ -210,6 +210,17 @@ def get_distinct_names():
     
     return result
     
+def get_distinct_first_names():
+    cnx = mysql.connector.connect(**config)
+    cursor = cnx.cursor()
+    cursor.execute("SELECT DISTINCT(first_name) FROM person")
+    result = []
+    for name in cursor:
+        result.append(name[0])
+    cursor.close()
+    
+    return result
+    
 def get_same_name_ids(distinct_names):
     cnx = mysql.connector.connect(**config)
     cursor = cnx.cursor()
@@ -294,16 +305,35 @@ def clean_unesco_codes():
     cursor.close()
     cursor2.close()
     
+def set_genders():
+    from cache import name_genders
+    
+    names = get_distinct_first_names()
+    cnx = mysql.connector.connect(**config)
+    cursor = cnx.cursor()
+    for cont, first_name in enumerate(names):
+        print 'Setting genders:', first_name, (float(cont)/len(names)) * 100
+        if first_name != '':    
+            name = first_name[0].split(' ')[0]
+            try:
+                gender = name_genders[name]
+                cursor.execute('UPDATE person SET gender = %s WHERE name = %s', (gender, name))
+            except KeyError:
+                print 'Name does not exist', first_name
+        
+    cursor.close()
+    
+    
 
     
 if __name__=='__main__':
-    check_repeated_thesis()
-    delete_repeated_thesis()
-    check_unused_person_ids()
-    nuke_unused_persons()
-    check_repeated_name_ids()
-    check_similar_names() 
-    merge_names()    
-    clean_unesco_codes()
-    
+#    check_repeated_thesis()
+#    delete_repeated_thesis()
+#    check_unused_person_ids()
+#    nuke_unused_persons()
+#    check_repeated_name_ids()
+#    check_similar_names() 
+#    merge_names()    
+#    clean_unesco_codes()
+    set_genders()
     
