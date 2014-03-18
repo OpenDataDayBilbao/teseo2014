@@ -1,9 +1,5 @@
 # -*- coding: utf-8 -*-
 
-from teseo_model import University
-
-from sqlalchemy import create_engine #, func, and_
-from sqlalchemy.orm import sessionmaker
 from rdflib import ConjunctiveGraph, URIRef, RDF
 
 import wikipedia
@@ -56,36 +52,23 @@ def get_uri_types(uri, lang):
 
     return [ str(typ) for typ in g.objects(URIRef(uri), RDF.type) ]
 
-if __name__ == '__main__':
-    import os, sys
-    lib_path = os.path.abspath('../')
-    sys.path.append(lib_path)
-    from model.dbconnection import dbconfig
+def search_university_in_dbp(name):
+    if name == u'CÓRDOBA':
+        # Otherwise it returns the one in Colombia (no way found to disambiguate)
+        return u'http://es.dbpedia.org/resource/Universidad_de_Córdoba'
+    elif name == u'PALMAS DE GRAN CANARIA':
+        # Otherwise it returns the resource describing the library of the University, which is also typed as an University
+        return u'http://es.dbpedia.org/resource/Universidad_de_Las_Palmas_de_Gran_Canaria'
+    elif name == u'VIC':
+        # It has no University type :-/
+        return u'http://es.dbpedia.org/resource/Universidad_de_Vich'
 
-    config = dbconfig
+    wikiresults = search_dbpedia_trough_wikipedia('universidad ' + name.encode('utf-8').lower(), 'es')
 
-    # Load from DB
-    engine = create_engine('mysql://%s:%s@%s/%s?charset=utf8' % (config['user'], config['password'], config['host'], dbconfig['database']))
+    for result in wikiresults:
+        uri = result[1]
+        if 'http://dbpedia.org/ontology/University' in get_uri_types(uri, 'es'):
+            return uri
 
-    Session = sessionmaker(bind=engine)
-    session = Session()
-    db_descriptors = []
-    for uni in session.query(University).distinct(University.name):
-        print uni.name.encode('utf-8').lower()
-        found = False
-
-        wikiresults = search_dbpedia_trough_wikipedia('universidad ' + uni.name.encode('utf-8').lower(), 'es')
-
-        for result in wikiresults:
-            uri = result[1]
-            if 'http://dbpedia.org/ontology/University' in get_uri_types(uri, 'es'):
-                found = True
-                print uri
-                break
-
-        if not found:
-            print '-'*30
-            # print uni.name.encode('utf-8').lower()
-            print wikiresults
-            print '-'*30
+    return None
 

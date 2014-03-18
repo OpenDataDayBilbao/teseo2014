@@ -59,7 +59,7 @@ def get_university_ids():
 def load_university_ids():
     result = ""
     try:
-        with open( base_dir + "/cache/university_ids.p", "rb" ) as infile:        
+        with open( base_dir + "/cache/university_ids.p", "rb" ) as infile:
             result = pickle.load(infile)
     except:
         print "No cache file created: /cache/university_ids.p"
@@ -87,7 +87,7 @@ def load_thesis_ids():
         with open( base_dir + "/cache/thesis_ids.p", "rb" ) as infile:
                 result = pickle.load(infile)
     except:
-        print "No cache file created: /cache/thesis_ids.p"  
+        print "No cache file created: /cache/thesis_ids.p"
     return result
 
 def save_descriptors():
@@ -168,7 +168,7 @@ def save_name_genders():
 def load_genders():
     result = ""
     try:
-        with open( base_dir + "/cache/genders.p", "rb" ) as infile:     
+        with open( base_dir + "/cache/genders.p", "rb" ) as infile:
                 result = pickle.load(infile)
     except:
         print "No cache file created: /cache/genders.p"
@@ -214,7 +214,7 @@ def check_similar_names():
 def load_descriptor_codes():
     result = ""
     try:
-        with open( base_dir + "/cache/descriptor_codes.p", "rb" ) as infile:        
+        with open( base_dir + "/cache/descriptor_codes.p", "rb" ) as infile:
             result = pickle.load(infile)
     except:
         print "No cache file created: /cache/descriptor_codes.p"
@@ -223,7 +223,7 @@ def load_descriptor_codes():
 def load_codes_descriptor():
     result = ""
     try:
-        with open( base_dir + "/cache/codes_descriptor.p", "rb" ) as infile:        
+        with open( base_dir + "/cache/codes_descriptor.p", "rb" ) as infile:
             result = pickle.load(infile)
     except:
         print "No cache file created: /cache/codes_descriptor.p"
@@ -237,18 +237,18 @@ def save_descriptor_codes():
     cursor.execute("SELECT code, text FROM descriptor")
 
     descriptor = {}
-    codes = {}    
-    
+    codes = {}
+
     for desc in cursor:
         code = str(desc[0])
         text = desc[1]
         if len(code) < 6:
             print code
             print text
-            
+
         descriptor[text] = code
         codes[code] = text
-        
+
     cursor.close()
     with open( base_dir + "/cache/descriptor_codes.p", "wb" ) as outfile:
         pickle.dump(descriptor, outfile)
@@ -362,6 +362,88 @@ university_locations = {
     u'EUROPEA DE CANARIAS' :u'Islas Canarias',
     u'TECNOLOGÍA Y EMPRESA' :u'Madrid',
     u'INTERNACIONAL DE BURGOS' :u'Castilla y León',
+}
+
+university_types = {
+    u'OVIEDO': 'public',
+    u'AUTÓNOMA DE BARCELONA': 'public',
+    u'BURGOS': 'public',
+    u'GRANADA': 'public',
+    u'INTERNACIONAL DE VALENCIA': 'private',
+    u'ZARAGOZA': 'public',
+    u'UNIVERSITAT DE VALÈNCIA (ESTUDI GENERAL)': 'public',
+    u'RAMÓN LLULL': 'private',
+    u'ILLES BALEARS': 'public',
+    u'FRANCISCO DE VITORIA': 'private',
+    u'GIRONA': 'public',
+    u'EUROPEA MIGUEL DE CERVANTES': 'private',
+    u'ROVIRA I VIRGILI': 'public',
+    u'PONTIFICIA DE SALAMANCA': 'private',
+    u'EUROPEA DE CANARIAS': 'private',
+    u'VALLADOLID': 'public',
+    u'MONDRAGÓN UNIBERTSITATEA': 'private',
+    u'EUROPEA DE MADRID': 'private',
+    u'IE UNIVERSITY': 'private',
+    u'LEÓN': 'public',
+    u'EXTREMADURA': 'public',
+    u'PÚBLICA DE NAVARRA':'public',
+    u'POLITÉCNICA DE CARTAGENA': 'public',
+    u'SAN PABLO-CEU': 'private',
+    u'ALFONSO X EL SABIO': 'private',
+    u'COMPLUTENSE DE MADRID': 'public',
+    u'INTERNACIONAL MENÉNDEZ PELAYO': 'public',
+    u'SEVILLA': 'public',
+    u'PALMAS DE GRAN CANARIA': 'public',
+    u'A DISTANCIA DE MADRID': 'private',
+    u'CÁDIZ': 'public',
+    u'POMPEU FABRA': 'public',
+    u'ALICANTE': 'public',
+    u'JAÉN': 'public',
+    u'PONTIFICIA COMILLAS': 'private',
+    u'POLITÉCNICA DE VALENCIA': 'public',
+    u'NACIONAL DE EDUCACIÓN A DISTANCIA': 'public',
+    u'CÓRDOBA': 'public',
+    u'LLEIDA': 'public',
+    u'HUELVA': 'public',
+    u'CASTILLA-LA MANCHA': 'public',
+    u'JAUME I DE CASTELLÓN': 'public',
+    u'SAN JORGE': 'private',
+    u'POLITÉCNICA DE MADRID': 'public',
+    u'LA LAGUNA': 'public',
+    u'INTERNACIONAL DE BURGOS': 'private',
+    u'CATÓLICA SANTA TERESA DE JESÚS DE ÁVILA': 'private',
+    u'BARCELONA': 'public',
+    u'RIOJA': 'public',
+    u'PAÍS VASCO/EUSKAL HERRIKO UNIBERTSITATEA': 'public',
+    u'CAMILO JOSÉ CELA': 'private',
+    u'OBERTA DE CATALUNYA': 'private',
+    u'INTERNACIONAL DE CATALUNYA': 'private',
+    u'SANTIAGO DE COMPOSTELA':'public',
+    u'MIGUEL HERNÁNDEZ DE ELCHE': 'public',
+    u'NAVARRA': 'private',
+    u'CARDENAL HERRERA-CEU': 'private',
+    u'ABAT OLIBA CEU':'private',
+    u'VIC': 'private',
+    u'MÁLAGA':'public',
+    u'SALAMANCA': 'public',
+    u'CARLOS III DE MADRID': 'public',
+    u'ALMERÍA': 'public',
+    u'INTERNACIONAL DE ANDALUCÍA': 'public',
+    u'MURCIA': 'public',
+    u'AUTÓNOMA DE MADRID': 'public',
+    u'REY JUAN CARLOS': 'public',
+    u'A CORUÑA': 'public',
+    u'CATÓLICA SAN ANTONIO': 'private',
+    u'PABLO DE OLAVIDE': 'public',
+    u'DEUSTO': 'private',
+    u'ALCALÁ': 'public',
+    u'CANTABRIA': 'public',
+    u'VIGO': 'public',
+    u'POLITÉCNICA DE CATALUNYA': 'public',
+    u'INTERNACIONAL DE LA RIOJA': 'private',
+    u'ANTONIO DE NEBRIJA': 'private',
+    u'CATÓLICA DE VALENCIA SAN VICENTE MÁRTIR': 'private',
+    u'TECNOLOGÍA Y EMPRESA': 'private',
 }
 
 university_ids = load_university_ids()
