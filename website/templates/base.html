@@ -35,15 +35,15 @@
                                 </li>
                                     <li role="presentation" class="tab-menu">
                                         <a href="{{ url_for('month_distribution') }}">Month</a>
-                                    <li>
+                                    </li>
 
                                     <li role="presentation" class="tab-menu">
                                         <a href="{{ url_for('theses_by_university') }}">Universities</a>
-                                    <li>
+                                    </li>
 
                                     <li role="presentation" class="tab-menu">
                                         <a href="{{ url_for('theses_geographical_distribution') }}">Geographical</a>
-                                    <li>
+                                    </li>
 
                                 <li class="divider"></li>
 
@@ -52,19 +52,19 @@
                                 </li>
                                     <li role="presentation" class="tab-menu">
                                         <a href="{{ url_for('theses_gender_distribution') }}">Theses</a>
-                                    <li>
+                                    </li>
 
                                     <li role="presentation" class="tab-menu">
                                         <a href="{{ url_for('advisor_gender_distribution') }}">Advisors</a>
-                                    <li>
+                                    </li>
 
                                     <li role="presentation" class="tab-menu">
                                         <a href="{{ url_for('panel_gender_distribution') }}">Panels</a>
-                                    <li>
+                                    </li>
 
                                     <li role="presentation" class="tab-menu">
                                         <a href="{{ url_for('topic_gender_distribution') }}">Topics</a>
-                                    <li>
+                                    </li>
 
                                 <li class="divider"></li>
 
@@ -73,16 +73,19 @@
                                 </li>
                                     <li role="presentation" class="tab-menu">
                                         <a href="{{ url_for('all_topics_by_range', min_year=1977, max_year=2014) }}">Time range (all topics)</a>
-                                    <li>
+                                    </li>
 
                                     <li role="presentation" class="tab-menu">
                                         <a href="{{ url_for('topics_by_range', min_year=1977, max_year=2014) }}">Time range (high level topics)</a>
-                                    <li>
+                                    </li>
 
                                     <li role="presentation" class="tab-menu">
                                         <a href="{{ url_for('topic_evolution') }}">Single evolution</a>
-                                    <li>
+                                    </li>
 
+                                    <li role="presentation" class="tab-menu">
+                                        <a href="{{ url_for('top_topics', min_year=1977, max_year=2014, university_slug='a-coruna') }}">Top by university</a>
+                                    </li>
                             </ul>
                         </div>
 

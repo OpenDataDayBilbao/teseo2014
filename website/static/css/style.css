@@ -151,6 +151,14 @@ body {
     border-bottom: 3px double white;
 }
 
+.d3-tip > h2 {
+    font-size: 1em;
+    font-weight: bold;
+    margin: 0.3em;
+    text-align: center;
+    border-bottom: 3px double white;
+}
+
 .d3-tip > p.genders {
     text-align: left;
 }
@@ -180,4 +188,9 @@ g.ev-axis > g.tick > text {
 
 .tab-menu {
     margin-left: 1.5em;
+}
+
+.topic-label {
+  font-size: 0.85em;
+  font-weight: bold;
 }

@@ -6,6 +6,7 @@ from slugify import slugify
 
 import os
 import sys
+import simplejson as json
 
 lib_path = os.path.abspath('../')
 sys.path.append(lib_path)
@@ -14,6 +15,9 @@ from data.cache import codes_descriptor, university_locations
 
 app = Flask(__name__)
 app.config.from_object(__name__)
+
+
+NUMBER_OF_TOP_TOPICS = 15
 
 
 ###########################################################################
@@ -95,6 +99,42 @@ def topic_evolution(topic="antropologia"):
     return render_template("topic_analysis/single_evolution.html", topic=topic, topic_slug=topic_slug, low_level_topic=low_level_topic, topics=sorted(topics))
 
 
+@app.route('/top_topics/<min_year>/<max_year>/<university_slug>')
+def top_topics(min_year, max_year, university_slug):
+    universities = []
+
+    for university in university_locations.keys():
+        universities.append(university)
+
+    json_file = open('static/data/university_area_year_by_uni.json')
+    data = json.load(json_file)
+
+    university_data = {}
+
+    for university_key in data.keys():
+        key_slug = slugify(unicode(university_key))
+        if (university_slug == key_slug):
+            university_data = data[university_key]
+
+    topic_count_dict = {}
+
+    for year in range(int(min_year), int(max_year) + 1):
+        year_str = str(year)
+        if year_str in university_data.keys():
+            for topic in university_data[year_str].keys():
+                if topic in topic_count_dict.keys():
+                    topic_count_dict[topic] = topic_count_dict[topic] + university_data[year_str][topic]
+                else:
+                    topic_count_dict[topic] = university_data[year_str][topic]
+
+    ordered_topics = []
+
+    for topic in sorted(topic_count_dict, key=topic_count_dict.get, reverse=True):
+        ordered_topics.append([topic, topic_count_dict[topic]])
+
+    return render_template("topic_analysis/top_topics.html", min_year=min_year, max_year=max_year, university_slug=university_slug, top_topics=ordered_topics[:NUMBER_OF_TOP_TOPICS], universities=sorted(universities))
+
+
 @app.route('/all_topics_by_range/<min_year>/<max_year>')
 def all_topics_by_range(min_year, max_year):
     return render_template("topic_analysis/topics_by_range.html", high_level=False, min_year=min_year, max_year=max_year)
@@ -126,6 +166,11 @@ def theses_by_university():
 @app.route('/theses_geographical_distribution')
 def theses_geographical_distribution():
     return render_template("totals_analysis/theses_geographical_distribution.html")
+
+
+@app.route('/testing')
+def testing():
+    return render_template("network/index.html")
 
 
 ###########################################################################

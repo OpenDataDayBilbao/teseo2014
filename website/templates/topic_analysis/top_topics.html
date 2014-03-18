@@ -1,0 +1,256 @@
+{% extends "base.html" %}
+
+
+
+{% block stylesheets %}
+
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/slider.css') }}">
+
+{% endblock %}
+
+
+
+{% block content %}
+
+    <div class="row">
+
+        <!-- Button trigger modal -->
+        <button class="btn btn-info col-md-1 col-md-offset-1" data-toggle="modal" data-target="#info-modal">
+            <i class="fa fa-info"></i>&emsp;Info
+        </button>
+
+        <!-- Modal -->
+        <div class="modal fade" id="info-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title" id="myModalLabel"></h4>
+                    </div>
+
+                    <div class="modal-body">
+                        <p>
+                        </p>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 col-md-offset-1">
+            <select id="university-selector" class="form-control">
+                {% for university in universities %}
+                    <option value="{{ university|slugify }}">{{ university }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="col-md-4 col-md-offset-1">
+            <strong id="min-year">{{ min_year }}</strong>&emsp;
+
+            <input id="year-selector" type="text" class="span6" value="" data-slider-min="1977" data-slider-max="2014" data-slider-step="1" data-slider-value="[1977,2014]"/>
+
+            &emsp;<strong id="max-year">{{ max_year }}</strong>
+        </div>
+
+    </div>
+
+    <br>
+
+    <div id="svg" class="centered"></div>
+
+{% endblock %}
+
+
+
+{% block scripts %}
+
+    <script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap-slider.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/underscore.min.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/d3.min.js') }}"></script>
+    <script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/handlebars-v1.3.0.js') }}"></script>
+
+    {% raw %}
+    <script id="theses-tooltip-template" type="text/x-handlebars-template">
+        <h2>{{ topic }}</h2>
+
+        <p>
+            {{ count }} theses
+        </p>
+    </script>
+    {% endraw %}
+
+    <script>
+        $('#year-selector').slider();
+        $('#university-selector').val('{{ university_slug }}');
+
+        var page_width = $(".container").width();
+
+        var min_year = {{ min_year }};
+        var max_year = {{ max_year }};
+        var university_slug = '{{ university_slug }}';
+
+        var margin = {top: 40, right: 50, bottom: 50, left: 50},
+            width = page_width - margin.left - margin.right,
+            height = 500 - margin.top - margin.bottom;
+
+
+        var data = {{ top_topics|safe }};
+        var barLabel = function(d) { return d[0]; };
+        var barValue = function(d) { return parseInt(d[1]); };
+
+        var valueLabelWidth = 40; // space reserved for value labels (right)
+        var barHeight = 25; // height of one bar
+        var barLabelWidth = page_width * 20 / 100; // space reserved for bar labels
+        var barLabelPadding = 10; // padding between bar and bar labels (left)
+        var gridLabelHeight = 18; // space reserved for gridline labels
+        var gridChartOffset = 3; // space between start of grid and first bar
+        var maxBarWidth = page_width - barLabelWidth - 100; // width of the bar with the max value
+
+        var xScale = d3.scale.linear().range([0, maxBarWidth]);
+        var yScale = d3.scale.ordinal().rangeBands([0, data.length * barHeight]);
+
+        var max = d3.max(data, barValue);
+
+        var units = 10;
+
+        if (max > 100) {
+            units = 50;
+        }
+        if (max > 1000) {
+            units = 500;
+        }
+
+        var domain = Math.ceil(max / units) * units;
+
+        xScale.domain([0, domain]);
+        yScale.domain(d3.range(0, data.length));
+
+        var y = function(d, i) { return yScale(i); };
+        var yText = function(d, i) { return y(d, i) + yScale.rangeBand() / 2; };
+
+        var svg = d3.select("#svg").append("svg")
+            .attr("width", width + margin.left + margin.right)
+            .attr('height', gridLabelHeight + gridChartOffset + data.length * (barHeight + 5))
+            .append("g")
+            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+        var tip = d3.tip()
+            .attr('class', 'd3-tip')
+            .offset([-10, 0])
+            .html(function(d) {
+                var template_source = $('#theses-tooltip-template').html();
+                var template = Handlebars.compile(template_source);
+                var tooltip_data = {
+                    topic: d[0],
+                    count: d[1]
+                }
+                return template(tooltip_data);
+            });
+
+        svg.call(tip);
+
+        // grid line labels
+        var gridContainer = svg.append('g')
+            .attr('transform', 'translate(' + barLabelWidth + ',' + gridLabelHeight + ')');
+
+        gridContainer.selectAll("text")
+            .data(xScale.ticks())
+            .enter().append("text")
+                .attr("x", xScale)
+                .attr("dy", -5)
+                .attr("text-anchor", "middle")
+                .text(String);
+
+        // vertical grid lines
+        gridContainer.selectAll("line")
+            .data(xScale.ticks())
+            .enter().append("line")
+                .attr("x1", xScale)
+                .attr("x2", xScale)
+                .attr("y1", 0)
+                .attr("y2", yScale.rangeExtent()[1] + gridChartOffset)
+                .style("stroke", "#ccc");
+
+        // bar labels
+        var labelsContainer = svg.append('g')
+            .attr('transform', 'translate(' + (barLabelWidth - barLabelPadding) + ',' + (gridLabelHeight + gridChartOffset) + ')');
+        labelsContainer.selectAll('text')
+            .data(data)
+            .enter().append('text')
+                .attr('class', 'topic-label')
+                .attr('y', yText)
+                .attr('stroke', 'none')
+                .attr('fill', 'black')
+                .attr("dy", ".35em") // vertical-align: middle
+                .attr('text-anchor', 'end')
+                .text(barLabel)
+                .append('svg:title')
+                    .text(barLabel);
+
+        // bars
+        var barsContainer = svg.append('g')
+            .attr('transform', 'translate(' + barLabelWidth + ',' + (gridLabelHeight + gridChartOffset) + ')');
+
+        barsContainer.selectAll("rect")
+            .data(data)
+            .enter().append("rect")
+                .attr('y', y)
+                .attr('height', yScale.rangeBand())
+                .attr('width', function(d) { return xScale(barValue(d)); })
+                .style('stroke', 'white')
+                .style('fill', 'steelblue')
+                .style('fill-opacity', 0.75)
+                .on('mouseover', tip.show)
+                .on('mouseout', tip.hide);
+
+        // start line
+        barsContainer.append("line")
+            .attr("y1", -gridChartOffset)
+            .attr("y2", yScale.rangeExtent()[1] + gridChartOffset)
+            .style("stroke", "#000");
+
+        var yearSelectorChange = function() {
+            var range = ys.getValue();
+
+            if (range[0] > range[1]) {
+                min_year = range[1];
+                max_year = range[0];
+            }
+            else {
+                min_year = range[0];
+                max_year = range[1];
+            }
+
+            redirectTemplate();
+        };
+
+        var ys = $('#year-selector').slider()
+            .on('slide', yearSelectorChange)
+            .data('slider');
+
+        ys.setValue([{{ min_year }}, {{ max_year }}]);
+
+        $('#university-selector').change(function() {
+            university_slug = $( "#university-selector option:selected" ).val();
+
+            redirectTemplate();
+        });
+
+        function redirectTemplate() {
+            var url = "{{ url_for('top_topics', min_year='min_year', max_year='max_year', university_slug='university_slug') }}";
+
+            url = url
+                .replace("min_year", min_year)
+                .replace("max_year", max_year)
+                .replace("university_slug", university_slug);
+
+            window.location.href = url;
+        };
+    </script>
+
+{% endblock %}
