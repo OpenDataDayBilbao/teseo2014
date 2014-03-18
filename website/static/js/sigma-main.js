@@ -121,23 +121,12 @@ function initSigma(config) {
 
 function setupGUI(config) {
 	// Initialise main interface elements
-	var logo=""; // Logo elements
-	if (config.logo.file) {
 
-		logo = "<img src=\"" + config.logo.file +"\"";
-		if (config.logo.text) logo+=" alt=\"" + config.logo.text + "\"";
-		logo+=">";
-	} else if (config.logo.text) {
-		logo="<h1>"+config.logo.text+"</h1>";
-	}
-	if (config.logo.link) logo="<a href=\"" + config.logo.link + "\">"+logo+"</a>";
-	$("#maintitle").html(logo);
-
-	// #title
-	$("#title").html("<h2>"+config.text.title+"</h2>");
+    // #title
+	$("#title").text(config.text.title);
 
 	// #titletext
-	$("#titletext").html(config.text.intro);
+	$("#titletext").text(config.text.intro);
 
 	// More information
 	if (config.text.more) {
@@ -151,21 +140,21 @@ function setupGUI(config) {
 
 	// Node
 	if (config.legend.nodeLabel) {
-		$(".node").next().html(config.legend.nodeLabel);
+		$(".node").text(config.legend.nodeLabel);
 	} else {
 		//hide more information link
 		$(".node").hide();
 	}
 	// Edge
 	if (config.legend.edgeLabel) {
-		$(".edge").next().html(config.legend.edgeLabel);
+		$(".edge").text(config.legend.edgeLabel);
 	} else {
 		//hide more information link
 		$(".edge").hide();
 	}
 	// Colours
 	if (config.legend.nodeLabel) {
-		$(".colours").next().html(config.legend.colorLabel);
+		$(".colours").text(config.legend.colorLabel);
 	} else {
 		//hide more information link
 		$(".colours").hide();
@@ -188,7 +177,7 @@ function setupGUI(config) {
     $GP.info_p = $GP.info.find(".p");
     $GP.info_close.click(nodeNormal);
     $GP.info_close2.click(nodeNormal);
-    $GP.form = $("#mainpanel").find("form");
+    $GP.form = $("#main-panel").find("form");
     $GP.search = new Search($GP.form.find("#search"));
     if (!config.features.search) {
 		$("#search").hide();
@@ -285,7 +274,7 @@ function configSigmaElements(config) {
         maxWidth: 800,
         maxHeight: 600
     };//        minHeight: 300,
-    $("a.fb").fancybox(b);
+    // $("a.fb").fancybox(b);
     $("#zoom").find("div.z").each(function () {
         var a = $(this),
             b = a.attr("rel");
@@ -341,15 +330,18 @@ function Search(a) {
         b.clean()
     });
     this.input.keydown(function (a) {
-        if (13 == a.which) return b.state.addClass("searching"), b.search(b.input.val()), !1
+        // if (13 == a.which) return b.state.addClass("searching"), b.search(b.input.val()), !1
+        if (13 == a.which) return b.state.html("<i class='fa fa-times'></i>"), b.search(b.input.val()), !1
     });
     this.state.click(function () {
         var a = b.input.val();
-        b.searching && a == b.lastSearch ? b.close() : (b.state.addClass("searching"), b.search(a))
+        // b.searching && a == b.lastSearch ? b.close() : (b.state.addClass("searching"), b.search(a))
+        b.searching && a == b.lastSearch ? b.close() : (b.state.html("<i class='fa fa-times'></i>"), b.search(a))
     });
     this.dom = a;
     this.close = function () {
-        this.state.removeClass("searching");
+        // this.state.removeClass("searching");
+        this.state.html("<i class='fa fa-search'></i>");
         this.results.hide();
         this.searching = !1;
         this.input.val("");//SAH -- let's erase string when we close
@@ -357,7 +349,8 @@ function Search(a) {
     };
     this.clean = function () {
         this.results.empty().hide();
-        this.state.removeClass("searching");
+        // this.state.removeClass("searching");
+        this.state.html("<i class='fa fa-search'></i>");
         this.input.val("");
     };
     this.search = function (a) {
@@ -378,8 +371,8 @@ function Search(a) {
                 })
             });
             c.length ? (b = !0, nodeActive(c[0].id)) : b = showCluster(a);
-            a = ["<b>Search Results: </b>"];
-            if (1 < c.length) for (var d = 0, h = c.length; d < h; d++) a.push('<a href="#' + c[d].name + '" onclick="nodeActive(\'' + c[d].id + "')\">" + c[d].name + "</a>");
+            a = ["<strong>Search Results</strong><br>"];
+            if (1 < c.length) for (var d = 0, h = c.length; d < h; d++) a.push('&emsp;<a class="search-result" href="#' + c[d].name + '" onclick="nodeActive(\'' + c[d].id + "')\">" + c[d].name + "</a><br>");
             0 == c.length && !b && a.push("<i>No results found.</i>");
             1 < a.length && this.results.html(a.join(""));
            }
