@@ -312,7 +312,9 @@ def set_genders():
     cnx = mysql.connector.connect(**config)
     cursor = cnx.cursor()
     for cont, first_name in enumerate(names):
-        print 'Setting genders:', first_name, (float(cont)/len(names)) * 100
+        if cont%100 == 0:
+            print 'Setting genders:', first_name, (float(cont)/len(names)) * 100
+            sys.stdout.flush()
         if first_name != '':    
             name = first_name[0].split(' ')[0]
             try:
