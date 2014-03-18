@@ -267,16 +267,16 @@ g.ev-axis > g.tick > text {
 }
 
 #zoom .z[rel=center] {
-    background-image: url('../images/zoom_reset.png');
+    background-image: url('../img/zoom_reset.png');
     background-position: center;
 }
 
 #zoom .z[rel=in] {
-    background-image: url('../images/zoom_in.png');
+    background-image: url('../img/zoom_in.png');
     background-position: center;
 }
 
 #zoom .z[rel=out] {
-    background-image: url('../images/zoom_out.png');
+    background-image: url('../img/zoom_out.png');
     background-position: center;
 }
