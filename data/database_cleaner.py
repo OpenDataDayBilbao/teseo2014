@@ -294,16 +294,30 @@ def clean_unesco_codes():
     cursor.close()
     cursor2.close()
     
+def set_genders():
+    from cache import name_genders
+    
+    names = get_distinct_names()
+    cnx = mysql.connector.connect(**config)
+    cursor = cnx.cursor()
+    for complete_name in names:
+        name = complete_name[0].split(' ')[0]
+        gender = name_genders[name]
+        cursor.execute('UPDATE person SET gender = %s WHERE name = %s', (gender, name))
+        
+    cursor.close()
+    
+    
 
     
 if __name__=='__main__':
-    check_repeated_thesis()
-    delete_repeated_thesis()
-    check_unused_person_ids()
-    nuke_unused_persons()
-    check_repeated_name_ids()
-    check_similar_names() 
-    merge_names()    
-    clean_unesco_codes()
-    
+#    check_repeated_thesis()
+#    delete_repeated_thesis()
+#    check_unused_person_ids()
+#    nuke_unused_persons()
+#    check_repeated_name_ids()
+#    check_similar_names() 
+#    merge_names()    
+#    clean_unesco_codes()
+    set_genders()
     
