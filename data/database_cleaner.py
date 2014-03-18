@@ -313,7 +313,7 @@ def set_genders():
     cursor = cnx.cursor()
     for cont, first_name in enumerate(names):
         if cont%100 == 0:
-            print 'Setting genders:', first_name, (float(cont)/len(names)) * 100
+            print 'Setting genders:', (float(cont)/len(names)) * 100
             sys.stdout.flush()
         if first_name != '':    
             name = first_name[0].split(' ')[0]
@@ -321,7 +321,7 @@ def set_genders():
                 gender = name_genders[name]
                 cursor.execute('UPDATE person SET gender = %s WHERE name = %s', (gender, name))
             except KeyError:
-                print 'Name does not exist', first_name
+                print 'Name does not exist'
         
     cursor.close()
     
