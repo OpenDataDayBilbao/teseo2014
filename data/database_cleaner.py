@@ -221,6 +221,17 @@ def get_distinct_first_names():
     
     return result
     
+def get_first_names_ids():
+    cnx = mysql.connector.connect(**config)
+    cursor = cnx.cursor()
+    cursor.execute("SELECT id, first_name FROM person")
+    names = {}
+    for name in cursor:
+        names[name[1]] = name[0]
+    cursor.close()
+    
+    return names
+    
 def get_same_name_ids(distinct_names):
     cnx = mysql.connector.connect(**config)
     cursor = cnx.cursor()
@@ -308,7 +319,7 @@ def clean_unesco_codes():
 def set_genders():
     from cache import name_genders
     
-    names = get_distinct_first_names()
+    names = get_first_names_ids()
     cnx = mysql.connector.connect(**config)
     cursor = cnx.cursor()
     for cont, first_name in enumerate(names):
@@ -319,10 +330,12 @@ def set_genders():
             name = first_name[0].split(' ')[0]
             try:
                 gender = name_genders[name]
-                cursor.execute('UPDATE person SET gender = %s WHERE name = %s', (gender, name))
+                cursor.execute("UPDATE person SET gender = '" + gender +"' WHERE id = " + str(names[first_name]))
             except KeyError:
-                cursor.execute('UPDATE person SET gender = %s WHERE name = %s', ('None', name))
+                cursor.execute("UPDATE person SET gender = 'None' WHERE id = " + str(names[first_name]))
                 print 'Name does not exist'
+        else:
+            cursor.execute("UPDATE person SET gender = 'None' WHERE id = " + str(names[first_name]))
         
     cursor.close()
     
