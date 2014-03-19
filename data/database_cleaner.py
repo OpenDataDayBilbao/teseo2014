@@ -330,12 +330,12 @@ def set_genders():
             name = first_name[0].split(' ')[0]
             try:
                 gender = name_genders[name]
-                cursor.execute('UPDATE person SET gender = %s WHERE id = %d', (gender, names[first_name]))
+                cursor.execute("UPDATE person SET gender = '" + gender +"' WHERE id = " + str(names[first_name]))
             except KeyError:
-                cursor.execute('UPDATE person SET gender = %s WHERE id = %d', ('None', names[first_name]))
+                cursor.execute("UPDATE person SET gender = 'None' WHERE id = " + str(names[first_name]))
                 print 'Name does not exist'
         else:
-            cursor.execute('UPDATE person SET gender = %s WHERE id = %d', ('None', names[first_name]))
+            cursor.execute("UPDATE person SET gender = 'None' WHERE id = " + str(names[first_name]))
         
     cursor.close()
     
