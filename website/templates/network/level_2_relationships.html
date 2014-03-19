@@ -4,11 +4,57 @@
 
 {% block content %}
 
+    <div class="row">
+
+        <!-- Button trigger modal -->
+        <button class="btn btn-info col-md-1 col-md-offset-1" data-toggle="modal" data-target="#info-modal">
+            <i class="fa fa-info"></i>&emsp;Info
+        </button>
+
+        <!-- Modal -->
+        <div class="modal fade" id="info-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title" id="myModalLabel">UNESCO topic relationships - 2<sup>nd</sup> level</h4>
+                    </div>
+
+                    <div class="modal-body">
+                        <p>
+                            This graph shows how 2<sup>nd</sup> level UNESCO topics relate to each other, according to the topics assigned to each doctoral dissertation registered in Spain since 1977.
+                        </p>
+
+                        <p>
+                            Topic clusters are automatically calculated, each color corresponding to a different high-level knowledge area.
+                        </p>
+
+                        <p>
+                            When hovering over each node, its name is shown. Clicking on a node renders its relationships, hiding non-related information.
+                        </p>
+
+                        <p>
+                            A search feature is also available on the extended information panel.
+                        </p>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <br>
+
     <div class="row sigma-parent">
 
         <div id="main-panel" class="col-md-3">
             <h1 id="title"></h1>
             <h2 id="titletext"></h2>
+
+            <div class="soften"></div>
 
             <p id="legend">
                 <strong>Legend</strong>
@@ -37,7 +83,7 @@
 
             <div class="soften"></div>
 
-            <a id="full-network" href="{{ url_for('testing') }}">View full network</a>
+            <a id="full-network" href="{{ url_for('network_level_2') }}">View full network</a>
 
             <div id="attributepane" class="nodeattributes">
                 <div class="name"></div>
@@ -69,7 +115,10 @@
     <script type="text/javascript" src="{{ url_for('static', filename='js/sigma.parseJson.js') }}"></script>
 
     <script>
-        var sigInst, canvas, $GP
+        var config_file = "{{ url_for('static', filename='data/level_2_relationships_config.json') }}";
+        var data_file = "{{ url_for('static', filename='data/level_2_relationships_data.json') }}";
+
+        var sigInst, canvas, $GP;
 
         //Load configuration file
         var config={};
@@ -89,8 +138,7 @@
             return defaultVal;
         }
 
-
-        jQuery.getJSON(GetQueryStringParams("config","static/config.json"), function(data, textStatus, jqXHR) {
+        jQuery.getJSON(GetQueryStringParams("config", config_file), function(data, textStatus, jqXHR) {
             config=data;
 
             if (config.type!="network") {
@@ -115,7 +163,7 @@
         };
 
         function initSigma(config) {
-            var data=config.data
+            var data = data_file;
 
             var drawProps, graphProps,mouseProps;
             if (config.sigma && config.sigma.drawingProperties)
