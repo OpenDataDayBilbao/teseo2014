@@ -227,7 +227,7 @@ def get_first_names_ids():
     cursor.execute("SELECT id, first_name FROM person")
     names = {}
     for name in cursor:
-        names[name[1]] = name[0]
+        names[name[0]] = name[1]
     cursor.close()
     
     return names
@@ -322,7 +322,8 @@ def set_genders():
     names = get_first_names_ids()
     cnx = mysql.connector.connect(**config)
     cursor = cnx.cursor()
-    for cont, first_name in enumerate(names):
+    for cont, person_id in enumerate(names):
+        first_name = names[person_id]
         if cont%100 == 0:
             print 'Setting genders:', (float(cont)/len(names)) * 100
             sys.stdout.flush()
@@ -330,12 +331,12 @@ def set_genders():
             name = first_name[0].split(' ')[0]
             try:
                 gender = name_genders[name]
-                cursor.execute("UPDATE person SET gender = '" + gender +"' WHERE id = " + str(names[first_name]))
+                cursor.execute("UPDATE person SET gender = '" + gender +"' WHERE id = " + str(person_id))
             except KeyError:
-                cursor.execute("UPDATE person SET gender = 'None' WHERE id = " + str(names[first_name]))
+                cursor.execute("UPDATE person SET gender = 'None' WHERE id = " + str(person_id))
                 print 'Name does not exist'
         else:
-            cursor.execute("UPDATE person SET gender = 'None' WHERE id = " + str(names[first_name]))
+            cursor.execute("UPDATE person SET gender = 'None' WHERE id = " + str(person_id))
         
     cursor.close()
     
