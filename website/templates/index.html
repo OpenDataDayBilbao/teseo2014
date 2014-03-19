@@ -4,27 +4,58 @@
 
 {% block content %}
 
-    <h1>The Sith Lords</h1>
-    <p>Red Five standing by. Escape is not his plan. I must face him, alone. You are a part of the Rebel Alliance and a traitor! Take her away! Dantooine. They're on Dantooine. Your eyes can deceive you. Don't trust them.</p>
-    <h2>The Sith Lords</h2>
-    <p>The more you tighten your grip, Tarkin, the more star systems will slip through your fingers. Partially, but it also obeys your commands. I want to come with you to Alderaan. There's nothing for me here now. I want to learn the ways of the Force and be a Jedi, like my father before me. Don't underestimate the Force. The more you tighten your grip, Tarkin, the more star systems will slip through your fingers. What!?</p>
-    <ul>
-        <li>Hokey religions and ancient weapons are no match for a good blaster at your side, kid.</li>
-        <li>Don't act so surprised, Your Highness. You weren't on any mercy mission this time. Several transmissions were beamed to this ship by Rebel spies. I want to know what happened to the plans they sent you.</li>
-        <li>Hokey religions and ancient weapons are no match for a good blaster at your side, kid.</li>
-    </ul>
-    <h3>The Battle for Endor</h3>
-    <p>The plans you refer to will soon be back in our hands. Obi-Wan is here. The Force is with him. Look, I ain't in this for your revolution, and I'm not in it for you, Princess. I expect to be well paid. I'm in it for the money. I call it luck. Partially, but it also obeys your commands.</p>
-    <h4>A New Hope</h4>
-    <p>I need your help, Luke. She needs your help. I'm getting too old for this sort of thing. A tremor in the Force. The last time I felt it was in the presence of my old master. Hokey religions and ancient weapons are no match for a good blaster at your side, kid. She must have hidden the plans in the escape pod. Send a detachment down to retrieve them, and see to it personally, Commander. There'll be no one to stop us this time! What?!</p>
-    <ol>
-        <li>Kid, I've flown from one side of this galaxy to the other. I've seen a lot of strange stuff, but I've never seen anything to make me believe there's one all-powerful Force controlling everything. There's no mystical energy field that controls my destiny. It's all a lot of simple tricks and nonsense.</li>
-        <li>Partially, but it also obeys your commands.</li>
-        <li>Don't underestimate the Force.</li>
-        <li>Your eyes can deceive you. Don't trust them.</li>
-        <li>The plans you refer to will soon be back in our hands.</li>
-    </ol>
-    <h5>A New Hope</h5>
-    <p>He is here. Hey, Luke! May the Force be with you. Leave that to me. Send a distress signal, and inform the Senate that all on board were killed. Alderaan? I'm not going to Alderaan. I've got to go home. It's late, I'm in for it as it is. I care. So, what do you think of her, Han?</p>
+    <div class="main-explanation">
+        <p>
+            This project has two main objectives:
+        </p>
+
+        <ul>
+            <li>
+                Make the information kept at <em>teseo</em> available as Open Data.
+            </li>
+
+            <li>
+                Perform different analyses over the previous data to understand them.
+            </li>
+        </ul>
+
+        <p>
+            <a target="_blank" href="https://www.educacion.gob.es/teseo/">Teseo</a> is a Doctoral Dissertation database maintained by the <a target="_blank" href="http://www.mecd.gob.es/portada-mecd/">Spanish Ministry of Education</a>, keeping records for the dissertations defended in Spain since 1977. Teseo's website provides different forms to query the database, but makes it difficult for automatic processing.
+        </p>
+
+        <p>
+            In order to make it openly available to anyone, we scrapped all the information of the database and stored it in a relational database model. As most of the data is not validated (form fields accept any text string), there may be some errors related to the data, as we have automatically processed them in order to perform different analyses. Should you detect any error, you can find different ways to contact us on the <a href="{{ url_for('about') }}">about section</a>.
+        </p>
+
+        <p>
+            Some of performed work involves:
+        </p>
+
+        <ul>
+            <li>
+                Gender dissambiguation for authors and panel members. The process is automatized, so some names could be wrongly assigned a gender.
+            </li>
+
+            <li>
+                Dissertations are tagged with different topics, from <a target="_blank" href="http://unesdoc.unesco.org/images/0008/000829/082946eb.pdf">UNESCO's 6-digit nomenclature for fields of science and technology</a>. Topic distribution for different levels of granularity.
+            </li>
+
+            <li>
+                People with the same full name, or with a high probability of being the same person (acronyms, abbreviations, etc.) are assigned to be the same person entity.
+            </li>
+
+            <li>
+                All the data has been semantically enriched and published as <a target="_blank" href="http://linkeddata.org/">Linked Open Data</a>, in order to allow machines to automatically process this dataset. We provide a <a href="">SPARQL endpoint</a> to query the available data.
+            </li>
+
+            <li>
+                You can also <a href="">download a SQL dump</a> of all the data to work with it locally.
+            </li>
+
+            <li>
+                Analyses are visualized through interactive charts to make them understandable by any user. The <span class="btn btn-info btn-xs"><i class="fa fa-info"></i>&emsp;Info</span> button on the top of each chart provides an extended explanation of the rendered data.
+            </li>
+        </ul>
+    </div>
 
 {% endblock %}

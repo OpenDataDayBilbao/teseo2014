@@ -352,3 +352,7 @@ g.ev-axis > g.tick > text {
     width: 50%;
     margin: 1em 0;
 }
+
+.main-explanation > p {
+    text-align: justify;
+}
