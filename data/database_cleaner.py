@@ -334,6 +334,8 @@ def set_genders():
             except KeyError:
                 cursor.execute('UPDATE person SET gender = %s WHERE id = %d', ('None', names[first_name]))
                 print 'Name does not exist'
+        else:
+            cursor.execute('UPDATE person SET gender = %s WHERE id = %d', ('None', names[first_name]))
         
     cursor.close()
     
