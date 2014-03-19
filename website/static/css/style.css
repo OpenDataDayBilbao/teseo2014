@@ -195,8 +195,8 @@ g.ev-axis > g.tick > text {
   font-weight: bold;
 }
 
-.sigma-parent > .col-md-8 {
-    height: 550px;
+.sigma-parent > .col-md-9 {
+    height: 600px;
     border: 3px ridge #ccc;
 }
 
@@ -267,16 +267,41 @@ g.ev-axis > g.tick > text {
 }
 
 #zoom .z[rel=center] {
-    background-image: url('../images/zoom_reset.png');
+    background-image: url('../img/zoom_reset.png');
     background-position: center;
 }
 
 #zoom .z[rel=in] {
-    background-image: url('../images/zoom_in.png');
+    background-image: url('../img/zoom_in.png');
     background-position: center;
 }
 
 #zoom .z[rel=out] {
-    background-image: url('../images/zoom_out.png');
+    background-image: url('../img/zoom_out.png');
     background-position: center;
+}
+
+#full-network {
+    display: block;
+    margin-top: 0.75em;
+    margin-bottom: 0.75em;
+}
+
+.name {
+    display: block;
+    margin-bottom: 0.75em;
+}
+
+.attribute-pane {
+    padding: 1.5em;
+    border: 1px solid #ccc;
+}
+
+.attribute-pane > h2 {
+    font-size: 1.25em;
+}
+
+.membership {
+  color: #4d6df3;
+  font-size: 0.75em;
 }

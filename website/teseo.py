@@ -74,6 +74,24 @@ def topic_gender_distribution(topic="antropologia"):
     return render_template("gender_analysis/topic_distribution.html", topic=topic)
 
 
+#####   Network analysis    ###############################################
+
+
+@app.route('/network/level_1')
+def network_level_1():
+    return render_template("network/level_1_relationships.html")
+
+
+@app.route('/network/level_2')
+def network_level_2():
+    return render_template("network/level_2_relationships.html")
+
+
+@app.route('/network/level_3')
+def network_level_3():
+    return render_template("network/level_3_relationships.html")
+
+
 #####   Topic analysis      ###############################################
 
 
@@ -204,11 +222,6 @@ def theses_by_university():
 @app.route('/theses_geographical_distribution')
 def theses_geographical_distribution():
     return render_template("totals_analysis/theses_geographical_distribution.html")
-
-
-@app.route('/testing')
-def testing():
-    return render_template("network/index.html")
 
 
 ###########################################################################

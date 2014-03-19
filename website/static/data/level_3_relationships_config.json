@@ -1,14 +1,14 @@
 {
   "type": "network",
   "version": "1.0",
-  "data": "static/data.json",
+  "data": "data.json",
   "logo": {
     "text": "Aitor",
     "file": "",
     "link": ""
   },
   "text": {
-    "title": "Second level UNESCO codes relations",
+    "title": "Third level UNESCO codes relations",
     "more": "Relations of the third level UNESCO codes in the Teseo database.",
     "intro": "Relations of the third level UNESCO codes in the Teseo database."
   },
