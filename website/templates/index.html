@@ -44,18 +44,26 @@
                 People with the same full name, or with a high probability of being the same person (acronyms, abbreviations, etc.) are assigned to be the same person entity.
             </li>
 
-            <li>
+            <!-- <li>
                 All the data has been semantically enriched and published as <a target="_blank" href="http://linkeddata.org/">Linked Open Data</a>, in order to allow machines to automatically process this dataset. We provide a <a href="">SPARQL endpoint</a> to query the available data.
-            </li>
+            </li> -->
 
             <li>
-                You can also <a href="">download a SQL dump</a> of all the data to work with it locally.
+                You can also <a href="{{ url_for('static', filename='data/teseo_db.sql') }}">download a SQL dump</a> of all the data to work with it locally.
             </li>
 
             <li>
                 Analyses are visualized through interactive charts to make them understandable by any user. The <span class="btn btn-info btn-xs"><i class="fa fa-info"></i>&emsp;Info</span> button on the top of each chart provides an extended explanation of the rendered data.
             </li>
         </ul>
+
+        <br>
+
+        <div class="alert alert-success">
+            <p>
+                All the source code of this website is openly available in the <a target="_blank" href="https://github.com/OpenDataDayBilbao/teseo2014">project's GitHub repository</a>.
+            </p>
+        </div>
     </div>
 
 {% endblock %}
