@@ -51,6 +51,7 @@ class ReverseProxied(object):
 app = Flask(__name__)
 app.config.from_object(__name__)
 app.wsgi_app = ReverseProxied(app.wsgi_app)
+app.debug = True
 
 
 NUMBER_OF_TOP_ITEMS = 15
@@ -216,10 +217,7 @@ def top_universities(min_year, max_year, topic_slug):
 
     ordered_universities = []
 
-    print university_count_dict
-
     for university in sorted(university_count_dict, key=university_count_dict.get, reverse=True):
-        print university
         ordered_universities.append([university, university_count_dict[university]])
 
     top_universities = json.dumps(ordered_universities[:NUMBER_OF_TOP_ITEMS])
