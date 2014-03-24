@@ -102,7 +102,7 @@ def create_panel_rdf(evaluators):
 
 def sanitize_string(text):
     text = ' '.join(text.splitlines())
-    text = text.replace('"', '\'')
+    text = text.replace('"', "'")
     return text
 
 def create_thesis_rdf(thesis):
@@ -156,9 +156,9 @@ def create_thesis_rdf(thesis):
     except TypeError:
         print 'resource:', RESOURCE_PREFIX
         print 'Title slug:',slugify(thesis.title)
-        print 'title', thesis.title
-        print 'author slug', slugify(thesis.author.name)
-        print 'date', thesis.defense_date.isoformat()
+        print 'title:', thesis.title
+        print 'author slug:', slugify(thesis.author.name)
+        print 'date:', thesis.defense_date.isoformat()
 
     return rdf
 
