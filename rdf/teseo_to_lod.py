@@ -196,6 +196,8 @@ if __name__ == '__main__':
         g.parse(data=rdf, format='turtle')
         sys.stdout.write('%d out of %d  \r' % (i, len_universities))
         sys.stdout.flush()
+		
+	g.serialize(destination='teseo.n3', format='n3')
 
 
 
