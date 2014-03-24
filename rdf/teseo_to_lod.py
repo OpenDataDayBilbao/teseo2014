@@ -154,8 +154,12 @@ def create_thesis_rdf(thesis):
     try:
         rdf = rdf % { 'prefix': RESOURCE_PREFIX, 'title_slug': slugify(thesis.title), 'title': thesis.title, 'person_slug': slugify(thesis.author.name) ,'date': thesis.defense_date.isoformat() }
     except TypeError:
-        print RESOURCE_PREFIX, slugify(thesis.title), thesis.title, slugify(thesis.author.name), thesis.defense_date.isoformat()
-    
+        print 'resource:', RESOURCE_PREFIX
+        print 'Title slug:',slugify(thesis.title)
+        print 'title', thesis.title
+        print 'author slug', slugify(thesis.author.name)
+        print 'date', thesis.defense_date.isoformat()
+
     return rdf
 
 
