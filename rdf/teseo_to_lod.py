@@ -147,10 +147,15 @@ def create_thesis_rdf(thesis):
 
     # APPEND PANEL RDF TO THE BOTTOM OF THE RDF STRING
     rdf += panel_rdf
+    
+    thesis.title = sanitize_string(thesis.title)
 
     # FILL THE GAPS
-    rdf = rdf % { 'prefix': RESOURCE_PREFIX, 'title_slug': slugify(thesis.title), 'title': sanitize_string(thesis.title), 'person_slug': slugify(thesis.author.name) ,'date': thesis.defense_date.isoformat() }
-
+    try:
+        rdf = rdf % { 'prefix': RESOURCE_PREFIX, 'title_slug': slugify(thesis.title), 'title': thesis.title, 'person_slug': slugify(thesis.author.name) ,'date': thesis.defense_date.isoformat() }
+    except TypeError:
+        print RESOURCE_PREFIX, slugify(thesis.title), thesis.title, slugify(thesis.author.name), thesis.defense_date.isoformat()
+    
     return rdf
 
 
