@@ -149,7 +149,7 @@ def create_thesis_rdf(thesis):
     rdf += panel_rdf
 
     # FILL THE GAPS
-    rdf = rdf % { 'prefix': RESOURCE_PREFIX, 'title_slug': slugify(thesis.title), 'title': thesis.title, 'person_slug': slugify(thesis.author.name) ,'date': thesis.defense_date.isoformat() }
+    rdf = rdf % { 'prefix': RESOURCE_PREFIX, 'title_slug': slugify(thesis.title), 'title': sanitize_string(thesis.title), 'person_slug': slugify(thesis.author.name) ,'date': thesis.defense_date.isoformat() }
 
     return rdf
 
