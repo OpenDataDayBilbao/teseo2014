@@ -102,7 +102,9 @@ def create_panel_rdf(evaluators):
 
 def sanitize_string(text):
     text = ' '.join(text.splitlines())
-    text = text.replace('"', "'")
+    text = text.replace('"', ' ')
+    text = text.replace("'", ' ')
+    text = text.replace('%', ' ')
     return text
 
 def create_thesis_rdf(thesis):
@@ -153,14 +155,9 @@ def create_thesis_rdf(thesis):
         thesis.defense_date = ''        
 
     # FILL THE GAPS
-    try:
-        rdf = rdf % { 'prefix': RESOURCE_PREFIX, 'title_slug': slugify(thesis.title), 'title': thesis.title, 'person_slug': slugify(thesis.author.name) ,'date': thesis.defense_date.isoformat() }
-    except TypeError:
-        print 'resource:', RESOURCE_PREFIX
-        print 'Title slug:',slugify(thesis.title)
-        print 'title:', thesis.title
-        print 'author slug:', slugify(thesis.author.name)
-        print 'date:', thesis.defense_date.isoformat()
+
+    rdf = rdf % { 'prefix': RESOURCE_PREFIX, 'title_slug': slugify(thesis.title), 'title': thesis.title, 'person_slug': slugify(thesis.author.name) ,'date': thesis.defense_date.isoformat() }
+
 
     return rdf
 
