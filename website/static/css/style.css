@@ -55,7 +55,7 @@ html {
 
 body {
     /* Margin bottom by footer height */
-    margin-bottom: 60px;
+    margin-bottom: 5em;
     background-color: transparent;
 }
 
@@ -64,7 +64,7 @@ body {
     bottom: 0;
     width: 100%;
     /* Set the fixed height of the footer here */
-    height: 60px;
+    height: 5em;
     background-color: #ccc;
 }
 
@@ -304,4 +304,55 @@ g.ev-axis > g.tick > text {
 .membership {
   color: #4d6df3;
   font-size: 0.75em;
+}
+
+.about-description {
+    margin-top: 3em;
+}
+
+.about-description > p {
+    text-align: justify;
+}
+
+.about-people h1 {
+    font-size: 2em;
+    margin: 0 0 0.75em;
+}
+
+.about-people i {
+    font-size: 2em;
+    margin: 0 0.25em;
+    -webkit-filter: grayscale(1);
+}
+
+.about-people i:hover {
+    -webkit-filter: grayscale(0);
+}
+
+.about-people blockquote {
+    margin-bottom: 0.5em;
+}
+
+.dl-horizontal > dd {
+    margin-bottom: 0.5em;
+    text-align: justify;
+}
+
+.tool-name {
+    vertical-align: middle;
+    font-weight: bold;
+    text-align: right;
+}
+
+.tool-description {
+    text-align: justify;
+}
+
+#open-data-day-logo {
+    width: 50%;
+    margin: 1em 0;
+}
+
+.main-explanation > p {
+    text-align: justify;
 }
