@@ -105,6 +105,7 @@ def sanitize_string(text):
     text = text.replace('"', ' ')
     text = text.replace("'", ' ')
     text = text.replace('%', ' ')
+    text = text.replace('^', ' ')
     return text
 
 def create_thesis_rdf(thesis):
@@ -140,6 +141,8 @@ def create_thesis_rdf(thesis):
     if len(thesis.panel) > 0:
         rdf += 'swrcfe:evaluatedBy <%(prefix)s/thesis/%(title_slug)s/evaluation> ;\n'
         panel_rdf = create_panel_rdf( [evaluator for evaluator in thesis.panel] )
+    else:
+	panel_rdf = ''
 
     #  UNESCO DESCRIPTORS
     for descriptor in thesis.descriptors:
