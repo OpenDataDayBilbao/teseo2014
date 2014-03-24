@@ -149,8 +149,8 @@ def create_thesis_rdf(thesis):
     rdf += panel_rdf
     
     thesis.title = sanitize_string(thesis.title)
-    if thesis.date == None:
-        thesis.date = ''        
+    if thesis.defense_date == None:
+        thesis.defense_date = ''        
 
     # FILL THE GAPS
     try:
