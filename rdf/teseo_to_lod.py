@@ -102,7 +102,10 @@ def create_panel_rdf(evaluators):
 
 def sanitize_string(text):
     text = ' '.join(text.splitlines())
-    text = text.replace('"', '\'')
+    text = text.replace('"', ' ')
+    text = text.replace("'", ' ')
+    text = text.replace('%', ' ')
+    text = text.replace('^', ' ')
     return text
 
 def create_thesis_rdf(thesis):
@@ -138,6 +141,8 @@ def create_thesis_rdf(thesis):
     if len(thesis.panel) > 0:
         rdf += 'swrcfe:evaluatedBy <%(prefix)s/thesis/%(title_slug)s/evaluation> ;\n'
         panel_rdf = create_panel_rdf( [evaluator for evaluator in thesis.panel] )
+    else:
+	panel_rdf = ''
 
     #  UNESCO DESCRIPTORS
     for descriptor in thesis.descriptors:
@@ -147,9 +152,15 @@ def create_thesis_rdf(thesis):
 
     # APPEND PANEL RDF TO THE BOTTOM OF THE RDF STRING
     rdf += panel_rdf
+    
+    thesis.title = sanitize_string(thesis.title)
+    if thesis.defense_date == None:
+        thesis.defense_date = ''        
 
     # FILL THE GAPS
+
     rdf = rdf % { 'prefix': RESOURCE_PREFIX, 'title_slug': slugify(thesis.title), 'title': thesis.title, 'person_slug': slugify(thesis.author.name) ,'date': thesis.defense_date.isoformat() }
+
 
     return rdf
 
@@ -196,6 +207,8 @@ if __name__ == '__main__':
         g.parse(data=rdf, format='turtle')
         sys.stdout.write('%d out of %d  \r' % (i, len_universities))
         sys.stdout.flush()
+		
+	g.serialize(destination='teseo.n3', format='n3')
 
 
 
