@@ -61,8 +61,9 @@ foaf:name "%(name)s" ;
         rdf += 'foaf:gender "%(gender)s" ; \n' % { 'gender': person.gender }
 
     rdf += 'rdfs:label "%(name)s" . \n'
-
-    return rdf % { 'prefix': RESOURCE_PREFIX, 'name_slug': slugify(person.name), 'name': person.name }
+    
+    name = sanitize_string(person.name)
+    return rdf % { 'prefix': RESOURCE_PREFIX, 'name_slug': slugify(person.name), 'name': name }
 
 def create_university_rdf(university, departments=[]):
     rdf = '''
@@ -178,29 +179,37 @@ rdfs:label "%(title)s" ;
 
 
 if __name__ == '__main__':
+    print 'Starting...'
+    print 'Creatin MySQL connection...'
     engine = create_engine('mysql://%s:%s@%s/%s?charset=utf8' % (dbconfig['user'], dbconfig['password'], dbconfig['host'], dbconfig['database']))
 
     Session = sessionmaker(bind=engine)
     session = Session()
 
+    print 'Creating graph instance...'
     g = Graph()
 
+    print 'Parsing theses...'
     theses = [ thesis for thesis in session.query(Thesis).all() ]
     len_theses = len(theses)
     for i, thesis in enumerate(theses):
         rdf = create_thesis_rdf(thesis)
         g.parse(data=rdf, format='turtle')
-        sys.stdout.write('%d out of %d \r' % (i, len_theses))
-        sys.stdout.flush()
+        if (i % 100 == 0):
+            sys.stdout.write('Theses: %d out of %d \r' % (i, len_theses))
+            sys.stdout.flush()
 
+    print 'Parsing people...'
     people = [ person for person in session.query(Person).all() ]
     len_people = len(people)
     for i, person in enumerate(people):
         rdf = create_person_rdf(person)
         g.parse(data=rdf, format='turtle')
-        sys.stdout.write('%d out of %d \r' % (i, len_people))
-        sys.stdout.flush()
+        if (i % 100 == 0):
+            sys.stdout.write('People: %d out of %d \r' % (i, len_people))
+            sys.stdout.flush()
 
+    print 'Recovering university departments...'
     uni_depts = {}
     for uni_id, dept_id in session.query(distinct(Thesis.university_id), Thesis.department_id).all():
         if uni_id:
@@ -209,6 +218,7 @@ if __name__ == '__main__':
             if dept_id:
                 uni_depts[uni_id].add(dept_id)
 
+    print 'Parsing universities...'
     universities = [ uni for uni in session.query(University).all() ]
     len_universities = len(universities)
     for i, uni in enumerate(universities):
@@ -217,10 +227,14 @@ if __name__ == '__main__':
             depts = [ session.query(Department).get(dept_id) for dept_id in uni_depts[int(uni.id)] ]
         rdf = create_university_rdf(uni, depts)
         g.parse(data=rdf, format='turtle')
-        sys.stdout.write('%d out of %d \r' % (i, len_universities))
+        sys.stdout.write('Universities: %d out of %d \r' % (i, len_universities))
         sys.stdout.flush()
 
-g.serialize(destination='teseo.n3', format='n3')
+    print 'Writing graph...'
+    g.serialize(destination='teseo.n3', format='n3')
+    
+    print '...done'
+
 
 
 
