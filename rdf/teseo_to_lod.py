@@ -34,17 +34,28 @@ advisor_role_to_swrcfe = {
 }
 
 
+def sanitize_string(text):
+    text = ' '.join(text.splitlines())
+    text = text.replace('"', ' ')
+    text = text.replace("'", ' ')
+    text = text.replace('%', ' ')
+    text = text.replace('^', ' ')
+    text = text.replace('\\', ' ')
+    text = text.replace('/', ' ')      
+    
+    return text
+
 def create_person_rdf(person):
     rdf = '''
-    @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
-    @prefix swrcfe: <http://www.morelab.deusto.es/ontologies/swrcfe#> .
-    @prefix dc: <http://purl.org/dc/elements/1.1/> .
-    @prefix foaf: <http://xmlns.com/foaf/0.1/> .
-    @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix swrcfe: <http://www.morelab.deusto.es/ontologies/swrcfe#> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-    <%(prefix)s/person/%(name_slug)s> rdf:type foaf:Person ;
-        foaf:name  "%(name)s" ;
-    '''
+<%(prefix)s/person/%(name_slug)s> rdf:type foaf:Person ;
+foaf:name "%(name)s" ;
+'''
 
     if person.gender:
         rdf += 'foaf:gender "%(gender)s" ; \n' % { 'gender': person.gender }
@@ -55,16 +66,16 @@ def create_person_rdf(person):
 
 def create_university_rdf(university, departments=[]):
     rdf = '''
-    @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
-    @prefix swrcfe: <http://www.morelab.deusto.es/ontologies/swrcfe#> .
-    @prefix owl: <http://www.w3.org/2002/07/owl#> .
-    @prefix foaf: <http://xmlns.com/foaf/0.1/> .
-    @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix swrcfe: <http://www.morelab.deusto.es/ontologies/swrcfe#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-    <%(prefix)s/university/%(name_slug)s> rdf:type foaf:Person ;
-        foaf:name  "%(name)s" ;
-        foaf:based_near "%(place)s" ;
-    '''
+<%(prefix)s/university/%(name_slug)s> rdf:type foaf:Person ;
+foaf:name "%(name)s" ;
+foaf:based_near "%(place)s" ;
+'''
 
     dbp_uri = search_university_in_dbp(university.name)
     if dbp_uri:
@@ -77,10 +88,10 @@ def create_university_rdf(university, departments=[]):
 
         dept_rdfs.append(
             '''
-            <%(prefix)s/university/%(university_slug)s/%(department_slug)s> rdf:type swrcfe:Department ;
-                foaf:name "%(department_name)s" ;
-                rdfs:label "%(department_name)s" .
-            ''' % \
+<%(prefix)s/university/%(university_slug)s/%(department_slug)s> rdf:type swrcfe:Department ;
+foaf:name "%(department_name)s" ;
+rdfs:label "%(department_name)s" .
+''' % \
             { 'prefix': RESOURCE_PREFIX, 'university_slug': slugify(university.name), 'department_slug': slugify(dept.name), 'department_name': dept.name }
         )
 
@@ -94,33 +105,31 @@ def create_panel_rdf(evaluators):
     rdf = '<%(prefix)s/thesis/%(title_slug)s/evaluation> rdf:type swrcfe:EvaluationPanel ; \n'
 
     for evaluator in evaluators:
-        rdf += '%(swrcfe_role)s <%(prefix)s/person/%(evaluator_slug)s> ; \n' % \
-            { 'swrcfe_role': panel_role_to_swrcfe[evaluator.role], 'prefix': RESOURCE_PREFIX, 'evaluator_slug': slugify(evaluator.person.name) }
-
+        if evaluator.person:
+            try:
+                role = panel_role_to_swrcfe[evaluator.role.lower()] 
+                rdf += '%(swrcfe_role)s <%(prefix)s/person/%(evaluator_slug)s> ; \n' % \
+                    { 'swrcfe_role': panel_role_to_swrcfe[role], 'prefix': RESOURCE_PREFIX, 'evaluator_slug': slugify(evaluator.person.name) }
+            except:
+                pass
     rdf += 'swrcfe:evaluates <%(prefix)s/thesis/%(title_slug)s> . \n'
     return rdf
 
-def sanitize_string(text):
-    text = ' '.join(text.splitlines())
-    text = text.replace('"', ' ')
-    text = text.replace("'", ' ')
-    text = text.replace('%', ' ')
-    text = text.replace('^', ' ')
-    return text
+
 
 def create_thesis_rdf(thesis):
     # BASIC INFO
     rdf = '''
-    @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
-    @prefix swrcfe: <http://www.morelab.deusto.es/ontologies/swrcfe#> .
-    @prefix dc: <http://purl.org/dc/elements/1.1/> .
-    @prefix bibo: <http://purl.org/ontology/bibo/> .
-    @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix swrcfe: <http://www.morelab.deusto.es/ontologies/swrcfe#> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix bibo: <http://purl.org/ontology/bibo/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-    <%(prefix)s/thesis/%(title_slug)s> rdf:type swrcfe:PhDThesis ;
-        dc:title  "%(title)s" ;
-        rdfs:label "%(title)s" ;
-    '''
+<%(prefix)s/thesis/%(title_slug)s> rdf:type swrcfe:PhDThesis ;
+dc:title "%(title)s" ;
+rdfs:label "%(title)s" ;
+'''
     if thesis.summary:
         rdf += 'bibo:abstract "%(abstract)s" ;\n' % { 'abstract': sanitize_string(thesis.summary) }
 
@@ -128,7 +137,8 @@ def create_thesis_rdf(thesis):
     rdf += 'dc:creator <%(prefix)s/person/%(person_slug)s> ;\n'
 
     for adv in thesis.advisors:
-        rdf += '%(swrcfe_role)s <%(prefix)s/person/%(advisor_slug)s> ;\n' % { 'swrcfe_role': advisor_role_to_swrcfe[adv.role],'prefix': RESOURCE_PREFIX, 'advisor_slug': slugify(adv.person.name) }
+        if adv.person:
+            rdf += '%(swrcfe_role)s <%(prefix)s/person/%(advisor_slug)s> ;\n' % { 'swrcfe_role': advisor_role_to_swrcfe[adv.role],'prefix': RESOURCE_PREFIX, 'advisor_slug': slugify(adv.person.name) }
 
     # UNIVERSITY & DEPARTMENT
     if thesis.university:
@@ -142,9 +152,9 @@ def create_thesis_rdf(thesis):
         rdf += 'swrcfe:evaluatedBy <%(prefix)s/thesis/%(title_slug)s/evaluation> ;\n'
         panel_rdf = create_panel_rdf( [evaluator for evaluator in thesis.panel] )
     else:
-	panel_rdf = ''
+        panel_rdf = ''
 
-    #  UNESCO DESCRIPTORS
+    # UNESCO DESCRIPTORS
     for descriptor in thesis.descriptors:
         rdf += 'dc:subject <%(unesco_prefix)s/%(descriptor)s> ;\n' % {'unesco_prefix': UNESCO_PREFIX, 'descriptor': descriptor.code}
 
@@ -153,13 +163,15 @@ def create_thesis_rdf(thesis):
     # APPEND PANEL RDF TO THE BOTTOM OF THE RDF STRING
     rdf += panel_rdf
     
-    thesis.title = sanitize_string(thesis.title)
+    
     if thesis.defense_date == None:
-        thesis.defense_date = ''        
+        thesis.defense_date = ''
 
     # FILL THE GAPS
-
-    rdf = rdf % { 'prefix': RESOURCE_PREFIX, 'title_slug': slugify(thesis.title), 'title': thesis.title, 'person_slug': slugify(thesis.author.name) ,'date': thesis.defense_date.isoformat() }
+    thesis.title = sanitize_string(thesis.title)
+    slug_title = slugify(thesis.title)
+    slug_author = slugify(thesis.author.name)
+    rdf = rdf % { 'prefix': RESOURCE_PREFIX, 'title_slug': slug_title, 'title': thesis.title, 'person_slug':  slug_author,'date': thesis.defense_date.isoformat() }
 
 
     return rdf
@@ -178,7 +190,7 @@ if __name__ == '__main__':
     for i, thesis in enumerate(theses):
         rdf = create_thesis_rdf(thesis)
         g.parse(data=rdf, format='turtle')
-        sys.stdout.write('%d out of %d  \r' % (i, len_theses))
+        sys.stdout.write('%d out of %d \r' % (i, len_theses))
         sys.stdout.flush()
 
     people = [ person for person in session.query(Person).all() ]
@@ -186,7 +198,7 @@ if __name__ == '__main__':
     for i, person in enumerate(people):
         rdf = create_person_rdf(person)
         g.parse(data=rdf, format='turtle')
-        sys.stdout.write('%d out of %d  \r' % (i, len_people))
+        sys.stdout.write('%d out of %d \r' % (i, len_people))
         sys.stdout.flush()
 
     uni_depts = {}
@@ -205,18 +217,10 @@ if __name__ == '__main__':
             depts = [ session.query(Department).get(dept_id) for dept_id in uni_depts[int(uni.id)] ]
         rdf = create_university_rdf(uni, depts)
         g.parse(data=rdf, format='turtle')
-        sys.stdout.write('%d out of %d  \r' % (i, len_universities))
+        sys.stdout.write('%d out of %d \r' % (i, len_universities))
         sys.stdout.flush()
-		
-	g.serialize(destination='teseo.n3', format='n3')
 
-
-
-
-
-
-
-
+g.serialize(destination='teseo.n3', format='n3')
 
 
 
