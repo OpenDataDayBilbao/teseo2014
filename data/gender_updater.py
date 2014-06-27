@@ -7,6 +7,7 @@ Created on Thu Jun 26 17:03:30 2014
 import gender
 import json
 import mysql.connector
+import time
 
 import os, sys
 lib_path = os.path.abspath('../')
@@ -71,8 +72,7 @@ def update_name_genders():
     cnx.close()
 
 
-def get_name_genders():
-    
+def get_name_genders():    
     name_pool = get_names()
     processed_names = []
     try:
@@ -128,6 +128,18 @@ def update_genders():
 
     
 
-print 'Updating genders...'    
-get_name_genders()
+print 'Updating genders...' 
+do_while = True
+while(do_while):
+    try:   
+        get_name_genders()
+        print 'Name genders retrieved'
+        do_while = False
+    except TypeError:
+        print 'Max. calls, waiting for 12 hours'
+        time.sleep(60 * 60 * 12)
+        
+update_genders()
+        
+        
 print 'Done'
