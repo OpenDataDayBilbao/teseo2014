@@ -5,6 +5,7 @@ Created on Thu Jun 26 17:03:30 2014
 @author: aitor
 """
 import gender
+import json
 import mysql.connector
 
 import os, sys
@@ -69,8 +70,64 @@ def update_name_genders():
     cursor.close()
     cnx.close()
 
+
+def get_name_genders():
+    
+    name_pool = get_names()
+    processed_names = []
+    try:
+        processed_names = json.load( open('processed_names.json', 'r'))
+    except: 
+        pass
+    
+    genders = {}
+    
+    for i, name in enumerate(name_pool):
+        if not name in processed_names:
+            result = gender.getGenders([name])
+            g = result[0][0]
+            genders[name] = g
+            processed_names.append(name)
+            if (i % 100 == 0) or (len(name_pool) - i < 100):
+                print ('%i of %i' % (i, len(name_pool)))
+                try:
+                    os.remove('processed_names.json')
+                    os.remove('genders.json')
+                except:
+                    pass
+                json.dump(processed_names, open('processed_names.json', 'w'))
+                json.dump(genders, open('genders.json', 'w'))
+                
+def update_genders():
+    config = load_config()
+    cnx = mysql.connector.connect(**config)
+    cursor = cnx.cursor()
+    
+    genders = json.load(open('genders.json', 'r'))
+    updated_names = []
+    try:
+        updated_names = json.load( open('updated_names.json', 'r'))
+    except:
+        pass
+    
+    for name in genders:
+        if not name in updated_names:            
+            query = "UPDATE person SET gender = '%s' WHERE first_name = '%s'" % (genders[name], name)
+            cursor.execute(query)
+            updated_names.append(name)
+      
+    try:
+        os.remove('updated_names.json')  
+    except:
+        pass
+    json.dump(updated_names, open('updated_names.json', 'w'))
+    
+    cursor.close()
+    cnx.close()
+            
+
     
 
 print 'Updating genders...'    
-update_name_genders()
+get_name_genders()
 print 'Done'
