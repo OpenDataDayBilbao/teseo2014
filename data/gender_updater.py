@@ -77,27 +77,87 @@ def update_name_genders():
 def get_name_genders_igender():    
     name_pool = get_names()    
     genders = {}
+    try:
+        genders = json.load(open('genders_igender.json', 'r'))
+    except:
+        pass
     
     for i, name in enumerate(name_pool):
-        if i % 50 == 0:
-            print 'Processed', i, 'of', len (name_pool)
-
-        try:
-            g, prob = gender_detection.get_gender(name)
-            genders[name] = g
-            time.sleep(0.1)
-        except UnicodeEncodeError:
-            genders[name] = 'none'
-        except urllib2.HTTPError: 
-            print 'Waiting 10 secs'
-            time.sleep(10)
-            g, prob = gender_detection.get_gender(name)
-            genders[name] = g
-                
-
-            
-            
+        if not genders.has_key(name):
+            if i % 50 == 0:
+                print 'Processed', i, 'of', len (name_pool)
+    
+            try:
+                g, prob = gender_detection.get_gender(name)
+                genders[name] = g
+                time.sleep(0.1)
+            except UnicodeEncodeError:
+                genders[name] = 'none'
+            except urllib2.HTTPError: 
+                try:
+                    print 'Waiting 10 secs'
+                    json.dump(genders, open('genders_igender.json', 'w'))
+                    time.sleep(10)
+                    g, prob = gender_detection.get_gender(name)
+                    genders[name] = g
+                except urllib2.URLError:
+                    print 'Waiting 60 secs'
+                    json.dump(genders, open('genders_igender.json', 'w'))
+                    time.sleep(60)
+                    g, prob = gender_detection.get_gender(name)
+                    genders[name] = g
+        
+ 
     json.dump(genders, open('genders_igender.json', 'w'))
+    
+def get_name_genders_genderize():
+    name_pool = get_names()
+
+    chunk_size = 50
+    total_chunks = len(name_pool)/chunk_size
+    rest = len(name_pool)%chunk_size
+    
+    genders = {}
+
+    for j in range(0, total_chunks):
+        print '*******Chunk', j, '/', total_chunks
+        names = []
+        if j == total_chunks - 1:
+            names = name_pool[j * chunk_size:total_chunks*chunk_size+rest]
+        else:
+            names = name_pool[j * chunk_size:(j+1)*chunk_size]
+
+
+        gender_list = gender.getGenders(names) 
+        
+#        [
+#          {"name":"peter","gender":"male","probability":"1.00","count":796},
+#          {"name":"lois","gender":"female","probability":"0.94","count":70},
+#          {"name":"stevie","gender":"male","probability":"0.63","count":39}
+#        ]
+
+        for g in gender_list:
+            genders[g['name']] =g['gender']
+
+    json.dump(genders, open('genders_genderize.json', 'w'))
+    
+    
+def merge_genders():
+    genderize = json.load(open('genders_genderize.json', 'r'))
+    igender = json.load(open('genders_igender.json', 'r'))
+    
+    different = []
+    final = {}
+    
+    for name in genderize:
+        if genderize[name] == 'None':
+            final[name] = igender[name]
+        if genderize[name].lower() != igender[name].lower():
+            different.append(name)
+            
+    print different
+    return final
+        
 
                 
 def update_genders():
