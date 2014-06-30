@@ -8,6 +8,8 @@ import gender
 import json
 import mysql.connector
 import time
+import gender_detection
+import urllib2
 
 import os, sys
 lib_path = os.path.abspath('../')
@@ -72,31 +74,31 @@ def update_name_genders():
     cnx.close()
 
 
-def get_name_genders():    
-    name_pool = get_names()
-    processed_names = []
-    try:
-        processed_names = json.load( open('processed_names.json', 'r'))
-    except: 
-        pass
-    
+def get_name_genders_igender():    
+    name_pool = get_names()    
     genders = {}
     
     for i, name in enumerate(name_pool):
-        if not name in processed_names:
-            result = gender.getGenders([name])
-            g = result[0][0]
+        if i % 50 == 0:
+            print 'Processed', i, 'of', len (name_pool)
+
+        try:
+            g, prob = gender_detection.get_gender(name)
             genders[name] = g
-            processed_names.append(name)
-            if (i % 100 == 0) or (len(name_pool) - i < 100):
-                print ('%i of %i' % (i, len(name_pool)))
-                try:
-                    os.remove('processed_names.json')
-                    os.remove('genders.json')
-                except:
-                    pass
-                json.dump(processed_names, open('processed_names.json', 'w'))
-                json.dump(genders, open('genders.json', 'w'))
+            time.sleep(0.1)
+        except UnicodeEncodeError:
+            genders[name] = 'none'
+        except urllib2.HTTPError: 
+            print 'Waiting 10 secs'
+            time.sleep(10)
+            g, prob = gender_detection.get_gender(name)
+            genders[name] = g
+                
+
+            
+            
+    json.dump(genders, open('genders_igender.json', 'w'))
+
                 
 def update_genders():
     config = load_config()
@@ -129,17 +131,5 @@ def update_genders():
     
 
 print 'Updating genders...' 
-do_while = True
-while(do_while):
-    try:   
-        get_name_genders()
-        print 'Name genders retrieved'
-        do_while = False
-    except TypeError:
-        print 'Max. calls, waiting for 12 hours'
-        time.sleep(60 * 60 * 12)
-        
-update_genders()
-        
-        
+get_name_genders_igender()        
 print 'Done'
