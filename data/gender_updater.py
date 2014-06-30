@@ -79,6 +79,7 @@ def get_name_genders_igender():
     genders = {}
     try:
         genders = json.load(open('genders_igender.json', 'r'))
+        print 'Loaded %i genders' % (len(genders))
     except:
         pass
     
@@ -86,26 +87,27 @@ def get_name_genders_igender():
         if not genders.has_key(name):
             if i % 50 == 0:
                 print 'Processed', i, 'of', len (name_pool)
-    
-            try:
-                g, prob = gender_detection.get_gender(name)
-                genders[name] = g
-                time.sleep(0.1)
-            except UnicodeEncodeError:
-                genders[name] = 'none'
-            except urllib2.HTTPError: 
+                json.dump(genders, open('genders_igender.json', 'w'))
+                
+            wait = 10  
+            repeat = True
+            while(repeat):
                 try:
-                    print 'Waiting 10 secs'
-                    json.dump(genders, open('genders_igender.json', 'w'))
-                    time.sleep(10)
                     g, prob = gender_detection.get_gender(name)
                     genders[name] = g
-                except urllib2.URLError:
-                    print 'Waiting 60 secs'
+                    repeat = False
+                    wait = 10
+                    time.sleep(0.1)                    
+                except UnicodeEncodeError:
+                    genders[name] = 'none'
+                    repeat = False
+                    wait = 10
+                except:
+                    repeat = True
                     json.dump(genders, open('genders_igender.json', 'w'))
-                    time.sleep(60)
-                    g, prob = gender_detection.get_gender(name)
-                    genders[name] = g
+                    print 'Waiting %i seconds' % (wait)
+                    time.sleep(wait)
+                    wait = wait * 6
         
  
     json.dump(genders, open('genders_igender.json', 'w'))
