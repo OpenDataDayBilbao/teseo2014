@@ -182,7 +182,9 @@ def update_genders():
     except:
         pass
     
-    for name in genders:
+    for i, name in enumerate(genders):
+        if i % 5 == 0:
+            print '%i of %i' % (i, len(genders))
         if not name in updated_names:            
             query = "UPDATE person SET gender = '%s' WHERE first_name = '%s'" % (genders[name], name)
             cursor.execute(query)
@@ -200,6 +202,10 @@ def update_genders():
 
     
 
-print 'Updating genders...' 
-print len(merge_genders())
+print 'Updating genders...'
+# The firs time do:
+#get_name_genders_igender()
+#get_name_genders_genderize()
+
+update_genders()
 print 'Done'
