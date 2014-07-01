@@ -139,7 +139,7 @@ def get_name_genders_genderize():
 #        ]
 
         for g in gender_list:
-            genders[g['name']] =g['gender']
+            genders[g[0]] = g[1]
 
     json.dump(genders, open('genders_genderize.json', 'w'))
     
@@ -151,13 +151,21 @@ def merge_genders():
     different = []
     final = {}
     
-    for name in genderize:
-        if genderize[name] == 'None':
-            final[name] = igender[name]
-        if genderize[name].lower() != igender[name].lower():
-            different.append(name)
-            
-    print different
+    for name in igender:
+        if igender[name] == 'none':
+            try:
+                final[name] = genderize[name].lower()
+            except:
+                final[name] = 'none'
+        else:
+            final[name] = igender[name].lower()
+        try:
+            if genderize[name].lower() != igender[name].lower() and igender[name] != 'none':
+                different.append(name)
+                final[name] = genderize[name].lower()
+        except:
+            pass
+       
     return final
         
 
@@ -167,7 +175,7 @@ def update_genders():
     cnx = mysql.connector.connect(**config)
     cursor = cnx.cursor()
     
-    genders = json.load(open('genders.json', 'r'))
+    genders = merge_genders()
     updated_names = []
     try:
         updated_names = json.load( open('updated_names.json', 'r'))
@@ -193,5 +201,5 @@ def update_genders():
     
 
 print 'Updating genders...' 
-get_name_genders_igender()        
+print len(merge_genders())
 print 'Done'
