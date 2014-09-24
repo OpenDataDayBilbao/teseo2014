@@ -13,6 +13,7 @@ import os.path
 import numpy as np
 import pandas as pd
 from pandas import Series
+from pandas import DataFrame
 
 config = {
     'user': 'aitor',
@@ -149,6 +150,65 @@ def build_panel_network(with_weigh = True):
     nx.write_gexf(G, "./networks/panels.gexf")
     return G
     
+def get_first_level_descriptors():
+    cnx = mysql.connector.connect(**config)
+    
+    print "Recovering first level descriptors"
+    cursor = cnx.cursor()    
+    query = "select id, text, code from descriptor where parent_code IS NULL"
+    cursor.execute(query)
+    descriptors = {}
+    for d in cursor:
+        descriptors[d[2]] = {"id" : d[0], "text" : d[1]}
+    
+    cursor.close()
+    cnx.close()
+    
+    return descriptors
+    
+def build_panel_network_by_descriptor(desc_id, unesco_code):  
+    cnx = mysql.connector.connect(**config)
+    
+    print "Recovering thesis ids"
+    cursor = cnx.cursor()    
+    query = "SELECT thesis_id FROM association_thesis_description WHERE descriptor_id = " + str(desc_id)
+    cursor.execute(query)
+    thesis_ids = []
+    for thesis in cursor:
+        thesis_ids.append(thesis[0])
+    cursor.close()
+    
+    print "Creating panel network"
+    cursor = cnx.cursor() 
+    G = nx.Graph()
+    for c, thesis_id in enumerate(thesis_ids):
+        if c % 1000 == 0:
+            print c, "of", len(thesis_ids)
+        cursor.execute("SELECT person_id FROM panel_member WHERE thesis_id = " + str(thesis_id))
+        members = []
+        for member in cursor:
+            members.append(member[0])
+        
+        for i, m1 in enumerate(members):
+            for m2 in members[i+1:]:
+                if not G.has_edge(m1, m2):
+                    G.add_edge(m1,m2, weight = 1)
+                else:
+                    G.edge[m1][m2]['weight'] += 1
+
+    
+    cursor.close()
+    cnx.close()
+        
+    nx.write_gexf(G, "./networks/panels-" + str(unesco_code) + ".gexf")
+    return G
+    
+        
+def generate_random_graph(n, m):
+    print "Building random graph"
+    G = barabasi_albert_graph(n, m, 10)
+    return G
+    
 def analize_cliques(G):
     print "Calculating cliques..."
     cliques = nx.find_cliques(G)
@@ -181,7 +241,16 @@ def analize_cliques(G):
     print "  - Max clique:", max_size
     print "  - Min clique:", min_size
     print "  - Cliques with a size higher than 5:", high_5
-    print hist_clic
+    print "  - histogram:", hist_clic
+    
+    results = {}
+    results['total'] = tot_cliques
+    results['avg_size'] = tot_size * 1.0 / tot_cliques
+    results['max'] = max_size
+    results['min'] = min_size
+    results['greater_than_5'] = high_5
+    results['histogram'] = hist_clic
+    return results
     
 def analize_degrees(G):
     print "Calculating degrees..."
@@ -192,6 +261,13 @@ def analize_degrees(G):
     print "  - Min degree:", min(degrees.values())
     print "  - Avg. degree:", sum(degrees.values()) * 1.0 / len(degrees)
     print "  - histogram:", hist
+    
+    results = {}
+    results['avg'] = sum(degrees.values()) * 1.0 / len(degrees)
+    results['max'] = max(degrees.values())
+    results['min'] = min(degrees.values())
+    results['histogram'] = hist
+    return results
     
 def analize_edges(G):
     print "Analizing edges..."
@@ -216,27 +292,50 @@ def analize_edges(G):
     print "  - Max weight:", max_weight
     print "  - Min weight:", min_weight
     print "  - Avg weight:", acum_weight * 1.0 / len(G.edges())
-    print hist_weight
+    print "  - histogram:", hist_weight
+    
+    results = {}
+    results['avg'] = acum_weight * 1.0 / len(G.edges())
+    results['max'] = max_weight
+    results['min'] = min_weight
+    results['histogram'] = hist_weight
+    return results
     
     
-    
-def generate_random_graph(n, m):
-    print "Building random graph"
-    G = barabasi_albert_graph(n, m, 10)
-    return G
-
-    
-        
-          
-if __name__=='__main__':
-    #G = build_panel_network()    
+   
+def analyze_rdn_graph():
     G = generate_random_graph(188979, 7) #nodes and nodes/edges
     nx.write_gexf(G, "./networks/barabasi_panel.gexf")
     print "Nodes:", G.number_of_nodes()
     print "Edges:", G.number_of_edges()
     analize_cliques(G)
     analize_degrees(G)
-#    analize_edges(G)
+
+
+def analyze_first_level_panels():
+    descriptors = get_first_level_descriptors()
+    results = {}
+    
+    for d in descriptors:
+        descriptor = descriptors[d]
+        print "\n*********DESCRIPTOR: " + descriptor['text'] + "(" + str(d) + ")"
+        G = build_panel_network_by_descriptor(descriptor['id'],d)
+        print "\nDESCRIPTOR: " + descriptor['text'] + "(" + str(d) + ")"
+        print "Nodes:", G.number_of_nodes()
+        print "Edges:", G.number_of_edges()
+        res_clique = analize_cliques(G)
+        res_degree = analize_degrees(G)
+        res_weight = analize_edges(G)
+        results[d] = {'cliques' : res_clique, 'degrees' : res_degree, 'edge_weights' : res_weight }
+        
+    print "Writing json..."
+    json.dump(results, open('./networks/first_level_analysis.json','w'), indent = 2)
+    
+
+          
+if __name__=='__main__':
+    #G = build_panel_network()    
+    analyze_first_level_panels()
     
 
     
