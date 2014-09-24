@@ -340,17 +340,68 @@ def analyze_first_level_panels():
 def from_json_to_dataframe():
     results = json.load(open('./networks/first_level_analysis.json','r'))
     df = DataFrame(results)
+    df.to_csv("panels.csv")
+    dft = df.transpose()
+    dft.to_csv("panels_trans.csv")
     return df
     #df = DataFrame(['id', 'name', 'clique_tot', 'clique_avg', 'clique_max', 'clique_min', 'clique_greater_5', 'degree_max', 'degree_min', 'degree_avg', 'weight_max', 'weight_min', 'weight_avg']);
-               
 
-if __name__=='__main__':
-    #G = build_panel_network()    
-    analyze_first_level_panels()
+def panel_repetition_per_advisor():
+    cnx = mysql.connector.connect(**config)    
+    print "Recovering thesis ids for each advisor..."
+    cursor = cnx.cursor()    
     
+    query = "SELECT person_id, thesis_id FROM advisor"
+    cursor.execute(query)
+    thesis_advisor = {}
+    for thesis in cursor:
+        adv_id = thesis[0]
+        thesis_id = thesis[1]
+        if thesis_advisor.has_key(adv_id):
+            thesis_advisor[adv_id].append(thesis_id)
+        else:
+            thesis_advisor[adv_id] = [thesis_id]
+    cursor.close()
     
+    print "Counting repetitions..."
+    cursor = cnx.cursor() 
+    results = {}
+    for c, adv in enumerate(thesis_advisor):
+        if c % 500 == 0:
+            print c, "of", len(thesis_advisor)
+        thesis_ids = thesis_advisor[adv]
+        adv_id = adv
+        for thesis_id in thesis_ids:                  
+            cursor.execute("SELECT person_id FROM panel_member WHERE thesis_id = " + str(thesis_id))
+            for member in cursor:
+                if results.has_key(adv_id):
+                    if results[adv_id].has_key(member[0]):
+                        results[adv_id][member[0]] += 1
+                    else:
+                        results[adv_id][member[0]] = 0
+                else: 
+                    results[adv_id] = {member[0] : 0}
+    
+    cursor.close()
+    cnx.close()
+    
+    json.dump(results, open('./networks/repetitions_per_advisor.json', 'w'), indent=2)
+    
+    print "Procesing total repetitons"
+    repetitions_per_advisor = {}
+    for adv in results:
+        total_rep = 0
+        for rep in results[adv]:
+            total_rep += results[adv][rep]
+            
+        repetitions_per_advisor[adv] = total_rep
+    
+        
+    return repetitions_per_advisor
 
-    
-    
+if __name__=='__main__':       
+    repetitions = panel_repetition_per_advisor()
+    print "Avg reps:", sum([r for r in repetitions.values()]) * 1.0 / len(repetitions) 
+  
     
     print "fin"
