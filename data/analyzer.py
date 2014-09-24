@@ -244,12 +244,13 @@ def analize_cliques(G):
     print "  - histogram:", hist_clic
     
     results = {}
-    results['total'] = tot_cliques
-    results['avg_size'] = tot_size * 1.0 / tot_cliques
-    results['max'] = max_size
-    results['min'] = min_size
-    results['greater_than_5'] = high_5
-    results['histogram'] = hist_clic
+    results['clique_tot'] = tot_cliques
+    results['clique_avg'] = tot_size * 1.0 / tot_cliques
+    results['clique_max'] = max_size
+    results['clique_min'] = min_size
+    results['clique_greater_5'] = high_5
+    results['clique_greater_5_norm'] = high_5 * 1.0 / tot_cliques
+    #results['clique_histogram'] = hist_clic
     return results
     
 def analize_degrees(G):
@@ -263,10 +264,10 @@ def analize_degrees(G):
     print "  - histogram:", hist
     
     results = {}
-    results['avg'] = sum(degrees.values()) * 1.0 / len(degrees)
-    results['max'] = max(degrees.values())
-    results['min'] = min(degrees.values())
-    results['histogram'] = hist
+    results['degree_avg'] = sum(degrees.values()) * 1.0 / len(degrees)
+    results['degree_max'] = max(degrees.values())
+    results['degree_min'] = min(degrees.values())
+    #results['degree_histogram'] = hist
     return results
     
 def analize_edges(G):
@@ -295,10 +296,10 @@ def analize_edges(G):
     print "  - histogram:", hist_weight
     
     results = {}
-    results['avg'] = acum_weight * 1.0 / len(G.edges())
-    results['max'] = max_weight
-    results['min'] = min_weight
-    results['histogram'] = hist_weight
+    results['weight_avg'] = acum_weight * 1.0 / len(G.edges())
+    results['weight_max'] = max_weight
+    results['weight_min'] = min_weight
+    #results['weight_histogram'] = hist_weight
     return results
     
     
@@ -326,16 +327,27 @@ def analyze_first_level_panels():
         res_clique = analize_cliques(G)
         res_degree = analize_degrees(G)
         res_weight = analize_edges(G)
-        results[d] = {'cliques' : res_clique, 'degrees' : res_degree, 'edge_weights' : res_weight }
+        d_final = dict(res_clique)
+        d_final.update(res_degree)
+        d_final.update(res_weight)
+        d_final['id'] = d
+        d_final['avg_clustering'] = nx.average_clustering(G)
+        results[descriptor['text']] = d_final
         
     print "Writing json..."
     json.dump(results, open('./networks/first_level_analysis.json','w'), indent = 2)
     
+def from_json_to_dataframe():
+    results = json.load(open('./networks/first_level_analysis.json','r'))
+    df = DataFrame(results)
+    return df
+    #df = DataFrame(['id', 'name', 'clique_tot', 'clique_avg', 'clique_max', 'clique_min', 'clique_greater_5', 'degree_max', 'degree_min', 'degree_avg', 'weight_max', 'weight_min', 'weight_avg']);
+               
 
-          
 if __name__=='__main__':
     #G = build_panel_network()    
     analyze_first_level_panels()
+    
     
 
     
