@@ -22,6 +22,8 @@ config = {
     'database': 'teseo_clean',
 }
 
+persons_university = []
+persons_id = []
 
 
 # Execute it once
@@ -433,9 +435,58 @@ def thesis_per_location():
     cnx.close()    
     return results
     
+def analyze_advisor_student_genders():
+    cnx = mysql.connector.connect(**config)   
+    cursor = cnx.cursor()  
+    print "Recovering advisor-student pairs..."
+    cursor.execute("SELECT thesis.author_id, advisor.person_id FROM thesis, advisor WHERE thesis.id = advisor.thesis_id")
+    adv_stu = []
+    for advisor in cursor:
+        adv_stu.append([advisor[1], advisor[0]])
+    
+    print "Recovering genders..."
+    genders = {}    
+    cursor.execute("SELECT person.id, person.gender FROM person")
+    for person in cursor:
+        genders[person[0]] = person[1]
+        
+    
+    cursor.close()       
+    cnx.close() 
+    
+    print "Counting..."
+    results = {}
+    results["MM"] = 0
+    results["FF"] = 0
+    results["FM"] = 0
+    results["MF"] = 0
+    
+    for pair in adv_stu:      
+        try:
+            adv_gender = genders[pair[0]]
+            stu_gender = genders[pair[1]]
+        except:
+            adv_gender = 'none'
+            stu_gender = 'none'
+            
+        if adv_gender == 'male':
+            if stu_gender == 'male':
+                results['MM'] += 1
+            elif stu_gender == 'female':
+                results['MF'] += 1          
+        elif adv_gender == 'female':
+            if stu_gender == 'male':
+                results['FM'] += 1
+            elif stu_gender == 'female':
+                results['FF'] += 1
+    
+    
+    
+    return results
+    
 
 if __name__=='__main__':       
-    results = thesis_per_location()
+    results = analyze_advisor_student_genders()
     print results
   
     
