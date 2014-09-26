@@ -398,10 +398,45 @@ def panel_repetition_per_advisor():
     
         
     return repetitions_per_advisor
+    
+def thesis_per_year():
+     
+    results = {}
+    cnx = mysql.connector.connect(**config)   
+    cursor = cnx.cursor()  
+    for year in range(1977,2015):                           
+        query = "SELECT count(defense_date) FROM thesis WHERE year(defense_date)=year('" + str(year) + "-01-01')"
+        cursor.execute(query)
+        for r in cursor:
+            results[year] = r[0]
+
+    cursor.close()       
+    cnx.close()    
+    return results
+    
+def thesis_per_location():
+    results = {}
+    cnx = mysql.connector.connect(**config)   
+    cursor = cnx.cursor()  
+    cursor.execute("select distinct(location) from university")
+    locations = []
+    for l in cursor:
+        locations.append(l[0])
+    results = {}
+    for location in locations:                           
+        query = "SELECT count(thesis.id) FROM thesis, university WHERE university.location = '" + location + "'"
+        cursor.execute(query)
+        for r in cursor:
+            results[location] = r[0]
+
+    cursor.close()       
+    cnx.close()    
+    return results
+    
 
 if __name__=='__main__':       
-    repetitions = panel_repetition_per_advisor()
-    print "Avg reps:", sum([r for r in repetitions.values()]) * 1.0 / len(repetitions) 
+    results = thesis_per_location()
+    print results
   
     
     print "fin"
