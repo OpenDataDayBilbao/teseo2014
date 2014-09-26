@@ -25,6 +25,34 @@ config = {
 persons_university = []
 persons_id = []
 
+first_level_topic_list = {
+                    11: 'Logic',
+                    12: 'Mathematics',
+                    21: 'Astronomy, Astrophysics',
+                    22: 'Physics',
+                    23: 'Chemistry',
+                    24: 'Life Sciences',
+                    25: 'Earth and space science',
+                    31: 'Agricultural Sciences',
+                    32: 'Medical Sciences',
+                    33: 'Technological Sciences',
+                    51: 'Anthropology',
+                    52: 'Demography',
+                    53: 'Economic Sciences',
+                    54: 'Geography',
+                    55: 'History',
+                    56: 'Juridical Science and Law',
+                    57: 'Linguistics',
+                    58: 'Pedagogy',
+                    59: 'Political Science',
+                    61: 'Psychology',
+                    62: 'Sciences of Arts and Letters',
+                    63: 'Sociology',
+                    71: 'Ethics',
+                    72: 'Philosophy',
+                    }
+
+
 
 # Execute it once
 def get_persons_university():
@@ -473,7 +501,7 @@ def advisor_genders_by_topic():
                unknown += r[0]
                
         if len(thesis_ids) > 0:
-            results[topic] = {'male' : male, 'female' : female, 'unknown' : unknown}
+            results[first_level_topic_list[topic]] = {'male' : male, 'female' : female, 'unknown' : unknown}
     cursor.close()       
     cnx.close() 
     
@@ -592,7 +620,7 @@ def analyze_advisor_student_genders_by_topic():
             results["FM_norm"] = results["FM"] * 1.0 / topic_genders[str(topic)]['female']
             results["MF_norm"] = results["MF"] * 1.0 / topic_genders[str(topic)]['male']  
     
-            topic_gender_pairs[topic] = results
+            topic_gender_pairs[first_level_topic_list[topic]] = results
               
     cursor.close()       
     cnx.close()   
@@ -607,7 +635,7 @@ def analyze_advisor_student_genders_by_topic():
     
 
 if __name__=='__main__':       
-    results = analyze_advisor_student_genders_by_topic()
+    results = advisor_genders_by_topic()
     print results
     
     print "fin"
