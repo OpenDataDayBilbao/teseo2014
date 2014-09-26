@@ -466,9 +466,8 @@ def thesis_per_location():
 def advisor_genders_by_topic():
     cnx = mysql.connector.connect(**config)   
     cursor = cnx.cursor()  
-    topics = range(10,100)
     results = {}
-    for topic in topics:
+    for topic in first_level_topic_list:
         print "Topic:", topic
         
         print 'Getting thesis ids for topic...'
@@ -562,7 +561,6 @@ def analyze_advisor_student_genders():
     
     
 def analyze_advisor_student_genders_by_topic():
-    topics = range(10,100)
     cnx = mysql.connector.connect(**config)   
     cursor = cnx.cursor() 
     
@@ -574,7 +572,7 @@ def analyze_advisor_student_genders_by_topic():
     
     topic_genders = json.load(open('advisor_gender_by_topic.json','r'))
     topic_gender_pairs = {}
-    for topic in topics:
+    for topic in first_level_topic_list:
         print "Topic:", topic
         print "Recovering advisor-student pairs..."
         query = """ SELECT thesis.author_id, advisor.person_id 
