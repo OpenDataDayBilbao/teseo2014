@@ -435,6 +435,57 @@ def thesis_per_location():
     cnx.close()    
     return results
     
+def advisor_genders_by_topic():
+    cnx = mysql.connector.connect(**config)   
+    cursor = cnx.cursor()  
+    topics = range(10,100)
+    results = {}
+    for topic in topics:
+        print "Topic:", topic
+        
+        print 'Getting thesis ids for topic...'
+        thesis_ids = []
+        cursor.execute("SELECT thesis_id FROM association_thesis_description, descriptor WHERE descriptor.id = association_thesis_description.descriptor_id AND descriptor.code DIV  10000 = " + str(topic))
+        for t_id in cursor:
+            thesis_ids.append(t_id)
+            
+        print 'Number of thesis:', len(thesis_ids)
+            
+        print 'Counting genders...'
+        male = 0
+        female = 0
+        unknown = 0             
+        for thesis in thesis_ids:
+            
+            query = "SELECT COUNT(advisor.person_id) FROM advisor, person, thesis WHERE thesis.id = advisor.thesis_id AND person.id = advisor.person_id AND person.gender = 'male' AND thesis.id = " + str(thesis[0])        
+            cursor.execute(query)
+            for r in cursor:
+               male += r[0]
+            
+            query = "SELECT COUNT(advisor.person_id) FROM advisor, person, thesis  WHERE thesis.id = advisor.thesis_id AND person.id = advisor.person_id AND person.gender = 'female' AND thesis.id = " + str(thesis[0])
+            cursor.execute(query)
+            for r in cursor:
+               female += r[0]
+            
+            query = "SELECT COUNT(advisor.person_id) FROM advisor, person, thesis  WHERE thesis.id = advisor.thesis_id AND person.id = advisor.person_id AND person.gender = 'none' AND thesis.id = " + str(thesis[0])
+            cursor.execute(query)
+            for r in cursor:
+               unknown += r[0]
+               
+        if len(thesis_ids) > 0:
+            results[topic] = {'male' : male, 'female' : female, 'unknown' : unknown}
+    cursor.close()       
+    cnx.close() 
+    
+    print "Saving json"
+    json.dump(results, open('advisor_gender_by_topic.json','w'))
+    print "Saving csv"
+    df = DataFrame(results)
+    df.to_csv("advisor_gender_by_topic.csv")   
+    
+    return results
+        
+    
 def analyze_advisor_student_genders():
     cnx = mysql.connector.connect(**config)   
     cursor = cnx.cursor()  
@@ -478,16 +529,85 @@ def analyze_advisor_student_genders():
             if stu_gender == 'male':
                 results['FM'] += 1
             elif stu_gender == 'female':
-                results['FF'] += 1
-    
-    
-    
+                results['FF'] += 1        
     return results
+    
+    
+def analyze_advisor_student_genders_by_topic():
+    topics = range(10,100)
+    cnx = mysql.connector.connect(**config)   
+    cursor = cnx.cursor() 
+    
+    print "Recovering genders..."
+    genders = {}    
+    cursor.execute("SELECT person.id, person.gender FROM person")
+    for person in cursor:
+        genders[person[0]] = person[1]
+    
+    topic_genders = json.load(open('advisor_gender_by_topic.json','r'))
+    topic_gender_pairs = {}
+    for topic in topics:
+        print "Topic:", topic
+        print "Recovering advisor-student pairs..."
+        query = """ SELECT thesis.author_id, advisor.person_id 
+                    FROM thesis, advisor, descriptor, association_thesis_description 
+                    WHERE descriptor.id = association_thesis_description.descriptor_id 
+                    AND thesis.id = advisor.thesis_id 
+                    AND thesis.id = association_thesis_description.thesis_id 
+                    AND descriptor.code DIV 10000 = """ + str(topic)  
+        cursor.execute(query)
+        adv_stu = []
+        for advisor in cursor:
+            adv_stu.append([advisor[1], advisor[0]])
+        
+        
+        if len(adv_stu) > 0:     
+            print "Counting..."
+            results = {}
+            results["MM"] = 0
+            results["FF"] = 0
+            results["FM"] = 0
+            results["MF"] = 0
+            
+            for pair in adv_stu:      
+                try:
+                    adv_gender = genders[pair[0]]
+                    stu_gender = genders[pair[1]]
+                except:
+                    adv_gender = 'none'
+                    stu_gender = 'none'
+                    
+                if adv_gender == 'male':
+                    if stu_gender == 'male':
+                        results['MM'] += 1
+                    elif stu_gender == 'female':
+                        results['MF'] += 1          
+                elif adv_gender == 'female':
+                    if stu_gender == 'male':
+                        results['FM'] += 1
+                    elif stu_gender == 'female':
+                        results['FF'] += 1
+            results["MM_norm"] = results["MM"] * 1.0 / topic_genders[str(topic)]['male']
+            results["FF_norm"] = results["FF"] * 1.0 / topic_genders[str(topic)]['female']
+            results["FM_norm"] = results["FM"] * 1.0 / topic_genders[str(topic)]['female']
+            results["MF_norm"] = results["MF"] * 1.0 / topic_genders[str(topic)]['male']  
+    
+            topic_gender_pairs[topic] = results
+              
+    cursor.close()       
+    cnx.close()   
+    
+    print "Saving json"
+    json.dump(topic_gender_pairs, open('gender_pairs_by_topic.json','w'))
+    print "Saving csv"
+    df = DataFrame(topic_gender_pairs)
+    df.to_csv("gender_pairs_by_topic.csv")   
+    
+    return topic_gender_pairs
     
 
 if __name__=='__main__':       
-    results = analyze_advisor_student_genders()
+    results = analyze_advisor_student_genders_by_topic()
     print results
-  
     
     print "fin"
