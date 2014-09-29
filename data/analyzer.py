@@ -196,12 +196,15 @@ def get_first_level_descriptors():
     
     return descriptors
     
-def build_panel_network_by_descriptor(desc_id, unesco_code):  
+def build_panel_network_by_descriptor(unesco_code):  
     cnx = mysql.connector.connect(**config)
     
     print "Recovering thesis ids"
     cursor = cnx.cursor()    
-    query = "SELECT thesis_id FROM association_thesis_description WHERE descriptor_id = " + str(desc_id)
+    query = """SELECT thesis_id 
+                FROM association_thesis_description, descriptor 
+                WHERE association_thesis_description.descriptor_id = descriptor.id
+                AND descriptor.code DIV 10000 = """ + str(unesco_code) 
     cursor.execute(query)
     thesis_ids = []
     for thesis in cursor:
@@ -344,14 +347,12 @@ def analyze_rdn_graph():
 
 
 def analyze_first_level_panels():
-    descriptors = get_first_level_descriptors()
     results = {}
     
-    for d in descriptors:
-        descriptor = descriptors[d]
-        print "\n*********DESCRIPTOR: " + descriptor['text'] + "(" + str(d) + ")"
-        G = build_panel_network_by_descriptor(descriptor['id'],d)
-        print "\nDESCRIPTOR: " + descriptor['text'] + "(" + str(d) + ")"
+    for d in first_level_topic_list:
+        print "\n*********DESCRIPTOR: " + first_level_topic_list[d] + "(" + str(d) + ")"
+        G = build_panel_network_by_descriptor(d)
+        print "\nDESCRIPTOR: " + first_level_topic_list[d] + "(" + str(d) + ")"
         print "Nodes:", G.number_of_nodes()
         print "Edges:", G.number_of_edges()
         res_clique = analize_cliques(G)
@@ -362,10 +363,15 @@ def analyze_first_level_panels():
         d_final.update(res_weight)
         d_final['id'] = d
         d_final['avg_clustering'] = nx.average_clustering(G)
-        results[descriptor['text']] = d_final
+        results[first_level_topic_list[d]] = d_final
         
     print "Writing json..."
-    json.dump(results, open('./networks/first_level_analysis.json','w'), indent = 2)
+    json.dump(results, open('./networks/first_level_panels_analysis.json','w'), indent = 2)
+    print "Writing csvs..."
+    df = DataFrame(results)
+    df.to_csv('./networks/first_level_panels_analysis.csv')
+    dfinv = df.transpose()
+    dfinv.to_csv('./networks/first_level_panels_analysis_inv.csv')
     
 def from_json_to_dataframe():
     results = json.load(open('./networks/first_level_analysis.json','r'))
@@ -633,7 +639,7 @@ def analyze_advisor_student_genders_by_topic():
     
 
 if __name__=='__main__':       
-    results = advisor_genders_by_topic()
-    print results
+    print "starting"
+    analyze_first_level_panels()
     
     print "fin"
