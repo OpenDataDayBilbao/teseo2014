@@ -637,9 +637,46 @@ def analyze_advisor_student_genders_by_topic():
     
     return topic_gender_pairs
     
+def count_persons_with_multiple_thesis():    
+    cnx = mysql.connector.connect(**config)   
+    cursor = cnx.cursor() 
+    persons_id = []  
+    cursor.execute("SELECT person.id FROM person")
+    for person in cursor:
+        persons_id.append(person[0])
+    
+    results = {}
+    histogram = {}
+    for i, p_id in enumerate(persons_id):
+        if i % 2000 == 0:
+            print i, 'of', len(persons_id)
+        cursor.execute("SELECT COUNT(thesis.id) FROM thesis WHERE thesis.author_id = " + str(p_id))
+        for r in cursor:
+            if r[0] > 1:
+                results[p_id] = r[0]
+                if histogram.has_key(r[0]):
+                    histogram[r[0]] += 1
+                else:
+                    histogram[r[0]] = 1
+                
+    
+    
+    cursor.close()       
+    cnx.close() 
+    print "Writing json..."
+    json.dump(results, open('multiple_thesis.json','w'))
+    json.dump(histogram, open('multiple_thesis_hist.json','w'))
+    
+    return results, histogram
+    
+
+    
+    
+    
 
 if __name__=='__main__':       
     print "starting"
-    analyze_first_level_panels()
+    results, histogram = count_persons_with_multiple_thesis()
+    print histogram
     
     print "fin"
