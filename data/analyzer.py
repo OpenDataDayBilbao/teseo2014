@@ -669,14 +669,38 @@ def count_persons_with_multiple_thesis():
     
     return results, histogram
     
-
+def count_panel_members():
+    cnx = mysql.connector.connect(**config)   
+    cursor = cnx.cursor() 
+    print "Getting thesis ids..."
+    cursor.execute("SELECT id FROM thesis")
+    thesis_ids = []
+    for r in cursor:
+        thesis_ids.append(r[0])
+        
+    results = {}    
+    print "Counting panel members"
+    for i, t_id in enumerate(thesis_ids):
+        if i % 2000 == 0:
+            print i, 'of', len(thesis_ids)
+        cursor.execute("SELECT count(panel_member.person_id) FROM panel_member WHERE panel_member.thesis_id = " + str(t_id))
+        for r in cursor:
+            if results.has_key(r[0]):
+                results[r[0]] += 1
+            else:
+                results[r[0]] = 1
+    
+    
+    cursor.close()       
+    cnx.close() 
+    
+    return results
     
     
     
 
 if __name__=='__main__':       
     print "starting"
-    results, histogram = count_persons_with_multiple_thesis()
-    print histogram
+    print count_panel_members()
     
     print "fin"
