@@ -14,6 +14,7 @@ import numpy as np
 import pandas as pd
 from pandas import Series
 from pandas import DataFrame
+import matplotlib.pyplot as plt
 
 config = {
     'user': 'aitor',
@@ -696,11 +697,58 @@ def count_panel_members():
     
     return results
     
+def create_gender_pie():
+    male = 221579.0
+    female = 80363.0
+    none = 21428.0
+    total = male + female + none
+    labels = ['Male', 'Female', 'Unknown']
+    sizes = [male/total*100, female/total*100, none/total*100]
+    colors = ['lightblue', 'pink', 'gold']
+    plt.pie(sizes, labels=labels, colors=colors, autopct='%1.1f%%')
+    plt.axis('equal')
+    plt.show()
+    
+def create_advisor_gender_pie():
+    male = 165506.0
+    female = 37012.0
+    none = 11229.0
+    total = male + female + none
+    labels = ['Male', 'Female', 'Unknown']
+    sizes = [male/total*100, female/total*100, none/total*100]
+    colors = ['lightblue', 'pink', 'gold']
+    plt.pie(sizes, labels=labels, colors=colors, autopct='%1.1f%%')
+    plt.axis('equal')
+    plt.show()
+    
+def create_student_gender_pie():
+    male = 115423.0
+    female = 52184.0
+    none = 9742.0
+    total = male + female + none
+    labels = ['Male', 'Female', 'Unknown']
+    sizes = [male/total*100, female/total*100, none/total*100]
+    colors = ['lightblue', 'pink', 'gold']
+    plt.pie(sizes, labels=labels, colors=colors, autopct='%1.1f%%')
+    plt.axis('equal')
+    plt.show()
+    
+def create_panel_gender_pie():
+    male = 674748.0
+    female = 139170.0
+    none = 44765.0
+    total = male + female + none
+    labels = ['Male', 'Female', 'Unknown']
+    sizes = [male/total*100, female/total*100, none/total*100]
+    colors = ['lightblue', 'pink', 'gold']
+    plt.pie(sizes, labels=labels, colors=colors, autopct='%1.1f%%')
+    plt.axis('equal')
+    plt.show()
     
     
 
 if __name__=='__main__':       
     print "starting"
-    print count_panel_members()
+    print create_panel_gender_pie()
     
     print "fin"
