@@ -745,10 +745,27 @@ def create_panel_gender_pie():
     plt.axis('equal')
     plt.show()
     
+def create_number_of_thesis_bar():
+    values = [1552, 126, 33, 7, 2]
+    fig, ax = plt.subplots()
+
+    index = np.arange(len(values))
+
+
+    width = 0.30
+    plt.bar(index, values)
     
+    plt.xlabel('Number of thesis')
+    plt.ylabel('Total persons')
+    plt.title('Number of thesis by person (> 2)')
+    plt.xticks(index + width, ('2', '3', '4', '5', '6'))
+    plt.legend()
+    
+    plt.tight_layout()
+    plt.show()
 
 if __name__=='__main__':       
     print "starting"
-    print create_panel_gender_pie()
+    print create_number_of_thesis_bar()
     
     print "fin"
