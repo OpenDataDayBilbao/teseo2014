@@ -6,7 +6,7 @@ from slugify import slugify
 
 import os
 import sys
-import simplejson as json
+import json
 
 lib_path = os.path.abspath('../')
 sys.path.append(lib_path)
