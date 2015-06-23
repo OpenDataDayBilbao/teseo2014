@@ -51,7 +51,7 @@ class ReverseProxied(object):
 app = Flask(__name__)
 app.config.from_object(__name__)
 app.wsgi_app = ReverseProxied(app.wsgi_app)
-app.debug = True
+app.debug = False
 
 
 NUMBER_OF_TOP_ITEMS = 15
@@ -264,4 +264,4 @@ def theses_geographical_distribution():
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=False)
